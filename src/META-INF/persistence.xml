@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="eReportAnalytics">
+		<description>E-Report Analytics Application</description>
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+			<class>org.sap.era.persistence.CellModel</class>
+			<class>org.sap.era.persistence.TableModel</class>
+			<class>org.sap.era.persistence.TableGroupModel</class>
+			<class>org.sap.era.persistence.TableGroupAssignment</class>
+			<class>org.sap.era.persistence.Orgnazition</class>
+			<class>org.sap.era.persistence.Person</class>
+			<class>org.sap.era.persistence.CellData</class>
+			<class>org.sap.era.persistence.TableData</class>
+			<class>org.sap.era.persistence.ReportTask</class>
+			<class>org.sap.era.persistence.AssignedOrgnazition</class>
+		<properties>
+			<property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+		</properties>
+	</persistence-unit>
+</persistence>

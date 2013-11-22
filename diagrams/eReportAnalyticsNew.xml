@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><entities>
+	<entity>
+		<entity-name>org.sap.era.persistence.TableModel</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>406</entity-height>
+		<entity-X-Coordinate>239</entity-X-Coordinate>
+		<entity-Y-Coordinate>369</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>org.sap.era.persistence.ReportTask</entity-name>
+		<entity-width>171</entity-width>
+		<entity-height>428</entity-height>
+		<entity-X-Coordinate>910</entity-X-Coordinate>
+		<entity-Y-Coordinate>20</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>org.sap.era.persistence.CellModel</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>246</entity-height>
+		<entity-X-Coordinate>38</entity-X-Coordinate>
+		<entity-Y-Coordinate>369</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>org.sap.era.persistence.Person</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>206</entity-height>
+		<entity-X-Coordinate>69</entity-X-Coordinate>
+		<entity-Y-Coordinate>44</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>org.sap.era.persistence.TableGroupAssignment</entity-name>
+		<entity-width>181</entity-width>
+		<entity-height>206</entity-height>
+		<entity-X-Coordinate>657</entity-X-Coordinate>
+		<entity-Y-Coordinate>290</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>org.sap.era.persistence.TableData</entity-name>
+		<entity-width>179</entity-width>
+		<entity-height>266</entity-height>
+		<entity-X-Coordinate>277</entity-X-Coordinate>
+		<entity-Y-Coordinate>830</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>org.sap.era.persistence.TableGroupModel</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>226</entity-height>
+		<entity-X-Coordinate>432</entity-X-Coordinate>
+		<entity-Y-Coordinate>395</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>org.sap.era.persistence.CellData</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>246</entity-height>
+		<entity-X-Coordinate>38</entity-X-Coordinate>
+		<entity-Y-Coordinate>810</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>org.sap.era.persistence.Orgnazition</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>286</entity-height>
+		<entity-X-Coordinate>341</entity-X-Coordinate>
+		<entity-Y-Coordinate>15</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>org.sap.era.persistence.AssignedOrgnazition</entity-name>
+		<entity-width>188</entity-width>
+		<entity-height>128</entity-height>
+		<entity-X-Coordinate>650</entity-X-Coordinate>
+		<entity-Y-Coordinate>14</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+</entities>
