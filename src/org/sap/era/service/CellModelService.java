@@ -24,6 +24,16 @@ public class CellModelService {
 		
 	}
 	
+	public List<CellModel> getAllCellModelsforLabelByTableModel(long tableModelID) {
+		return this.cellModelDAO.getAllCellModelsforLabelByTableModel(tableModelID);
+		
+	}
+	
+	public List<CellModel> getAllCellModelsforParmByTableModel(long tableModelID) {
+		return this.cellModelDAO.getAllCellModelsforParmByTableModel(tableModelID);
+		
+	}
+	
 	//
 	public void addCellModel(CellModel cellModel, int TableModelID) {
 		TableModel tableModel = new TableModel();

@@ -179,7 +179,7 @@ public class ExcelReadService {
 	}
 	
 	/*
-	 * Read the sheet, return the model & basic format errors, and the CellData;
+	 * Read the "fixed-cells" type sheet, return the model & basic format errors, and the CellData;
 	 * (Basic Validate: Template Consistancy & Cell DataType Validation)
 	 * @Parm:Document
 	 *       TableModel
@@ -188,7 +188,7 @@ public class ExcelReadService {
 	 * @Date:2013.11.24
 	 * 
 	 */
-	private ValidatorSheetErrors readDataCellsFromTableModel(Document doc,TableModel tableModel){
+	private ValidatorSheetErrors readFixedCellsFromTableModel(Document doc,TableModel tableModel){
 		InputStream is;
 		XSSFWorkbook wb;
 		XSSFSheet sheet;
@@ -271,7 +271,92 @@ public class ExcelReadService {
 		return validatorSheetErrors;
 	}
 	
-	
+	/*
+	 * Read the "MiltiLine-cells" type sheet, return the model & basic format errors, and the CellData;
+	 * (Basic Validate: Template Consistancy & Cell DataType Validation)
+	 * @Parm:Document
+	 *       TableModel
+	 * @Return:ValidatorSheetErrors
+	 * @Author:Jason.Zan
+	 * @Date:2013.11.25
+	 * //Note:need more: If the cell is the first column, then to judge how many rows via the column of the cell.#K
+	 */
+	private ValidatorSheetErrors readMiltiLineCellsFromTableModel(Document doc,TableModel tableModel){
+		InputStream is;
+		XSSFWorkbook wb;
+		XSSFSheet sheet;
+		int excelSheetID = tableModel.getSheetID();
+		String excelSheetName = tableModel.getSheetName();
+		HashMap<String, CellData> cellsValue = new HashMap<String, CellData>();
+		List<ValidatorError> modelErrors = new ArrayList<ValidatorError> ();
+		List<ValidatorError> formatErrors = new ArrayList<ValidatorError> ();
+		List<CellData> cellDataList = new ArrayList<CellData> ();
+		// get the cells for data abstraction
+		try {
+			is = doc.getContentStream().getStream();
+			wb = new XSSFWorkbook(is);
+			sheet = wb.getSheetAt(excelSheetID);
+			//1. validate for the cells of "LABEL"
+			List<CellModel> cellsForLabel = cellModelService.getAllCellModelsforLabelByTableModel(tableModel.getId());// get all cells
+			XSSFRow excelRow = null;
+			for (int i = 0; i < cellsForLabel.size(); i++){
+				CellModel cellModel = cellsForLabel.get(i); //CellModel instance
+				int row = cellModel.getRow();
+				int column = cellModel.getCol();
+				excelRow = sheet.getRow(row);
+				Cell cell = excelRow.getCell(column);
+				if ( !cellModel.getLabel().equals(cell.getStringCellValue()) ){
+					modelErrors.add(new ValidatorError("Cell-[row:"+row+",column:"+column+"] isn't consistent.",ValidatorError.LEVEL_ERROR));
+				}
+			}
+			//2. validate for the cells of "PARM" type
+			
+			//3. validate for the cells of "DATA"//, "PARM" type &
+			List<CellModel> cellsForValue = cellModelService.getAllCellModelsforDataByTableModel(tableModel.getId());// get all cells
+			int totalRowNum = sheet.getLastRowNum();
+			for (int i = 0; i < cellsForValue.size(); i++){
+				CellModel cellModel = cellsForValue.get(i); //CellModel instance
+				int row = cellModel.getRow();
+				int column = cellModel.getCol();
+				int cellDataType = cellModel.getDataType();
+				//
+				for (int j = row; j < totalRowNum+1; j++){
+					excelRow = sheet.getRow(row);
+					Cell cell = excelRow.getCell(column);
+					CellData cellData = new CellData(); //The cellData for the corresponding cellModel.
+					// 2. check value type
+					String value = cell.toString();
+					if (cellDataType == CellModel.CELL_DATA_TYPE_NUMERIC ){//for Numeric cell
+						//validate
+						if (cell.getCellType() != Cell.CELL_TYPE_NUMERIC){
+							formatErrors.add(new ValidatorError("Cell-[row:"+row+",column:"+column+"] isn't numeric type.",ValidatorError.LEVEL_ERROR));
+						}else{
+							cellData.setDataDouble(Double.parseDouble(value));
+						}
+					}else if (cell.getCellType() == CellModel.CELL_DATA_TYPE_STRING){//for String cell
+						cellData.setDataText(value);
+					}else {
+						cellData.setDataText(value);
+					}
+					// add the cellData into result list
+					cellData.setCol(column);
+					cellData.setRow(row);
+					cellData.setType(cellDataType);
+					cellDataList.add(cellData);
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//return errors
+		ValidatorSheetErrors validatorSheetErrors = new ValidatorSheetErrors();
+		validatorSheetErrors.setSheetID(tableModel.getSheetID());
+		validatorSheetErrors.setSheetName(tableModel.getSheetName());
+		validatorSheetErrors.setModelErrors(modelErrors);
+		validatorSheetErrors.setFormatErrors(formatErrors);
+		return validatorSheetErrors;
+	}
 	
 	/*
 	 * return all MergedRange Cell of a sheet into list<SpanCell>
@@ -329,8 +414,4 @@ public class ExcelReadService {
 		catch (Exception ex) {
 
 		}
-	}
-	
-	
-	
-}
+	}}

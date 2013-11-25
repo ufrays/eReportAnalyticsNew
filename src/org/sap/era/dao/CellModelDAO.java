@@ -23,6 +23,34 @@ public class CellModelDAO {
 	}
 	
 	
+	public List<CellModel> getAllCellModelsforLabelByTableModel(long tableModelID) {
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("AllCellModelsfoLabelByTableModel",CellModel.class);
+			query.setParameter("tableModelID", tableModelID);
+			List<CellModel> cellModelList = query.getResultList();
+			return cellModelList;
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
+	}
+	
+	public List<CellModel> getAllCellModelsforParmByTableModel(long tableModelID) {
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("AllCellModelsforParmByTableModel",CellModel.class);
+			query.setParameter("tableModelID", tableModelID);
+			List<CellModel> cellModelList = query.getResultList();
+			return cellModelList;
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
+	}
+	
 	public List<CellModel> getAllCellModelsforDataByTableModel(long tableModelID) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
