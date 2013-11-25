@@ -19,8 +19,7 @@ public class CellModelService {
 	}
 	
 	//
-	public List<CellModel> getAllCellModelsByTableModel(String tableModelID) {
-		
+	public List<CellModel> getAllCellModelsByTableModel(long tableModelID) {
 		return this.cellModelDAO.getAllCellModelsByTableModel(tableModelID);
 		
 	}
@@ -31,6 +30,10 @@ public class CellModelService {
 		tableModel.setId(TableModelID);
 		cellModel.setTableModel(tableModel);
 		this.cellModelDAO.addCellModel(cellModel);
+	}
+	
+	public List<CellModel> getAllCellModelsforDataByTableModel(long tableModelID){
+		return cellModelDAO.getAllCellModelsforDataByTableModel(tableModelID);
 	}
 	
 }

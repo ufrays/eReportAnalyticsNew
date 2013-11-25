@@ -5,12 +5,16 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import org.sap.era.persistence.CellModel;
+import org.sap.era.persistence.TableModel;
 import org.sap.era.service.excel.Control;
 import org.sap.era.service.excel.ExcelForm;
 import org.sap.era.service.excel.LabelControl;
 import org.sap.era.service.excel.ParseException;
+import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -18,6 +22,9 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.sap.era.service.excel.SpanCell;
+import org.sap.era.service.validation.ValidatorError;
+import org.sap.era.service.validation.ValidatorSheetErrors;
+import org.sap.era.persistence.CellData;
 
 public class ExcelReadService {
 	
@@ -121,22 +128,25 @@ public class ExcelReadService {
 						control.setRowspan(spanCell.getRowspan()+1);//"+1" is for html 
 						control.setColspan(spanCell.getColspan()+1);//"+1" is for html 
 					}
-					if (cell.getCellType() == cell.CELL_TYPE_BLANK){
-						control.setCellType(control.CONTROL_TYPE_EMPTY);
+					if (cell.getCellType() == Cell.CELL_TYPE_BLANK){
+						control.setCellType(CellModel.CELL_TYPE_BLANK);
 						control.setText("");
 						excelForm.addCell(i+1, j+1, control);
 					}
 					else if (cell.toString().startsWith("#N")){
-						control.setCellType(control.CONTROL_TYPE_INPUT_NUMERIC);
+						control.setCellType(CellModel.CELL_TYPE_DATA);
+						control.setCellDataType(CellModel.CELL_DATA_TYPE_NUMERIC);
 						control.setText(cell.toString());
 						excelForm.addCell(i+1, j+1, control);
 					}
 					else if (cell.toString().startsWith("#T")){
-						control.setCellType(control.CONTROL_TYPE_INPUT_TEXT);
+						control.setCellType(CellModel.CELL_TYPE_DATA);
+						control.setCellDataType(CellModel.CELL_DATA_TYPE_STRING);
 						control.setText(cell.toString());
 						excelForm.addCell(i+1, j+1, control);
 					}else{
-						control.setCellType(control.CONTROL_TYPE_LABEL);
+						control.setCellType(CellModel.CELL_TYPE_LABEL);
+						control.setCellDataType(CellModel.CELL_DATA_TYPE_STRING);
 						control.setText(cell.toString());
 						excelForm.addCell(i+1, j+1, control);
 					}
@@ -156,6 +166,112 @@ public class ExcelReadService {
 		}
 		return excelForm;
 	}
+	
+	//
+	public List readDataCellsFromTableModelGroup(Document doc, String tableModelGroupID){
+		//
+		List<TableModel> list = (List<TableModel>) tableModelService.getAllTableModelsByTableGroupModel(tableModelGroupID);
+		for(int i = 0; i < list.size(); i++){
+			
+		}
+		
+		return null;
+	}
+	
+	/*
+	 * Read the sheet, return the model & basic format errors, and the CellData;
+	 * (Basic Validate: Template Consistancy & Cell DataType Validation)
+	 * @Parm:Document
+	 *       TableModel
+	 * @Return:ValidatorSheetErrors
+	 * @Author:Jason.Zan
+	 * @Date:2013.11.24
+	 * 
+	 */
+	private ValidatorSheetErrors readDataCellsFromTableModel(Document doc,TableModel tableModel){
+		InputStream is;
+		XSSFWorkbook wb;
+		XSSFSheet sheet;
+		int excelSheetID = tableModel.getSheetID();
+		String excelSheetName = tableModel.getSheetName();
+		HashMap<String, CellData> cellsValue = new HashMap<String, CellData>();
+		List<ValidatorError> modelErrors = new ArrayList<ValidatorError> ();
+		List<ValidatorError> formatErrors = new ArrayList<ValidatorError> ();
+		List<CellData> cellDataList = new ArrayList<CellData> ();
+		// get the cells for data abstraction
+		try {
+			is = doc.getContentStream().getStream();
+			wb = new XSSFWorkbook(is);
+			sheet = wb.getSheetAt(excelSheetID);
+			//1. validate for the cells of "LABEL","DATA", "PARM" type &
+			List<CellModel> cellsForValue = cellModelService.getAllCellModelsByTableModel(tableModel.getId());// get all cells		
+			int cellCount = cellsForValue.size();
+			XSSFRow excelRow = null;
+			
+			for (int i = 0; i < cellCount; i++){
+				CellModel cellModel = cellsForValue.get(i); //CellModel instance
+				int row = cellModel.getRow();
+				int column = cellModel.getCol();
+				int cellType = cellModel.getType();
+				int cellDataType = cellModel.getDataType();
+				//
+				excelRow = sheet.getRow(row);
+				Cell cell = excelRow.getCell(column);
+				if (cellType == CellModel.CELL_TYPE_LABEL){
+					// 1. check equals (model check)
+					if ( !cellModel.getLabel().equals(cell.getStringCellValue()) ){
+						modelErrors.add(new ValidatorError("Cell-[row:"+row+",column:"+column+"] isn't consistent.",ValidatorError.LEVEL_ERROR));
+					}
+				}else if(cellType == CellModel.CELL_TYPE_DATA){
+					CellData cellData = new CellData(); //The cellData for the corresponding cellModel.
+					// 2. check value type
+					String value = cell.toString();
+					if (cellDataType == CellModel.CELL_DATA_TYPE_NUMERIC ){//for Numeric cell
+						//validate
+						if (cell.getCellType() != Cell.CELL_TYPE_NUMERIC){
+							formatErrors.add(new ValidatorError("Cell-[row:"+row+",column:"+column+"] isn't numeric type.",ValidatorError.LEVEL_ERROR));
+						}else{
+							cellData.setDataDouble(Double.parseDouble(value));
+						}
+					}else if (cell.getCellType() == CellModel.CELL_DATA_TYPE_STRING){//for String cell
+						cellData.setDataText(value);
+						//validate? -- no need for String type
+						//if (cell.getCellType() != Cell.CELL_TYPE_STRING){
+						//	formatErrors.add(new ValidatorError("Cell-[row:"+row+",column:"+column+"] isn't  type.",ValidatorError.LEVEL_ERROR));
+						//}
+					}else {
+						cellData.setDataText(value);
+					}
+					// add the cellData into result list
+					cellData.setCol(column);
+					cellData.setRow(row);
+					cellData.setType(cellDataType);
+					cellDataList.add(cellData);
+				}else if(cellType == CellModel.CELL_TYPE_PARM){
+					// 3. check parm type
+					// ignore....
+				}else if(cellType == CellModel.CELL_TYPE_BLANK){
+					// 4. check if it is blank
+					// ignore....
+				}else{
+					
+				}
+				
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//return errors
+		ValidatorSheetErrors validatorSheetErrors = new ValidatorSheetErrors();
+		validatorSheetErrors.setSheetID(tableModel.getSheetID());
+		validatorSheetErrors.setSheetName(tableModel.getSheetName());
+		validatorSheetErrors.setModelErrors(modelErrors);
+		validatorSheetErrors.setFormatErrors(formatErrors);
+		return validatorSheetErrors;
+	}
+	
+	
 	
 	/*
 	 * return all MergedRange Cell of a sheet into list<SpanCell>

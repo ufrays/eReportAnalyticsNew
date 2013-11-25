@@ -81,6 +81,7 @@ public class TableGroupModelService {
 	            cellModel.setLabel(cellControl.getText());
 	            cellModel.setRowspan(cellControl.getRowspan());
 	            cellModel.setType(cellControl.getCellType());
+	            cellModel.setDataType(cellControl.getCellDataType());
 	            cellModel.setTableModel(tableModel);
 	            listCellModel.add(cellModel);
 	            System.out.println("Data-Cell:"+cellModel.getKey()+"-value:"+cellModel.getLabel());

@@ -27,6 +27,10 @@ public class TableData {
 	@Basic
 	private Integer reportMode;
 	@Basic
+	private long TableModelID;
+	@Basic
+	private String uploadedDocmentID;
+	@Basic
 	private Integer reportOrgnizationID;
 	@OneToMany(mappedBy="tableData")
 	private Collection<CellData> cellData;
@@ -101,6 +105,22 @@ public class TableData {
 
 	public void setCellData(Collection<CellData> cellData) {
 		this.cellData = cellData;
+	}
+
+	public long getTableModelID() {
+		return TableModelID;
+	}
+
+	public void setTableModelID(long tableModelID) {
+		TableModelID = tableModelID;
+	}
+
+	public String getUploadedDocmentID() {
+		return uploadedDocmentID;
+	}
+
+	public void setUploadedDocmentID(String uploadedDocmentID) {
+		this.uploadedDocmentID = uploadedDocmentID;
 	}
 
 }

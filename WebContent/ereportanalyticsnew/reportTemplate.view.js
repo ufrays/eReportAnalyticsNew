@@ -15,11 +15,18 @@ sap.ui.jsview("ereportanalyticsnew.reportTemplate", {
 	createContent : function(oController) {
 
 		// Create the button 
+		// Button - Detail
+		var oBtn_Detail =new sap.ui.commons.Button({
+			text : "Detail",enabled:true,
+			press : function() {
+				 //oController.ReportTemplateDetail(); 
+			}
+		});
 		// Button - New
 		var oBtn_New =new sap.ui.commons.Button({
 			text : "New",enabled:true,
 			press : function() {
-				 oController.createReportTemplate(); 
+				oController.createReportTemplate(); 
 			}
 		});
 		// Button - Delete
@@ -34,9 +41,8 @@ sap.ui.jsview("ereportanalyticsnew.reportTemplate", {
 			visibleRowCount : 10,
 			firstVisibleRow : 3,
 			selectionMode : sap.ui.table.SelectionMode.Single,
-			
 			toolbar: new sap.ui.commons.Toolbar({
-							items : [oBtn_New, oBtn_Delete]
+							items : [oBtn_Detail, oBtn_New, oBtn_Delete]
 					}) 
 		}); 
 		//oBtn_New.attachPress(function(oEvent){oController.detailApprove(oTable.getModel());});

@@ -2,12 +2,13 @@ package org.sap.era.persistence;
 
 import java.util.Date;
 import java.util.List;
-
+import org.sap.era.main.*;
 import javax.persistence.*;
 
 import static javax.persistence.TemporalType.DATE;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.sap.era.persistence.TableModel;
 import java.util.Collection;
 import static javax.persistence.GenerationType.AUTO;
@@ -55,6 +56,7 @@ public class TableGroupModel {
 	public void setName(String name) {
 		this.name = name;
 	}
+	@JsonSerialize(using = CustomDateSerializer.class)  
 	public Date getCreatedOn() {
 		return createdOn;
 	}

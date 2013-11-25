@@ -1,5 +1,7 @@
 package org.sap.era.service.excel;
 
+import org.sap.era.persistence.CellModel;
+
 public class LabelControl extends Control {
 	//
 	public LabelControl(String text, int colspan, int rowspan, boolean merge,
@@ -13,7 +15,7 @@ public class LabelControl extends Control {
 
 	public LabelControl(String text) {
 		//
-		super.cellType = super.CONTROL_TYPE_INPUT_TEXT;
+		super.cellType = CellModel.CELL_TYPE_DATA;
 		super.text = text;
 		super.rowspan = 1;
 		super.colspan = 1;

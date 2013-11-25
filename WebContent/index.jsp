@@ -17,7 +17,7 @@
 				view.placeAt("content");
 		</script>
 
-	</head>
+	</head> 
 	<body class="sapUiBody" role="application">
 		<div id="content"></div>
 	</body>

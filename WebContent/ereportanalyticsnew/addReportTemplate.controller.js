@@ -8,34 +8,34 @@ sap.ui.controller("ereportanalyticsnew.addReportTemplate", {
 	onInit: function() {
 		var model = new sap.ui.model.json.JSONModel();     	   
 	    this.getView().setModel(model);	
-	    
-	    
+	    var oModel = this.getView().getModel();
+	    oModel.getData().newTemplate = {};
 	    
 	},
 
-	refreshForm: function() {
-		
-		
-		
-	},
 	
-	uploadTemplate:function(){
+	
+	
+	saveTemplate:function(){
 		var _this = this;
 		var oModel = _this.getView().getModel();
+		var newTemplate = oModel.getProperty("/newTemplate");
+		console.log(JSON.stringify(newTemplate));
 		jQuery.ajax({
-			url : "uploadReportTemplate.do",
-			type : 'POST',
-			dataType:"json",
+			url : "saveReportTemplate.do",
+			data : newTemplate,
+			type : 'GET',
+			dataType:"text",
 			success : function(data) {
-				oModel.getData().newTemplate = data;
-			    console.log(data);
+				sap.ui.commons.MessageBox.show(data, "SUCCESS", "Save Success");
+				sap.ui.getCore().getControl("myShell").setContent(sap.ui.getCore().getControl("idReportTemplate"));
+				sap.ui.getCore().getControl("idReportTemplate").getController().getReportTemplateList();
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
 				// TODO improve error handling
-				sap.ui.commons.MessageBox.alert("Failed to retrieve data: " + textStatus+ "\n" + errorThrown);
+				sap.ui.commons.MessageBox.alert("Could not create report template: " + textStatus);
 			}
 		});
-		
 		
 		
 	}

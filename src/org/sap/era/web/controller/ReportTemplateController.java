@@ -40,7 +40,7 @@ public class ReportTemplateController {
 	
 	@RequestMapping(value = "/uploadReportTemplate.do", method=RequestMethod.POST)
 	@ResponseBody
-	public TableGroupModel uploadReportTemplate(HttpServletRequest request) throws IOException{
+	public String uploadReportTemplate(HttpServletRequest request) throws IOException{
 		
 		TableGroupModel tgm = new TableGroupModel();
 		String realPathOfApp = request.getServletContext().getRealPath("");  
@@ -51,10 +51,10 @@ public class ReportTemplateController {
 		Document doc = cmis.addDocument(file);  
 		file.delete(); 
 		tgm.setModelPath(doc.getId());
-		return tgm;
+		return doc.getId();
 	}
 	
-	@RequestMapping(value = "/saveReportTemplate", method=RequestMethod.POST)
+	@RequestMapping(value = "/saveReportTemplate", method=RequestMethod.GET)
 	@ResponseBody
 	public String saveReportTemplate(TableGroupModel tgm) throws IOException,ParseException{
 		CmisHelper cmis = new CmisHelper();  
@@ -62,9 +62,8 @@ public class ReportTemplateController {
 		String docID = tgm.getModelPath();
 		Document doc = cmis.getDocumentById(docID);
 		InputStream is = doc.getContentStream().getStream();
-		FileInputStream fis = (FileInputStream)is;
 		//
-		XSSFWorkbook wb = new XSSFWorkbook(fis);
+		XSSFWorkbook wb = new XSSFWorkbook(is);
 		listExcelForm = ExcelReadService.getAllExcelForm(wb);
 		tgm.setModelPath(doc.getId());
 		tgm.setCreatedBy( 1);
@@ -73,6 +72,19 @@ public class ReportTemplateController {
 		//tgm.setTableModel(tableModel)
 		tableGroupModelService.addTableGroupModel(tgm,listExcelForm);
 		return "The report template was saved!";
+	}
+	
+	@RequestMapping(value = "/getReportTemplateList", method=RequestMethod.GET)
+	@ResponseBody
+	public List<TableGroupModel> getReportTemplateList(){
+		List<TableGroupModel> list = tableGroupModelService.getAllTableGroupModels();
+		return list;
+		
+	}
+	
+	@RequestMapping(value = "/download/TemplateFile", method = RequestMethod.GET)
+	public void downloadTemplateFile(String docID){
+		
 	}
 	
 	
