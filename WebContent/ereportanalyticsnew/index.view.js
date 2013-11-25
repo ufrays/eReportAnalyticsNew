@@ -18,6 +18,7 @@ sap.ui.jsview("ereportanalyticsnew.index", {
 		var oBusinessUser = sap.ui.view({id:"idBusinessUser", viewName:"ereportanalyticsnew.businessuser", type:sap.ui.core.mvc.ViewType.JS});
 		//Report Template
 		var oReportTemplate = sap.ui.view({id:"idReportTemplate", viewName:"ereportanalyticsnew.reportTemplate", type:sap.ui.core.mvc.ViewType.JS});
+		var oDisplayMyReport = sap.ui.view({id:"idDisplayMyReport", viewName:"ereportanalyticsnew.displayMyReport", type:sap.ui.core.mvc.ViewType.JS});
 
 		var oShell = new sap.ui.ux3.Shell("myShell", {
 			appTitle: "E-Report Collection & Analytics",
@@ -60,6 +61,9 @@ sap.ui.jsview("ereportanalyticsnew.index", {
 				case "WI_3_2":
 					break;
 				case "WI_3_3":
+					break;
+				case "WI_1_1" :
+					oShell.setContent(oDisplayMyReport);
 					break;
 				default:
 					break;
