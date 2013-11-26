@@ -16,14 +16,29 @@ public class BaseDAO<TEntity> {
 	@Resource(name = "entityManagerFactory")
 	private EntityManagerFactory entityManagerFactory;
 
+	/**
+	 * 
+	 * @author I071053
+	 * @return
+	 */
 	public EntityManagerFactory getEntityManagerFactory() {
 		return entityManagerFactory;
 	}
 
+	/**
+	 * 
+	 * @author I071053
+	 * @param entityManagerFactory
+	 */
 	public void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
 		this.entityManagerFactory = entityManagerFactory;
 	}
 
+	/**
+	 * @author I071053
+	 * @param entity
+	 * @return
+	 */
 	public TEntity merge(final TEntity entity) {
 		return new TransactionWrapper<TEntity>() {
 			@Override
@@ -33,7 +48,16 @@ public class BaseDAO<TEntity> {
 		}.run();
 	}
 
+	/**
+	 * @author I071053
+	 * @param entities
+	 * @return
+	 */
 	public <TCollection extends List<TEntity>> TCollection batchMerge(final TCollection entities) {
+		if (entities == null || entities.size() == 0) {
+			// TODO: Throw exception if necessary
+			return entities;
+		}
 		return new TransactionWrapper<TCollection>() {
 			@Override
 			protected TCollection runAsTransactional(EntityManager em) {
@@ -48,6 +72,12 @@ public class BaseDAO<TEntity> {
 		}.run();
 	}
 
+	/**
+	 * 
+	 * @author I071053
+	 * 
+	 * @param <TResult>
+	 */
 	protected abstract class TransactionWrapper<TResult> {
 
 		@Autowired

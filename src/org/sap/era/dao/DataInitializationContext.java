@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.sap.era.persistence.AssignedOrgnazition;
@@ -27,7 +26,7 @@ public class DataInitializationContext {
 	@Resource(name = "personDAO")
 	private PersonDAO personDao;
 
-	@PostConstruct
+	// @PostConstruct
 	void initial() {
 		initialOrg();
 		initialPerson();
@@ -94,5 +93,23 @@ public class DataInitializationContext {
 
 			}
 		}
+	}
+
+	private void createSubOrg(Orgnazition parentOrg) {
+		int creatingSize = R_INST.nextInt(3) + 3;
+		ArrayList<Orgnazition> orgs = new ArrayList<Orgnazition>(creatingSize);
+		for (int j = 0; j < creatingSize; j++) {
+			Orgnazition subOrg = new Orgnazition();
+			subOrg.setName("Org_level_" + j);
+			subOrg.setParentName("#");
+			subOrg.setTypeID("0");
+			subOrg.setType("0");
+			subOrg.setReportDirect("1");
+			subOrg.setOrgnazitionLevel(0);
+			subOrg.setDescription("Demo Head Quater");
+			subOrg.setParentOrgnazition(parentOrg);
+			orgs.add(subOrg);
+		}
+		orgDao.batchMerge(orgs);
 	}
 }
