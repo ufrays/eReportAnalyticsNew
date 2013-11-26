@@ -9,12 +9,43 @@ sap.ui.controller("ereportanalyticsnew.addReportTemplate", {
 		var model = new sap.ui.model.json.JSONModel();     	   
 	    this.getView().setModel(model);	
 	    var oModel = this.getView().getModel();
-	    oModel.getData().newTemplate = {};
+	    oModel.getData().newTemplate = {"status":"New","flag":0};
 	    
 	},
+	
+	onEditOrViewInit: function(editOrView,reportID) {
+		var model = new sap.ui.model.json.JSONModel();     	   
+	    this.getView().setModel(model);	
+	    var oModel = this.getView().getModel();
+		jQuery.ajax({
+			url : "getReportTemplateByID.do?groupID="+reportID,
+			type : 'GET',
+			dataType:"json",
+			success : function(data) {
 
-	
-	
+			    console.log("data:"+data);
+			    console.log("newTemplate-data:"+oModel.getData().newTemplate);
+			    //oModel.getData().newTemplate = data;
+			    oModel.setData({newTemplate: data});
+			    console.log("newTemplate-data2:"+oModel.getData().newTemplate);
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				// TODO improve error handling
+				sap.ui.commons.MessageBox.alert("Failed to retrieve data: " + textStatus+ "\n" + errorThrown);
+			}
+		});
+		if (editOrView == "New"){
+			sap.ui.getCore().getControl("addReportTemplate.flag").setEnabled(false);
+			sap.ui.getCore().getControl("addReportTemplate.upload").setEnabled(false);
+		}else{
+			sap.ui.getCore().getControl("addReportTemplate.flag").setEnabled(false);
+			sap.ui.getCore().getControl("addReportTemplate.upload").setEnabled(false);
+			sap.ui.getCore().getControl("addReportTemplate.category").setEnabled(false);
+			sap.ui.getCore().getControl("addReportTemplate.name").setEnabled(false);
+			sap.ui.getCore().getControl("addReportTemplate.description").setEnabled(false);
+		}
+		
+	},
 	
 	saveTemplate:function(){
 		var _this = this;
@@ -36,9 +67,15 @@ sap.ui.controller("ereportanalyticsnew.addReportTemplate", {
 				sap.ui.commons.MessageBox.alert("Could not create report template: " + textStatus);
 			}
 		});
-		
-		
+	},
+	
+	cancel:function(){
+		var oModel = this.getView().getModel();
+		oModel.getData().newTemplate = {};
+		sap.ui.getCore().getControl("myShell").setContent(sap.ui.getCore().getControl("idReportTemplate"));
+		sap.ui.getCore().getControl("idReportTemplate").getController().getReportTemplateList();
 	}
+	
 	
 /**
 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered

@@ -30,9 +30,55 @@ sap.ui.controller("ereportanalyticsnew.reportTemplate", {
 	},
 
     createReportTemplate: function(){
-		var oCreateReportTemplate = sap.ui.view({viewName:"ereportanalyticsnew.addReportTemplate", type:sap.ui.core.mvc.ViewType.JS});
+    	sap.ui.getCore().getControl("myShell").destroyContent();
+    	var oCreateReportTemplate = sap.ui.view({viewName:"ereportanalyticsnew.addReportTemplate", type:sap.ui.core.mvc.ViewType.JS});
     	sap.ui.getCore().getControl("myShell").setContent(oCreateReportTemplate);
-    }
+    },
+    
+    editReportTemplate: function(oTable){
+		var oModel = oTable.getModel();
+		var selRowContext = oTable.getContextByIndex(oTable.getSelectedIndex());
+		var selectedID = oModel.getProperty("id", selRowContext);
+		var selectedStatus = oModel.getProperty("status", selRowContext);
+		sap.ui.getCore().getControl("myShell").destroyContent();
+		var oReportTemplate = sap.ui.view({viewName:"ereportanalyticsnew.addReportTemplate", type:sap.ui.core.mvc.ViewType.JS});
+    	sap.ui.getCore().getControl("myShell").setContent(oReportTemplate);
+    	oReportTemplate.getController().onEditOrViewInit(selectedStatus,selectedID);
+    },
+    
+    deleteReportTemplate: function(oTable){
+    	
+    },
+    
+    releaseReportTemplate: function(oTable){
+    	
+    },
+	
+	tableRowSelected: function(oTable) {
+		var oModel = oTable.getModel();
+		var selRowContext = oTable.getContextByIndex(oTable.getSelectedIndex());
+		var selectedStatus = oModel.getProperty("status", selRowContext);
+		console.log(selectedStatus);
+		if(oTable.getSelectedIndex() != -1){
+			if (selectedStatus == "New"){
+				sap.ui.getCore().getControl("reportTemplate.B0").setEnabled(true);
+				sap.ui.getCore().getControl("reportTemplate.B1").setEnabled(true);
+				sap.ui.getCore().getControl("reportTemplate.B3").setEnabled(true);
+			}else{
+				sap.ui.getCore().getControl("reportTemplate.B0").setEnabled(true);
+				sap.ui.getCore().getControl("reportTemplate.B1").setEnabled(false);
+				sap.ui.getCore().getControl("reportTemplate.B3").setEnabled(false);
+			}
+		}
+		else
+		{
+			sap.ui.getCore().getControl("reportTemplate.B0").setEnabled(true);
+			sap.ui.getCore().getControl("reportTemplate.B1").setEnabled(false);
+			sap.ui.getCore().getControl("reportTemplate.B3").setEnabled(false);
+		}
+		
+	},
+	
 	
 /**
 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered

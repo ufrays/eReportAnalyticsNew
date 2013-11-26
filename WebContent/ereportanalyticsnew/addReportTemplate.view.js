@@ -21,17 +21,18 @@ sap.ui.jsview("ereportanalyticsnew.addReportTemplate", {
 			var oTabStrip = oEvent.oSource;
 			oTabStrip.closeTab(oEvent.getParameter("index"));
 		});
-
 		// 1. tab: general data (use createTab)
 		var oTab1 = new sap.ui.commons.Tab();
-		oTab1.setTooltip("New Report Template");
-		oTab1.setTitle(new sap.ui.commons.Title({text:"New Report Template",icon:"images/address.jpg"}));
+		oTab1.setTooltip("General");
+		oTab1.setTitle(new sap.ui.commons.Title({text:"General",icon:"images/address.jpg"}));
 		
 		var oLayout1 = new sap.ui.commons.layout.MatrixLayout({columns: 2, width: "100%"});
 		oLayout1.bindElement("/newTemplate");
 		oLayout1.setWidths(['150px']);
+		// 1.0 Template Type
+		
 		// 1.1 Template Type
-		var  oRBtn = new sap.ui.commons.RadioButtonGroup({
+		var  oRBtn = new sap.ui.commons.RadioButtonGroup("addReportTemplate.flag",{
 			 columns : 2,
 			 selectedIndex : "{flag}",
 				items: [new sap.ui.core.Item({text: "Column-Fixed Report"}),
@@ -41,7 +42,7 @@ sap.ui.jsview("ereportanalyticsnew.addReportTemplate", {
 		oLayout1.createRow(oLabel, oRBtn);
 		// 1.2 Template File
 		var oTF = new sap.ui.commons.TextField({editable: true, value: 'modelPath', width: '200px'});
-		var oFileUploader = new sap.ui.commons.FileUploader({
+		var oFileUploader = new sap.ui.commons.FileUploader("addReportTemplate.upload",{
 			name: "upload",
 			uploadOnChange: true,
 			uploadUrl: "uploadReportTemplate.do",
@@ -59,12 +60,20 @@ sap.ui.jsview("ereportanalyticsnew.addReportTemplate", {
 		});
 		oLabel = new sap.ui.commons.Label({text: 'Template File', labelFor: oFileUploader});
 		oLayout1.createRow(oLabel, oFileUploader);
+		//selectedKey
+		oTF = new sap.ui.commons.DropdownBox("addReportTemplate.category",{
+			items: [new sap.ui.core.ListItem({text: "Inventory", key: "1"}),
+			        new sap.ui.core.ListItem({text: "Sales", key: "2"}),
+			        new sap.ui.core.ListItem({text: "Others", key: "3"})]
+			}).bindProperty("selectedKey","category");
+		oLabel = new sap.ui.commons.Label({text: 'Template Category', labelFor: oTF});
+		oLayout1.createRow(oLabel, oTF);
 		// 1.3 Template Name
-		oTF = new sap.ui.commons.TextField({tooltip: 'Template Name', editable: true, value: '{name}', width: '400px'});
+		oTF = new sap.ui.commons.TextField("addReportTemplate.name",{tooltip: 'Template Name', editable: true, value: '{name}', width: '400px'});
 		oLabel = new sap.ui.commons.Label({text: 'Template Name', labelFor: oTF});
 		oLayout1.createRow(oLabel, oTF);
 		// 1.4 Template Description
-		oInput = new sap.ui.commons.TextArea({value:"{description}",cols : 100, row: 4});
+		oInput = new sap.ui.commons.TextArea("addReportTemplate.description",{value:"{description}",cols : 100, row: 4});
 		oInput.setRows(10);
 		oLabel = new sap.ui.commons.Label({text: 'Description', labelFor: oInput});
 		oLayout1.createRow(oLabel, oInput);
@@ -73,32 +82,55 @@ sap.ui.jsview("ereportanalyticsnew.addReportTemplate", {
 		oLayout1.createRow(oCell);
 		// 1.5 Buttons - Save & Cancel
 		var oBtn1 = new sap.ui.commons.Button({text: "Save",
-			tooltip: "",
 			press: function() {
 				//oFileUploader.upload();
+				oController.saveTemplate();
+			},
+			layoutData: new sap.ui.commons.form.GridElementData({hCells: "1"})});
+		var oBtn3 = new sap.ui.commons.Button({text: "Save and Close",
+			press: function() {
+				oController.saveTemplate();
+			},
+			layoutData: new sap.ui.commons.form.GridElementData({hCells: "1"})});
+		var oBtn4 = new sap.ui.commons.Button({text: "Release",
+			press: function() {
 				oController.saveTemplate();
 			},
 			layoutData: new sap.ui.commons.form.GridElementData({hCells: "1"})});
 		var oBtn2 = new sap.ui.commons.Button({text: "Cancel",
 			tooltip: "",
 			press: function() {oController.cancel();}});
-		oCell = new sap.ui.commons.layout.MatrixLayoutCell({content: [oBtn1, oBtn2],colSpan : 2});
-		oLayout1.createRow(oCell);
 		
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({content: [oBtn1, oBtn3,oBtn4, oBtn2],colSpan : 4});
+		oLayout1.createRow(oCell);
 		//oTabStrip1.createTab("New Report Template",oLayout1);
 		oTab1.addContent(oLayout1);
 		oTabStrip1.addTab(oTab1);
-		
 		// 2. tab: address data (use separate tab element)
 		oTab2 = new sap.ui.commons.Tab();
-		oTab2.setTooltip("Template Detail");
-		oTab2.setTitle(new sap.ui.commons.Title({text:"Template Preview",icon:"images/doc_excel_table.png"}));
-		var oLayout2 = new sap.ui.commons.layout.MatrixLayout({columns: 2, width: "100%"});
-		oLayout2.setWidths(['150px']);
-		
-	    // 2.1 create the HTML control for tab2
+		oTab2.setTooltip("Detail");
+		oTab2.setTitle(new sap.ui.commons.Title({text:"Content Preview",icon:"images/doc_excel_table.png"}));
+		var oLayout2 = new sap.ui.commons.layout.MatrixLayout({columns: 2, width:"100%"});
+		oLayout2.setWidths(['100%']);
+		// 2.1 Template for Design
+		oTF = new sap.ui.commons.Link({
+			text: "Download",
+			press: function() {alert('download');}});
+		oLabel = new sap.ui.commons.Label({text: 'Template for Design', labelFor: oTF});
+		oLayout2.createRow(oLabel, oTF);
+		// 2.2 Template for Report
+		oTF = new sap.ui.commons.Link({
+			text: "Download",
+			press: function() {alert('download');}});
+		oLabel = new sap.ui.commons.Label({text: 'Tempate for Report', labelFor: oTF});
+		oLayout2.createRow(oLabel, oTF);
+		// 2.3 Sheet Preview
+		oTF = new sap.ui.commons.TextField({tooltip: 'Template Name', editable: true, value: '{name}', width: '400px'});
+		oLabel = new sap.ui.commons.Label({text: 'Sheet Preview', labelFor: oTF});
+		oLayout2.createRow(oLabel, oTF);
+	    // 2.4 create the HTML control for tab2
         var html1 = new sap.ui.core.HTML({
-        	    content:"<iframe src='/eReportAnalyticsNew/pages/Login.jsp' width='100%'></iframe>",
+        	    content:"<iframe src='/eReportAnalyticsGit/pages/reportAdmin/ReportTemplatePreview.jsp?groupID=1' height='600px' width='100%' scrolling='yes'/>",
                 preferDOM : false,                      
                 // use the afterRendering event for 2 purposes
                 afterRendering : function(e) {
@@ -106,10 +138,16 @@ sap.ui.jsview("ereportanalyticsnew.addReportTemplate", {
                 }
         });
 		oLayout2.createRow(html1);
-		
 		oTab2.addContent(oLayout2);
 		oTabStrip1.addTab(oTab2);
-		
+		oTabStrip1.attachSelect(function(oEvent){
+			console.log(oTabStrip1.getSelectedIndex());
+			if (oTabStrip1.getSelectedIndex() == 0){
+				oTabStrip1.setHeight("350px");
+			}else{
+				oTabStrip1.setHeight("750px");
+			}
+  		});
 		//
 		var oModel = this.getModel();
 		//oTab1.setModel(oModel, "newTemplate");

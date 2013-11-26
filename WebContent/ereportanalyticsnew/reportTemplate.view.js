@@ -1,9 +1,6 @@
 sap.ui.jsview("ereportanalyticsnew.reportTemplate", {
 
-	/** Specifies the Controller belonging to this View. 
-	* In the case that it is not implemented, or that "null" is returned, this View does not have a Controller.
-	* @memberOf ereportanalyticsnew.reportTemplate
-	*/ 
+
 	getControllerName : function() {
 		return "ereportanalyticsnew.reportTemplate";
 	},
@@ -16,21 +13,28 @@ sap.ui.jsview("ereportanalyticsnew.reportTemplate", {
 
 		// Create the button 
 		// Button - Detail
-		var oBtn_Detail =new sap.ui.commons.Button({
-			text : "Detail",enabled:true,
+		var oBtn_Edit =new sap.ui.commons.Button("reportTemplate.B0",{
+			text : "Edit",enabled:false,
 			press : function() {
-				 //oController.ReportTemplateDetail(); 
+				 oController.editReportTemplate(oTable); 
+			}
+		});
+		// Button - Delete
+		var oBtn_Release =new sap.ui.commons.Button("reportTemplate.B1",{
+			text : "Release",enabled:false,
+			press : function() {
+				
 			}
 		});
 		// Button - New
-		var oBtn_New =new sap.ui.commons.Button({
+		var oBtn_New =new sap.ui.commons.Button("reportTemplate.B2",{
 			text : "New",enabled:true,
 			press : function() {
 				oController.createReportTemplate(); 
 			}
 		});
 		// Button - Delete
-		var oBtn_Delete =new sap.ui.commons.Button({
+		var oBtn_Delete =new sap.ui.commons.Button("reportTemplate.B3",{
 			text : "Delete",enabled:false,
 			press : function() {
 				
@@ -42,7 +46,7 @@ sap.ui.jsview("ereportanalyticsnew.reportTemplate", {
 			firstVisibleRow : 3,
 			selectionMode : sap.ui.table.SelectionMode.Single,
 			toolbar: new sap.ui.commons.Toolbar({
-							items : [oBtn_Detail, oBtn_New, oBtn_Delete]
+							items : [oBtn_Edit,  oBtn_New, oBtn_Delete, oBtn_Release]
 					}) 
 		}); 
 		//oBtn_New.attachPress(function(oEvent){oController.detailApprove(oTable.getModel());});
@@ -68,11 +72,31 @@ sap.ui.jsview("ereportanalyticsnew.reportTemplate", {
 		}));
 		oTable.addColumn(new sap.ui.table.Column({
 			label : new sap.ui.commons.Label({
+				text : "Model Type"
+			}),
+			template : new sap.ui.commons.TextField().bindProperty("value","flag"),
+			sortProperty : "flag",
+			filterProperty : "flag"
+		}));
+		oTable.addColumn(new sap.ui.table.Column({
+			label : new sap.ui.commons.Label({
+				text : "Template Category"
+			}),
+			template : new sap.ui.commons.TextField().bindProperty("value","category"),
+			sortProperty : "category",
+			filterProperty : "category"
+		}));
+		oTable.addColumn(new sap.ui.table.Column({
+			label : new sap.ui.commons.Label({
+				text : "Status"
+			}),
+			template : new sap.ui.commons.TextField().bindProperty("value","status"),
+		}));
+		oTable.addColumn(new sap.ui.table.Column({
+			label : new sap.ui.commons.Label({
 				text : "Created By"
 			}),
-			template : new sap.ui.commons.TextField().bindProperty("value","createdBy"),
-			sortProperty : "createdBy",
-			filterProperty : "createdBy"
+			template : new sap.ui.commons.TextField().bindProperty("value","createdBy")
 		}));
 		oTable.addColumn(new sap.ui.table.Column({
 			label : new sap.ui.commons.Label({
@@ -83,7 +107,7 @@ sap.ui.jsview("ereportanalyticsnew.reportTemplate", {
 		oTable.attachRowSelectionChange(function(oEvent){
   			//oEvent.preventDefault();
   			console.log(oTable.getSelectedIndex());
-  			//oController.requestSelected(oTable.getModel());
+  			oController.tableRowSelected(oTable);
   		});
 		// Create a model and bind the table rows to this model
 		oController.getReportTemplateList();
