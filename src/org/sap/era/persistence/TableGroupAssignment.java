@@ -7,10 +7,8 @@ import org.sap.era.persistence.TableGroupModel;
 
 @Entity
 @Table(name = "T_TABLEGROUPASSIGNMENT")
-@NamedQueries({
-	@NamedQuery(name = "AllTableGroupAssignments", query = "select tga from TableGroupAssignment tga"),
-	@NamedQuery(name = "GetTableGroupAssignmentByID", query = "select tga from TableGroupAssignment tga where tga.id = :assignmentID")
-})
+@NamedQueries({ @NamedQuery(name = "AllTableGroupAssignments", query = "select tga from TableGroupAssignment tga"),
+		@NamedQuery(name = "GetTableGroupAssignmentByID", query = "select tga from TableGroupAssignment tga where tga.id = :assignmentID") })
 public class TableGroupAssignment {
 
 	@Id
@@ -59,8 +57,7 @@ public class TableGroupAssignment {
 		return assignedOrgnazition;
 	}
 
-	public void setAssignedOrgnazition(
-			List<AssignedOrgnazition> assignedOrgnazition) {
+	public void setAssignedOrgnazition(List<AssignedOrgnazition> assignedOrgnazition) {
 		this.assignedOrgnazition = assignedOrgnazition;
 	}
 

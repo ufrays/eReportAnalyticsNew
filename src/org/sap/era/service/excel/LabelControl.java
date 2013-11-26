@@ -2,8 +2,7 @@ package org.sap.era.service.excel;
 
 public class LabelControl extends Control {
 	//
-	public LabelControl(String text, int colspan, int rowspan, boolean merge,
-			int cellType) {
+	public LabelControl(String text, int colspan, int rowspan, boolean merge, int cellType) {
 		super.rowspan = rowspan;
 		super.colspan = colspan;
 		super.isMerge = merge;

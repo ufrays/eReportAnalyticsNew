@@ -17,14 +17,14 @@ public class CellModelService {
 	public void setCellModelDAO(CellModelDAO cellModelDAO) {
 		this.cellModelDAO = cellModelDAO;
 	}
-	
+
 	//
 	public List<CellModel> getAllCellModelsByTableModel(String tableModelID) {
-		
+
 		return this.cellModelDAO.getAllCellModelsByTableModel(tableModelID);
-		
+
 	}
-	
+
 	//
 	public void addCellModel(CellModel cellModel, int TableModelID) {
 		TableModel tableModel = new TableModel();
@@ -32,5 +32,5 @@ public class CellModelService {
 		cellModel.setTableModel(tableModel);
 		this.cellModelDAO.addCellModel(cellModel);
 	}
-	
+
 }

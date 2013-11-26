@@ -33,62 +33,60 @@ public class DocumentService {
 	InitialContext ctx;
 	EcmService ecmSvc;
 	Folder root;
-	
-	public DocumentService(){
+
+	public DocumentService() {
 		try {
 			openCmisSession = null;
 			ctx = new InitialContext();
 			ecmSvc = (EcmService) ctx.lookup(lookupName);
 			try {
-		        // connect to my repository
-		        openCmisSession = ecmSvc.connect(uniqueName, secretKey);
-		      }
-		      catch (CmisObjectNotFoundException e) {
-		        // repository does not exist, so try to create it
-		        RepositoryOptions options = new RepositoryOptions();
-		        options.setUniqueName(uniqueName);
-		        options.setRepositoryKey(secretKey);
-		        options.setVisibility(Visibility.PROTECTED);
-		        ecmSvc.createRepository(options);
-		        // should be created now, so connect to it
-		        openCmisSession = ecmSvc.connect(uniqueName, secretKey);
-		      }
+				// connect to my repository
+				openCmisSession = ecmSvc.connect(uniqueName, secretKey);
+			} catch (CmisObjectNotFoundException e) {
+				// repository does not exist, so try to create it
+				RepositoryOptions options = new RepositoryOptions();
+				options.setUniqueName(uniqueName);
+				options.setRepositoryKey(secretKey);
+				options.setVisibility(Visibility.PROTECTED);
+				ecmSvc.createRepository(options);
+				// should be created now, so connect to it
+				openCmisSession = ecmSvc.connect(uniqueName, secretKey);
+			}
 			root = openCmisSession.getRootFolder();
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	// create a new file in the root folder
-	public Document createNewDocument(String docName,String path) throws IOException{
+	public Document createNewDocument(String docName, String path) throws IOException {
 		Map<String, Object> properties = new HashMap<String, Object>();
-	    properties.put(PropertyIds.OBJECT_TYPE_ID, "cmis:document");
-	    properties.put(PropertyIds.NAME, docName);
-	    FileInputStream stream = new FileInputStream(path);
-	    long streamSize = (long)stream.available();
-	    ContentStream contentStream = openCmisSession.getObjectFactory()
-                .createContentStream("HelloWorld.txt",streamSize,"text/plain; charset=UTF-8", stream);
-	    Document doc = root.createDocument(properties, contentStream, VersioningState.NONE);
-	    //doc.getId()
-	    
+		properties.put(PropertyIds.OBJECT_TYPE_ID, "cmis:document");
+		properties.put(PropertyIds.NAME, docName);
+		FileInputStream stream = new FileInputStream(path);
+		long streamSize = (long) stream.available();
+		ContentStream contentStream = openCmisSession.getObjectFactory().createContentStream("HelloWorld.txt", streamSize,
+				"text/plain; charset=UTF-8", stream);
+		Document doc = root.createDocument(properties, contentStream, VersioningState.NONE);
+		// doc.getId()
+
 		return doc;
 	}
-	
+
 	// find a file in the root folder
-	public Document getDocumentByID(String docID){
-		
+	public Document getDocumentByID(String docID) {
+
 		ItemIterable<CmisObject> children = root.getChildren();
 		Document doc = null;
 		for (CmisObject o : children) {
-			if (o.getId().equals(docID)){
-				doc = (Document)o;
+			if (o.getId().equals(docID)) {
+				doc = (Document) o;
 				break;
 			}
 		}
-		//doc.
+		// doc.
 		return doc;
 	}
-	
-	
+
 }

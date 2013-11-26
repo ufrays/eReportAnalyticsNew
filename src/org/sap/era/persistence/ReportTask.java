@@ -16,7 +16,7 @@ public class ReportTask {
 	private long orgizationID;
 
 	private long TableGroupModel;
-	
+
 	private String TableGroupModelName;
 
 	private long durationID;
@@ -34,17 +34,17 @@ public class ReportTask {
 	private long reportBy;
 	@Temporal(DATE)
 	private Date reportAt;
-	
+
 	private String reportByName;
-	
+
 	private String durationFlag;
-	
+
 	private String durationDepict;
-	
+
 	private String errorInformation;
-	
+
 	private String errorReason;
-	
+
 	private Integer passStatus;
 
 	public long getId() {
@@ -190,8 +190,5 @@ public class ReportTask {
 	public void setPassStatus(Integer passStatus) {
 		this.passStatus = passStatus;
 	}
-	
-	
-	
-	
+
 }

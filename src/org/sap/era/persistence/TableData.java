@@ -28,9 +28,9 @@ public class TableData {
 	private Integer reportMode;
 	@Basic
 	private Integer reportOrgnizationID;
-	@OneToMany(mappedBy="tableData")
+	@OneToMany(mappedBy = "tableData")
 	private Collection<CellData> cellData;
-	
+
 	public long getId() {
 		return id;
 	}

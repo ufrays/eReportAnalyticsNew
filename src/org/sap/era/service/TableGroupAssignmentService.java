@@ -14,29 +14,42 @@ public class TableGroupAssignmentService {
 		return tableGroupAssignmentDAO;
 	}
 
-	public void setTableGroupAssignmentDAO(
-			TableGroupAssignmentDAO tableGroupAssignmentDAO) {
+	public void setTableGroupAssignmentDAO(TableGroupAssignmentDAO tableGroupAssignmentDAO) {
 		this.tableGroupAssignmentDAO = tableGroupAssignmentDAO;
 	}
-	
-	//
-	public List<TableGroupAssignment> getAllTableGroupAssignments(){
+
+	/**
+	 * 
+	 * @return
+	 */
+	public List<TableGroupAssignment> getAllTableGroupAssignments() {
 		return tableGroupAssignmentDAO.getAllTableGroupAssignments();
 	}
-	
-	//
-	public TableGroupAssignment getTableGroupAssignmentByID(long ID){
+
+	/**
+	 * 
+	 * @param ID
+	 * @return
+	 */
+	public TableGroupAssignment getTableGroupAssignmentByID(long ID) {
 		return tableGroupAssignmentDAO.getTableGroupAssignmentByID(ID);
 	}
-	
-	//
-	public void addTableGroupAssignment(TableGroupAssignment tableGroupAssignment){
+
+	/**
+	 * 
+	 * @param tableGroupAssignment
+	 */
+	public void addTableGroupAssignment(TableGroupAssignment tableGroupAssignment) {
 		tableGroupAssignmentDAO.addTableGroupAssignment(tableGroupAssignment);
 	}
-	
-	//
-	public List<Orgnazition> getUnselectedOrgnazition(long tableGroupAssignmentID){
+
+	/**
+	 * 
+	 * @param tableGroupAssignmentID
+	 * @return
+	 */
+	public List<Orgnazition> getUnselectedOrgnazition(long tableGroupAssignmentID) {
 		return tableGroupAssignmentDAO.getUnselectedOrgnazition(tableGroupAssignmentID);
 	}
-	
+
 }

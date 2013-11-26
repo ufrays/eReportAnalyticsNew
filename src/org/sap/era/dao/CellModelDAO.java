@@ -17,16 +17,14 @@ public class CellModelDAO {
 		return entityManagerFactory;
 	}
 
-	public void setEntityManagerFactory(
-			EntityManagerFactory entityManagerFactory) {
+	public void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
 		this.entityManagerFactory = entityManagerFactory;
 	}
-	
-	
+
 	public List<CellModel> getAllCellModelsByTableModel(String tableModelID) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			Query query = em.createNamedQuery("AllCellModelsByTableModel",CellModel.class);
+			Query query = em.createNamedQuery("AllCellModelsByTableModel", CellModel.class);
 			query.setParameter("tableModelID", tableModelID);
 			List<CellModel> cellModelList = query.getResultList();
 			return cellModelList;
@@ -36,7 +34,7 @@ public class CellModelDAO {
 			}
 		}
 	}
-	
+
 	public void addCellModel(CellModel cellModel) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
@@ -49,5 +47,5 @@ public class CellModelDAO {
 			}
 		}
 	}
-	
+
 }

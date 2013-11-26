@@ -14,8 +14,8 @@ public class ExcelForm {
 	private String SheetName;
 	private int sheetID;
 	private long tableModelID;
-	
-	 public int getStartCol() {
+
+	public int getStartCol() {
 		return startCol;
 	}
 
@@ -23,12 +23,12 @@ public class ExcelForm {
 		this.startCol = startCol;
 	}
 
-	private Map<String,Control> cells = new HashMap<String,Control>();
-	 
-	 public void addCell(int row,int col,Control control){
-		 
-		 cells.put(String.valueOf(row).concat("-").concat(String.valueOf(col)), control); 
-	 }
+	private Map<String, Control> cells = new HashMap<String, Control>();
+
+	public void addCell(int row, int col, Control control) {
+
+		cells.put(String.valueOf(row).concat("-").concat(String.valueOf(col)), control);
+	}
 
 	public int getCols() {
 		return cols;
@@ -45,8 +45,8 @@ public class ExcelForm {
 	public void setRows(int rows) {
 		this.rows = rows;
 	}
-	
-	public Map getCells(){
+
+	public Map getCells() {
 		return cells;
 	}
 
@@ -85,5 +85,5 @@ public class ExcelForm {
 	public void setTableModelID(long tableModelID) {
 		this.tableModelID = tableModelID;
 	}
-	
+
 }

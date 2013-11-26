@@ -3,17 +3,17 @@ package org.sap.era.dto;
 public class PersonDTO {
 
 	private long id;
-	
+
 	private String name;
-	
+
 	private String firstName;
-	
+
 	private String lastName;
-	
+
 	private String password;
-	
+
 	private long orgnazitionId;
-	
+
 	private String orgnazitionName;
 
 	public long getId() {
@@ -71,7 +71,5 @@ public class PersonDTO {
 	public void setOrgnazitionName(String orgnazitionName) {
 		this.orgnazitionName = orgnazitionName;
 	}
-	
-	
-	
+
 }

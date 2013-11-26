@@ -15,16 +15,14 @@ public class TableGroupModelDAO {
 		return entityManagerFactory;
 	}
 
-	public void setEntityManagerFactory(
-			EntityManagerFactory entityManagerFactory) {
+	public void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
 		this.entityManagerFactory = entityManagerFactory;
 	}
-	
 
 	public List<TableGroupModel> getAllTableGroupModels() {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			Query query = em.createNamedQuery("AllTableGroupModels",TableGroupModel.class);
+			Query query = em.createNamedQuery("AllTableGroupModels", TableGroupModel.class);
 			List<TableGroupModel> tableGroupModelList = query.getResultList();
 			return tableGroupModelList;
 		} finally {
@@ -33,32 +31,32 @@ public class TableGroupModelDAO {
 			}
 		}
 	}
-	
+
 	public TableGroupModel getTableGroupModelByID(long groupID) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			Query query = em.createNamedQuery("GetTableGroupModelByID",TableGroupModel.class);
+			Query query = em.createNamedQuery("GetTableGroupModelByID", TableGroupModel.class);
 			query.setParameter("groupID", groupID);
 			List<TableGroupModel> tableGroupModelList = query.getResultList();
-			if(tableGroupModelList!= null && tableGroupModelList.size()>0){
+			if (tableGroupModelList != null && tableGroupModelList.size() > 0) {
 				return tableGroupModelList.get(0);
-			}else{
+			} else {
 				return null;
 			}
-			
+
 		} finally {
 			if (em != null) {
 				em.close();
 			}
 		}
 	}
-	
+
 	public void addTableGroupModel(TableGroupModel tableGroupModel) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
 			em.getTransaction().begin();
 			em.persist(tableGroupModel);
-			
+
 			em.getTransaction().commit();
 		} finally {
 			if (em != null) {

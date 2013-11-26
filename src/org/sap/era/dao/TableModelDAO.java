@@ -15,16 +15,14 @@ public class TableModelDAO {
 		return entityManagerFactory;
 	}
 
-	public void setEntityManagerFactory(
-			EntityManagerFactory entityManagerFactory) {
+	public void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
 		this.entityManagerFactory = entityManagerFactory;
 	}
-	
 
 	public List<TableModel> getAllTableModelsByTableGroupModel(String tableGroupModelID) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			Query query = em.createNamedQuery("AllTableModelsByTableGroupModel",TableModel.class);
+			Query query = em.createNamedQuery("AllTableModelsByTableGroupModel", TableModel.class);
 			query.setParameter("tableGroupModelID", tableGroupModelID);
 			List<TableModel> tableModelList = query.getResultList();
 			return tableModelList;
@@ -34,7 +32,7 @@ public class TableModelDAO {
 			}
 		}
 	}
-	
+
 	public void addTableModel(TableModel tableModel) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
@@ -47,6 +45,5 @@ public class TableModelDAO {
 			}
 		}
 	}
-	
-	
+
 }

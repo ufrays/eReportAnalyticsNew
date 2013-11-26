@@ -9,29 +9,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
-@Controller  
-@RequestMapping  
+@Controller
+@RequestMapping
 public class BusinessUserController {
 
 	PersonService personService;
-	
-	public BusinessUserController(){
+
+	public BusinessUserController() {
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "beans.xml" });
 		personService = context.getBean("personService", PersonService.class);
 	}
-	
-    @RequestMapping("/getAllPersons")
-    @ResponseBody
-    public List<Person> getAllPersons(){
-    	List<Person> list = personService.getAllPersons();
-    	return list;
-    }
-	
-    
-    
-    
-    
-	
-	
+
+	@RequestMapping("/getAllPersons")
+	@ResponseBody
+	public List<Person> getAllPersons() {
+		List<Person> list = personService.getAllPersons();
+		return list;
+	}
+
 }

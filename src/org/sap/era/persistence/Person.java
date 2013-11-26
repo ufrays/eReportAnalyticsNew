@@ -7,12 +7,9 @@ import static javax.persistence.GenerationType.AUTO;
 
 @Entity
 @Table(name = "T_PERSON")
-@NamedQueries({
-	@NamedQuery(name = "AllPersons", query = "select p from Person p"),
-	@NamedQuery(name = "PersonsByOrgID", query = "select p from Person p where p.orgnazition.id = :orgID"),
-	@NamedQuery(name = "PersonsByUserName", query = "select p from Person p where p.name = :userName")
-})
-
+@NamedQueries({ @NamedQuery(name = "AllPersons", query = "select p from Person p"),
+		@NamedQuery(name = "PersonsByOrgID", query = "select p from Person p where p.orgnazition.id = :orgID"),
+		@NamedQuery(name = "PersonsByUserName", query = "select p from Person p where p.name = :userName") })
 public class Person {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

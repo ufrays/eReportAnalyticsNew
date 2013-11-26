@@ -6,16 +6,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller  
-@RequestMapping  
+@Controller
+@RequestMapping
 public class ReportAssignmentController {
 
-    @RequestMapping("reportAdmin/toAddReportAssignment")
-    public ModelAndView toAddReportAssignment() {  
-    	TableGroupAssignment ra = new TableGroupAssignment();
-    	ra.setDescription("test");
-    	return new ModelAndView("/reportAdmin/AddReportAssignment","ra",ra);
-    }
-	
-	
+	@RequestMapping("reportAdmin/toAddReportAssignment")
+	public ModelAndView toAddReportAssignment() {
+		TableGroupAssignment ra = new TableGroupAssignment();
+		ra.setDescription("test");
+		return new ModelAndView("/reportAdmin/AddReportAssignment", "ra", ra);
+	}
+
 }

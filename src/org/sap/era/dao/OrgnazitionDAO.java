@@ -4,13 +4,11 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.sap.era.persistence.Orgnazition;
-import org.sap.era.persistence.Person;
 
-
-public class OrgnazitionDAO {
+public class OrgnazitionDAO extends BaseDAO<Orgnazition> {
 
 	private EntityManagerFactory entityManagerFactory;
 
@@ -18,30 +16,28 @@ public class OrgnazitionDAO {
 		return entityManagerFactory;
 	}
 
-	public void setEntityManagerFactory(
-			EntityManagerFactory entityManagerFactory) {
+	public void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
 		this.entityManagerFactory = entityManagerFactory;
 	}
-	
+
 	//
 	public List<Orgnazition> getAllOrgnazitions() {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			List<Orgnazition> orgnazitions = em.createNamedQuery("AllOrgnazitions",Orgnazition.class).getResultList();
+			List<Orgnazition> orgnazitions = em.createNamedQuery("AllOrgnazitions", Orgnazition.class).getResultList();
 			return orgnazitions;
 		} finally {
 			if (em != null) {
 				em.close();
 			}
 		}
-		
-		
+
 	}
-	
-	public List<Orgnazition> getOrgnazitionsByParentID(String parentID){
+
+	public List<Orgnazition> getOrgnazitionsByParentID(String parentID) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			Query query = em.createNamedQuery("OrgnazitionsByParentID",Orgnazition.class);
+			TypedQuery<Orgnazition> query = em.createNamedQuery("OrgnazitionsByParentID", Orgnazition.class);
 			query.setParameter("parentID", Integer.parseInt(parentID));
 			List<Orgnazition> orgnazitions = query.getResultList();
 			return orgnazitions;
@@ -50,10 +46,10 @@ public class OrgnazitionDAO {
 				em.close();
 			}
 		}
-		
+
 	}
-	
-	public Orgnazition getOrgnazitionByID(String ID){
+
+	public Orgnazition getOrgnazitionByID(String ID) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
 			Orgnazition org = em.find(Orgnazition.class, Long.parseLong(ID));
@@ -63,14 +59,14 @@ public class OrgnazitionDAO {
 				em.close();
 			}
 		}
-		
+
 	}
-	
-	//OrgnazitionOfTop
-	public List<Orgnazition> getOrgnazitionOfTop(){
+
+	// OrgnazitionOfTop
+	public List<Orgnazition> getOrgnazitionOfTop() {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			Query query = em.createNamedQuery("OrgnazitionOfTop",Orgnazition.class);
+			TypedQuery<Orgnazition> query = em.createNamedQuery("OrgnazitionOfTop", Orgnazition.class);
 			List<Orgnazition> orgnazitions = query.getResultList();
 			return orgnazitions;
 		} finally {
@@ -78,22 +74,23 @@ public class OrgnazitionDAO {
 				em.close();
 			}
 		}
-		
+
 	}
-	
-	public void addOrgnazition(Orgnazition orgnazition) {
+
+	public Orgnazition mergeOrgnazition(Orgnazition orgnazition) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
 			em.getTransaction().begin();
-			em.persist(orgnazition);
+			orgnazition = em.merge(orgnazition);
 			em.getTransaction().commit();
+			return orgnazition;
 		} finally {
 			if (em != null) {
 				em.close();
 			}
 		}
 	}
-	
+
 	public void saveOrgnazition(Orgnazition orgnazition) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
@@ -106,8 +103,8 @@ public class OrgnazitionDAO {
 			}
 		}
 	}
-	
-	public void deleteOrgnazition(Orgnazition orgnazition){
+
+	public void deleteOrgnazition(Orgnazition orgnazition) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
 			em.getTransaction().begin();

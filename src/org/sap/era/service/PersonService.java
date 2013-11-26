@@ -20,7 +20,7 @@ public class PersonService {
 	public void addPerson(Person person) {
 		this.personDAO.addPerson(person);
 	}
-	
+
 	public List<Person> getAllPersons() {
 		return this.personDAO.getAllPersons();
 	}
@@ -32,10 +32,11 @@ public class PersonService {
 	public void setPersonDAO(PersonDAO personDAO) {
 		this.personDAO = personDAO;
 	}
-	
+
 	public List<Person> getPersonsByOrgID(String orgID) {
 		return this.personDAO.getPersonsByOrgID(orgID);
 	}
+
 	public List<Person> getPersonsByUserName(String userName) {
 		return this.personDAO.getPersonsByUserName(userName);
 	}
