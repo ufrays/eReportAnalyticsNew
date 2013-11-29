@@ -4,13 +4,18 @@ import static javax.persistence.TemporalType.DATE;
 
 import java.util.Date;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 @Entity
 @Table(name = "T_REPORTTASK")
 public class ReportTask {
 
 	@Id
+	@GeneratedValue
 	private long id;
 
 	private long orgizationID;

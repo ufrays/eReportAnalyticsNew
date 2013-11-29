@@ -2,21 +2,20 @@ package org.sap.era.service;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.sap.era.dao.TableGroupAssignmentDAO;
 import org.sap.era.persistence.Orgnazition;
 import org.sap.era.persistence.TableGroupAssignment;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service(value = "tableGroupAssignmentService")
 public class TableGroupAssignmentService {
 
+	@Autowired
+	@Resource
 	private TableGroupAssignmentDAO tableGroupAssignmentDAO;
-
-	public TableGroupAssignmentDAO getTableGroupAssignmentDAO() {
-		return tableGroupAssignmentDAO;
-	}
-
-	public void setTableGroupAssignmentDAO(TableGroupAssignmentDAO tableGroupAssignmentDAO) {
-		this.tableGroupAssignmentDAO = tableGroupAssignmentDAO;
-	}
 
 	/**
 	 * 

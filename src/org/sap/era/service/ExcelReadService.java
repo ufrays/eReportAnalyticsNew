@@ -3,53 +3,39 @@ package org.sap.era.service;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sap.era.service.excel.Control;
-import org.sap.era.service.excel.ExcelForm;
-import org.sap.era.service.excel.LabelControl;
-import org.sap.era.service.excel.ParseException;
+import javax.annotation.Resource;
+
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
+import org.sap.era.service.excel.Control;
+import org.sap.era.service.excel.ExcelForm;
+import org.sap.era.service.excel.LabelControl;
+import org.sap.era.service.excel.ParseException;
 import org.sap.era.service.excel.SpanCell;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service(value = "excelReadService")
 public class ExcelReadService {
 
+	@Autowired
+	@Resource
 	private CellModelService cellModelService;
 
+	@Autowired
+	@Resource
 	private TableModelService tableModelService;
 
+	@Autowired
+	@Resource
 	private TableGroupModelService tableGroupModelService;
-
-	public CellModelService getCellModelService() {
-		return cellModelService;
-	}
-
-	public void setCellModelService(CellModelService cellModelService) {
-		this.cellModelService = cellModelService;
-	}
-
-	public TableModelService getTableModelService() {
-		return tableModelService;
-	}
-
-	public void setTableModelService(TableModelService tableModelService) {
-		this.tableModelService = tableModelService;
-	}
-
-	public TableGroupModelService getTableGroupModelService() {
-		return tableGroupModelService;
-	}
-
-	public void setTableGroupModelService(TableGroupModelService tableGroupModelService) {
-		this.tableGroupModelService = tableGroupModelService;
-	}
 
 	public static List<ExcelForm> getAllExcelForm(XSSFWorkbook wb) throws FileNotFoundException, IOException, ParseException {
 		List<ExcelForm> list = new ArrayList<ExcelForm>();

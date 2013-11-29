@@ -10,71 +10,91 @@
 		http://www.springframework.org/schema/context   
         http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
-	<context:component-scan base-package="org.sap.era" />
+	<!-- 
+	<context:component-scan base-package="org.sap.era.dao" />
+	<context:component-scan base-package="org.sap.era.service" />
+	<context:component-scan base-package="org.sap.era.web" />
+	 -->
 	<context:load-time-weaver
 		weaver-class="org.sap.era.service.ExtInstrumentationLoadTimeWeaver"
 		aspectj-weaving="autodetect" />
 	<!-- Service List -->
-	<bean id="personService" class="org.sap.era.service.PersonService" scope="singleton">
-		<property name="personDAO" ref="personDAO" />
+	<bean id="person-service" class="org.sap.era.service.PersonService" scope="singleton">
+		<property name="personDAO" ref="person-dao" />
 	</bean>
 
 	<bean id="orgnazitionService" class="org.sap.era.service.OrgnazitionService" scope="singleton">
-		<property name="orgnazitionDAO" ref="orgnazitionDAO" />
+		<property name="orgDao" ref="orgnazition-dao" />
 	</bean>
 
-	<bean id="cellModelService" class="org.sap.era.service.CellModelService" scope="singleton">
-		<property name="cellModelDAO" ref="cellModelDAO" />
+	<bean id="table-group-assignment-service" class="org.sap.era.service.TableGroupAssignmentService" scope="singleton">
+		<property name="tgaDao" ref="table-group-assignment-dao" />
+		<property name="aoDao" ref="assigned-organization-dao" />
 	</bean>
 
-	<bean id="tableModelService" class="org.sap.era.service.TableModelService" scope="singleton">
-		<property name="tableModelDAO" ref="tableModelDAO" />
+	<bean id="cell-model-service" class="org.sap.era.service.CellModelService" scope="singleton">
+		<property name="cmDao" ref="cell-model-dao" />
 	</bean>
 
-	<bean id="tableGroupModelService" class="org.sap.era.service.TableGroupModelService" scope="singleton">
-		<property name="tableGroupModelDAO" ref="tableGroupModelDAO" />
+	<bean id="table-model-service" class="org.sap.era.service.TableModelService" scope="singleton">
+		<property name="tmDao" ref="table-model-dao" />
 	</bean>
 
-	<bean id="tableGroupAssignmentService" class="org.sap.era.service.TableGroupAssignmentService" scope="singleton">
-		<property name="tableGroupAssignmentDAO" ref="tableGroupAssignmentDAO" />
+	<bean id="table-group-model-service" class="org.sap.era.service.TableGroupModelService" scope="singleton">
+		<property name="tgmDao" ref="table-group-assignment-dao" />
 	</bean>
 
 	<!-- Service List End -->
 
+	<!-- Data Initialization -->
+	<bean id="data-initialization-context" class="org.sap.era.dao.DataInitializationContext" scope="singleton" init-method="initial">
+		<property name="personDao" ref="person-dao" />
+		<property name="orgDao" ref="orgnazition-dao" />
+		<property name="aoDao" ref="assigned-organization-dao" />
+		<property name="cmDao" ref="cell-model-dao" />
+		<property name="tmDao" ref="table-model-dao" />
+		<property name="tgmDao" ref="table-group-model-dao" />
+		<property name="tgaDao" ref="table-group-assignment-dao" />
+	</bean>
 	<!-- DAO List -->
-	<bean id="personDAO" class="org.sap.era.dao.PersonDAO" scope="singleton">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	<bean id="person-dao" class="org.sap.era.dao.PersonDAO">
+		<property name="emf" ref="entity-manager-factory" />
 	</bean>
 
-	<bean id="orgnazitionDAO" class="org.sap.era.dao.OrgnazitionDAO" scope="singleton">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	<bean id="orgnazition-dao" class="org.sap.era.dao.OrgnazitionDAO" scope="singleton">
+		<property name="emf" ref="entity-manager-factory" />
+	</bean>
+	
+	<bean id="assigned-organization-dao" class="org.sap.era.dao.AssignedOrganizationDAO" scope="singleton">
+		<property name="emf" ref="entity-manager-factory" />
 	</bean>
 
-	<bean id="cellModelDAO" class="org.sap.era.dao.CellModelDAO" scope="singleton">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	<bean id="cell-model-dao" class="org.sap.era.dao.CellModelDAO" scope="singleton">
+		<property name="emf" ref="entity-manager-factory" />
 	</bean>
 
-	<bean id="tableModelDAO" class="org.sap.era.dao.TableModelDAO" scope="singleton">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	<bean id="table-model-dao" class="org.sap.era.dao.TableModelDAO" scope="singleton">
+		<property name="emf" ref="entity-manager-factory" />
 	</bean>
 
-	<bean id="tableGroupModelDAO" class="org.sap.era.dao.TableGroupModelDAO" scope="singleton">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	<bean id="table-group-model-dao" class="org.sap.era.dao.TableGroupModelDAO" scope="singleton">
+		<property name="emf" ref="entity-manager-factory" />
 	</bean>
 
-	<bean id="tableGroupAssignmentDAO" class="org.sap.era.dao.TableGroupAssignmentDAO" scope="singleton">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	<bean id="table-group-assignment-dao" class="org.sap.era.dao.TableGroupAssignmentDAO" scope="singleton">
+		<property name="emf" ref="entity-manager-factory" />
 	</bean>
 	<!-- DAO List End -->
 
 	<!-- EntityManagerFactory Configuration -->
-	<bean id="entityManagerFactory"
-		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+	<bean id="entity-manager-factory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+		scope="singleton">
 		<property name="dataSource" ref="dataSource" />
 		<property name="persistenceUnitName" value="eReportAnalytics" />
 		<property name="loadTimeWeaver">
 			<bean
-				class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" />
+				class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver"/>
 		</property>
 	</bean>
 

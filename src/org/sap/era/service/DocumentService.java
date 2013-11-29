@@ -1,12 +1,12 @@
 package org.sap.era.service;
 
-import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Document;
@@ -16,15 +16,13 @@ import org.apache.chemistry.opencmis.client.api.Session;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.data.ContentStream;
 import org.apache.chemistry.opencmis.commons.enums.VersioningState;
-import org.apache.chemistry.opencmis.commons.exceptions.CmisNameConstraintViolationException;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 
+import com.sap.ecm.api.EcmService;
 import com.sap.ecm.api.RepositoryOptions;
 import com.sap.ecm.api.RepositoryOptions.Visibility;
-import com.sap.ecm.api.EcmService;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 
+//@Service(value = "document-service")
 public class DocumentService {
 	static String uniqueName = "com.foo.MyRepository";
 	static String secretKey = "my_super_secret_key_123";

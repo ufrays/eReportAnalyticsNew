@@ -3,28 +3,18 @@ package org.sap.era.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.sap.era.persistence.CellModel;
-import org.sap.era.persistence.Person;
+import org.springframework.stereotype.Repository;
 
-public class CellModelDAO {
-
-	private EntityManagerFactory entityManagerFactory;
-
-	public EntityManagerFactory getEntityManagerFactory() {
-		return entityManagerFactory;
-	}
-
-	public void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
-		this.entityManagerFactory = entityManagerFactory;
-	}
+@Repository(value = "cellModelDAO")
+public class CellModelDAO extends BaseDAO<CellModel, Long> {
 
 	public List<CellModel> getAllCellModelsByTableModel(String tableModelID) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			Query query = em.createNamedQuery("AllCellModelsByTableModel", CellModel.class);
+			TypedQuery<CellModel> query = em.createNamedQuery("AllCellModelsByTableModel", CellModel.class);
 			query.setParameter("tableModelID", tableModelID);
 			List<CellModel> cellModelList = query.getResultList();
 			return cellModelList;

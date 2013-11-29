@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.chemistry.opencmis.client.api.Document;
@@ -16,8 +17,7 @@ import org.sap.era.service.TableGroupModelService;
 import org.sap.era.service.excel.CmisHelper;
 import org.sap.era.service.excel.ExcelForm;
 import org.sap.era.service.excel.ParseException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,11 +27,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping
 public class ReportTemplateController {
 
+	@Autowired
+	@Resource
 	private TableGroupModelService tableGroupModelService;
 
 	public ReportTemplateController() {
-		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "beans.xml" });
-		tableGroupModelService = context.getBean("tableGroupModelService", TableGroupModelService.class);
+		// ApplicationContext context = new ClassPathXmlApplicationContext(new
+		// String[] { "beans.xml" });
+		// tableGroupModelService = context.getBean("tableGroupModelService",
+		// TableGroupModelService.class);
 	}
 
 	/**

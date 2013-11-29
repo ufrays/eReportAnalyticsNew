@@ -3,23 +3,14 @@ package org.sap.era.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 
 import org.sap.era.persistence.Orgnazition;
 import org.sap.era.persistence.TableGroupAssignment;
+import org.springframework.stereotype.Repository;
 
-public class TableGroupAssignmentDAO {
-
-	private EntityManagerFactory entityManagerFactory;
-
-	public EntityManagerFactory getEntityManagerFactory() {
-		return entityManagerFactory;
-	}
-
-	public void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
-		this.entityManagerFactory = entityManagerFactory;
-	}
+@Repository(value = "tableGroupAssignmentDAO")
+public class TableGroupAssignmentDAO extends BaseDAO<TableGroupAssignment, Long> {
 
 	/**
 	 * 

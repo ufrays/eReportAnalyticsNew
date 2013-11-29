@@ -2,20 +2,19 @@ package org.sap.era.service;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.sap.era.dao.OrgnazitionDAO;
 import org.sap.era.persistence.Orgnazition;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service(value = "orgnazitionService")
 public class OrgnazitionService {
 
+	@Autowired
+	@Resource
 	private OrgnazitionDAO orgnazitionDAO;
-
-	public OrgnazitionDAO getOrgnazitionDAO() {
-		return orgnazitionDAO;
-	}
-
-	public void setOrgnazitionDAO(OrgnazitionDAO orgnazitionDAO) {
-		this.orgnazitionDAO = orgnazitionDAO;
-	}
 
 	public void addOrgnazition(Orgnazition orgnazition) {
 		this.orgnazitionDAO.mergeOrgnazition(orgnazition);

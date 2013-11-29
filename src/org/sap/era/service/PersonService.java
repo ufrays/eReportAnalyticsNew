@@ -1,44 +1,50 @@
 package org.sap.era.service;
 
-import org.sap.era.dao.PersonDAO;
-
 import java.util.List;
 
-import org.sap.era.persistence.Person;
+import javax.annotation.Resource;
 
+import org.sap.era.dao.PersonDAO;
+import org.sap.era.persistence.Person;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service(value = "personService")
 public class PersonService {
 
-	private PersonDAO personDAO;
+	@Autowired
+	@Resource
+	private PersonDAO personDao;
 
 	public void addPerson(String firstName, String lastName) {
 		Person person = new Person();
 		person.setFirstName(firstName);
 		person.setLastName(lastName);
-		this.personDAO.addPerson(person);
+		this.personDao.addPerson(person);
 	}
 
 	public void addPerson(Person person) {
-		this.personDAO.addPerson(person);
+		this.personDao.addPerson(person);
 	}
 
 	public List<Person> getAllPersons() {
-		return this.personDAO.getAllPersons();
+		return this.personDao.getAllPersons();
 	}
 
 	public PersonDAO getPersonDAO() {
-		return personDAO;
+		return personDao;
 	}
 
 	public void setPersonDAO(PersonDAO personDAO) {
-		this.personDAO = personDAO;
+		this.personDao = personDAO;
 	}
 
 	public List<Person> getPersonsByOrgID(String orgID) {
-		return this.personDAO.getPersonsByOrgID(orgID);
+		return this.personDao.getPersonsByOrgID(orgID);
 	}
 
 	public List<Person> getPersonsByUserName(String userName) {
-		return this.personDAO.getPersonsByUserName(userName);
+		return this.personDao.getPersonsByUserName(userName);
 	}
 
 }
