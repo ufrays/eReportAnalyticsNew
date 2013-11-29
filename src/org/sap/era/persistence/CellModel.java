@@ -5,19 +5,36 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "T_CELLMODEL")
-@NamedQuery(name = "AllCellModelsByTableModel", query = "select cm from CellModel cm where cm.tableModel.id = :tableModelID")
+@NamedQueries({
+		@NamedQuery(name = "AllCellModelsByTableModel", query = "select cm from CellModel cm where cm.tableModel.id = :tableModelID"),
+		@NamedQuery(name = "AllCellModelsforDataByTableModel", query = "select cm from CellModel cm where (cm.tableModel.id = :tableModelID and cm.type = 1)"),
+		@NamedQuery(name = "AllCellModelsfoLabelByTableModel", query = "select cm from CellModel cm where (cm.tableModel.id = :tableModelID and cm.type = 0)"),
+		@NamedQuery(name = "AllCellModelsforParmByTableModel", query = "select cm from CellModel cm where (cm.tableModel.id = :tableModelID and cm.type = 4)") })
+
 public class CellModel {
 
-	public final static int CELL_HIDDEN = -1;
-	public final static int CELL_LABEL = 0;
-	public final static int CELL_DATA = 1;
-	public final static int CELL_BANK = 2;
-	public final static int CELL_Text = 3;
+	// Type - Indicate the usage of the cell.
+	public final static int CELL_TYPE_HIDDEN = -1;
+	public final static int CELL_TYPE_LABEL = 0;
+	public final static int CELL_TYPE_DATA = 1;
+	public final static int CELL_TYPE_BLANK = 2;
+	public final static int CELL_TYPE_PARM = 3;
+
+	// Cell Type - Indicate which data type it is.
+	public static final int CELL_DATA_TYPE_NUMERIC = 0;
+	public static final int CELL_DATA_TYPE_STRING = 1;
+	public static final int CELL_DATA_TYPE_FORMULA = 2;
+	public static final int CELL_DATA_TYPE_BLANK = 3;
+	public static final int CELL_DATA_TYPE_BOOLEAN = 4;
+	public static final int CELL_DATA_TYPE_ERROR = 5;
+
 	@Id
 	@GeneratedValue(strategy = AUTO)
 	private long id;
 	@Basic
 	private int type;
+	@Basic
+	private int dataType;
 	@Basic
 	private String label;
 	@Basic
@@ -46,6 +63,14 @@ public class CellModel {
 
 	public void setType(int type) {
 		this.type = type;
+	}
+
+	public int getDataType() {
+		return dataType;
+	}
+
+	public void setDataType(int dataType) {
+		this.dataType = dataType;
 	}
 
 	public String getLabel() {

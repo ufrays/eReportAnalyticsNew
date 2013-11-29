@@ -19,15 +19,6 @@ public class CellModelService {
 
 	/**
 	 * 
-	 * @param tableModelID
-	 * @return
-	 */
-	public List<CellModel> getAllCellModelsByTableModel(String tableModelID) {
-		return this.cellModelDAO.getAllCellModelsByTableModel(tableModelID);
-	}
-
-	/**
-	 * 
 	 * @param cellModel
 	 * @param TableModelID
 	 */
@@ -38,4 +29,39 @@ public class CellModelService {
 		this.cellModelDAO.addCellModel(cellModel);
 	}
 
+	/**
+	 * 
+	 * @param tableModelID
+	 * @return
+	 */
+	public List<CellModel> getAllCellModelsByTableModel(long tableModelID) {
+		return this.cellModelDAO.getAllCellModelsByTableModel(tableModelID);
+	}
+
+	/**
+	 * 
+	 * @param tableModelID
+	 * @return
+	 */
+	public List<CellModel> getAllCellModelsforLabelByTableModel(long tableModelID) {
+		return this.cellModelDAO.getAllCellModelsforLabelByTableModel(tableModelID);
+	}
+
+	/**
+	 * 
+	 * @param tableModelID
+	 * @return
+	 */
+	public List<CellModel> getAllCellModelsforParmByTableModel(long tableModelID) {
+		return this.cellModelDAO.getAllCellModelsforParmByTableModel(tableModelID);
+	}
+
+	/**
+	 * 
+	 * @param tableModelID
+	 * @return
+	 */
+	public List<CellModel> getAllCellModelsforDataByTableModel(long tableModelID) {
+		return this.cellModelDAO.getAllCellModelsforDataByTableModel(tableModelID);
+	}
 }

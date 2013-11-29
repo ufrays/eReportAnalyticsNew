@@ -1,16 +1,25 @@
 package org.sap.era.persistence;
 
+import static javax.persistence.GenerationType.AUTO;
+import static javax.persistence.TemporalType.DATE;
+
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.*;
-
-import static javax.persistence.TemporalType.DATE;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.sap.era.persistence.TableModel;
-import java.util.Collection;
-import static javax.persistence.GenerationType.AUTO;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.sap.era.main.CustomDateSerializer;
 
 @Entity
 @Table(name = "T_TABLEGROUPMODEL")
@@ -59,6 +68,7 @@ public class TableGroupModel {
 		this.name = name;
 	}
 
+	@JsonSerialize(using = CustomDateSerializer.class)
 	public Date getCreatedOn() {
 		return createdOn;
 	}

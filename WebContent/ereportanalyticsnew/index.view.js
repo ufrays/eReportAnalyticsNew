@@ -60,53 +60,68 @@ sap.ui.jsview('ereportanalyticsnew.index', {
 			showSearchTool : false,
 			showInspectorTool : false,
 			showFeederTool : false,
-			worksetItems : [ new sap.ui.ux3.NavigationItem('WI_admin', {
-				key : 'wi_admin',
-				text : 'Admin',
-				subItems : [ new sap.ui.ux3.NavigationItem('WI_admin_1', {
-					key : 'wi_admin_1',
-					text : 'Orgnazition Structure'
-				}), new sap.ui.ux3.NavigationItem('WI_admin_2', {
-					key : 'wi_admin_2',
-					text : 'Business Users'
-				}) ]
-			}), new sap.ui.ux3.NavigationItem('WI_1', {
-				key : 'wi_1',
-				text : 'Report Collect',
-				subItems : [ new sap.ui.ux3.NavigationItem('WI_1_1', {
-					key : 'wi_1_1',
-					text : 'Pending Reports'
-				}), new sap.ui.ux3.NavigationItem('WI_1_2', {
-					key : 'wi_1_2',
-					text : 'Finished Reports'
-				}) ]
-			}), new sap.ui.ux3.NavigationItem('WI_2', {
-				key : 'wi_2',
-				text : 'Management&Analytics',
-				subItems : [ new sap.ui.ux3.NavigationItem('WI_2_1', {
-					key : 'wi_2_1',
-					text : 'Report Management'
-				}), new sap.ui.ux3.NavigationItem('WI_2_2', {
-					key : 'wi_2_2',
-					text : 'Report Analytics'
-				}), new sap.ui.ux3.NavigationItem('WI_2_3', {
-					key : 'wi_2_3',
-					text : 'Custom Analytics'
-				}) ]
-			}), new sap.ui.ux3.NavigationItem('WI_3', {
-				key : 'wi_3',
-				text : 'Report Admin',
-				subItems : [ new sap.ui.ux3.NavigationItem('WI_3_1', {
-					key : 'wi_3_1',
-					text : 'Report Template'
-				}), new sap.ui.ux3.NavigationItem('wi-report-assignment-owl', {
-					key : 'wi-report-assignment-owl',
-					text : 'Report Assignment'
-				}), new sap.ui.ux3.NavigationItem('WI_3_3', {
-					key : 'wi_3_3',
-					text : 'Job Schedule'
-				}) ]
-			}) ],
+			worksetItems :
+			[
+					new sap.ui.ux3.NavigationItem('WI_admin', {
+						key : 'wi_admin',
+						text : 'Admin',
+						subItems :
+						[
+								new sap.ui.ux3.NavigationItem('WI_admin_1', {
+									key : 'wi_admin_1',
+									text : 'Orgnazition Structure'
+								}), new sap.ui.ux3.NavigationItem('WI_admin_2', {
+									key : 'wi_admin_2',
+									text : 'Business Users'
+								})
+						]
+					}), new sap.ui.ux3.NavigationItem('WI_1', {
+						key : 'wi_1',
+						text : 'Report Collect',
+						subItems :
+						[
+								new sap.ui.ux3.NavigationItem('WI_1_1', {
+									key : 'wi_1_1',
+									text : 'Pending Reports'
+								}), new sap.ui.ux3.NavigationItem('WI_1_2', {
+									key : 'wi_1_2',
+									text : 'Finished Reports'
+								})
+						]
+					}), new sap.ui.ux3.NavigationItem('WI_2', {
+						key : 'wi_2',
+						text : 'Management&Analytics',
+						subItems :
+						[
+								new sap.ui.ux3.NavigationItem('WI_2_1', {
+									key : 'wi_2_1',
+									text : 'Report Management'
+								}), new sap.ui.ux3.NavigationItem('WI_2_2', {
+									key : 'wi_2_2',
+									text : 'Report Analytics'
+								}), new sap.ui.ux3.NavigationItem('WI_2_3', {
+									key : 'wi_2_3',
+									text : 'Custom Analytics'
+								})
+						]
+					}), new sap.ui.ux3.NavigationItem('WI_3', {
+						key : 'wi_3',
+						text : 'Report Admin',
+						subItems :
+						[
+								new sap.ui.ux3.NavigationItem('WI_3_1', {
+									key : 'wi_3_1',
+									text : 'Report Template'
+								}), new sap.ui.ux3.NavigationItem('wi-report-assignment-owl', {
+									key : 'wi-report-assignment-owl',
+									text : 'Report Assignment'
+								}), new sap.ui.ux3.NavigationItem('WI_3_3', {
+									key : 'wi_3_3',
+									text : 'Job Schedule'
+								})
+						]
+					})
+			],
 			worksetItemSelected : function(oEvent) {
 				var sId = oEvent.getParameter('id');
 				var oShell = oEvent.oSource;

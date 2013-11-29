@@ -57,6 +57,7 @@ public class CmisHelper {
 
 	// Maximum size of a file (in Bytes) that you can upload at a time to your
 	// repository
+	@SuppressWarnings("unused")
 	static private int MAX_FILE_SIZE = 10000000;
 
 	// The prefix for the download URL of a file

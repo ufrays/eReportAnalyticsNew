@@ -2,11 +2,11 @@ package org.sap.era.service.excel;
 
 public abstract class Control {
 
-	public static int CONTROL_TYPE_EMPTY = -1;
-	public static int CONTROL_TYPE_LABEL = 0;
-	public static int CONTROL_TYPE_INPUT_NUMERIC = 1;
-	public static int CONTROL_TYPE_INPUT_TEXT = 3;
-	public static int CONTROL_TYPE_NO_INPUT = 2;
+	// public static int CONTROL_TYPE_EMPTY = -1;
+	// public static int CONTROL_TYPE_LABEL = 0;
+	// public static int CONTROL_TYPE_INPUT_NUMERIC = 1;
+	// public static int CONTROL_TYPE_INPUT_TEXT = 3;
+	// public static int CONTROL_TYPE_NO_INPUT = 2;
 
 	protected String name;
 	protected int size;
@@ -17,6 +17,7 @@ public abstract class Control {
 	protected boolean isMerge = false;
 	protected CellAlignment alignment;
 	protected int cellType;
+	protected int cellDataType;
 	protected String property;// VO Property
 
 	protected CellFormat format = new CellFormat();
@@ -112,4 +113,13 @@ public abstract class Control {
 	public void setCellType(int cellType) {
 		this.cellType = cellType;
 	}
+
+	public int getCellDataType() {
+		return cellDataType;
+	}
+
+	public void setCellDataType(int cellDataType) {
+		this.cellDataType = cellDataType;
+	}
+
 }
