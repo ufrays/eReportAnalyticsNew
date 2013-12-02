@@ -1,6 +1,16 @@
 package org.sap.era.persistence;
 
-import javax.persistence.*;
+import static javax.persistence.TemporalType.DATE;
+
+import java.util.Date;
+
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 @Entity
 @Table(name = "T_REPORTTASKITEM")
@@ -8,22 +18,26 @@ public class ReportTaskItem {
 
 	@Id
 	private long id;
-	@Basic
-	private String orgnazition;
+	@ManyToOne
+	private Orgnazition orgnazition;
 	@Basic
 	private String itemStatus;
+	@ManyToOne
+	private Orgnazition reportOrgnazition;
+	@ManyToOne
+	private Person reportPerson;
 	@Basic
-	private String reportOrgnazition;
-	@Basic
-	private String reportPerson;
-	@Basic
-	private String reportDate;
+	@Temporal(DATE)
+	private Date reportDate;
 	@Basic
 	private String errorInformation;
 	@Basic
 	private String errorReson;
 	@Basic
 	private String filePath;
+	@ManyToOne
+	@JoinColumn(name = "reportTask", nullable = false)
+	private ReportTask reportTask;
 
 	public long getId() {
 		return id;
@@ -33,12 +47,12 @@ public class ReportTaskItem {
 		this.id = id;
 	}
 
-	public void setOrgnazition(String param) {
-		this.orgnazition = param;
+	public Orgnazition getOrgnazition() {
+		return orgnazition;
 	}
 
-	public String getOrgnazition() {
-		return orgnazition;
+	public void setOrgnazition(Orgnazition orgnazition) {
+		this.orgnazition = orgnazition;
 	}
 
 	public void setItemStatus(String param) {
@@ -49,28 +63,28 @@ public class ReportTaskItem {
 		return itemStatus;
 	}
 
-	public void setReportOrgnazition(String param) {
-		this.reportOrgnazition = param;
-	}
-
-	public String getReportOrgnazition() {
+	public Orgnazition getReportOrgnazition() {
 		return reportOrgnazition;
 	}
 
-	public void setReportPerson(String param) {
-		this.reportPerson = param;
+	public void setReportOrgnazition(Orgnazition reportOrgnazition) {
+		this.reportOrgnazition = reportOrgnazition;
 	}
 
-	public String getReportPerson() {
+	public Person getReportPerson() {
 		return reportPerson;
 	}
 
-	public void setReportDate(String param) {
-		this.reportDate = param;
+	public void setReportPerson(Person reportPerson) {
+		this.reportPerson = reportPerson;
 	}
 
-	public String getReportDate() {
+	public Date getReportDate() {
 		return reportDate;
+	}
+
+	public void setReportDate(Date reportDate) {
+		this.reportDate = reportDate;
 	}
 
 	public void setErrorInformation(String param) {
@@ -95,6 +109,14 @@ public class ReportTaskItem {
 
 	public String getFilePath() {
 		return filePath;
+	}
+
+	public ReportTask getReportTask() {
+		return reportTask;
+	}
+
+	public void setReportTask(ReportTask reportTask) {
+		this.reportTask = reportTask;
 	}
 
 }
