@@ -1,8 +1,15 @@
 package org.sap.era.persistence;
 
-import javax.persistence.*;
-
-import org.sap.era.persistence.Orgnazition;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "T_PERSON")
@@ -24,6 +31,10 @@ public class Person {
 	private Orgnazition orgnazition;
 	@Basic
 	private String password;
+	@Basic
+	private String phone;
+	@Basic
+	private String email;
 
 	public long getId() {
 		return id;
@@ -71,6 +82,22 @@ public class Person {
 
 	public String getPassword() {
 		return password;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

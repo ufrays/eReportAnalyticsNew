@@ -14,8 +14,5 @@
 			<class>org.sap.era.persistence.ReportTask</class>
 			<class>org.sap.era.persistence.AssignedOrgnazition</class>
 			<class>org.sap.era.persistence.ReportTaskItem</class>
-			<properties>
-				<property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
-			</properties>
 	</persistence-unit>
 </persistence>

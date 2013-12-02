@@ -3,10 +3,15 @@ package org.sap.era.persistence;
 import static javax.persistence.TemporalType.DATE;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -17,40 +22,26 @@ public class ReportTask {
 	@Id
 	@GeneratedValue
 	private long id;
-
-	private long orgizationID;
-
+	@Basic
 	private long TableGroupModel;
-
+	@Basic
 	private String TableGroupModelName;
-
-	private long durationID;
+	@Basic
+	private String durationID;
 	@Temporal(DATE)
 	private Date startDate;
 	@Temporal(DATE)
 	private Date endDate;
-
-	private String flag;
-
+	@Basic
 	private String reportMode;
-
-	private String reportOrgizationID;
-
-	private long reportBy;
-	@Temporal(DATE)
-	private Date reportAt;
-
-	private String reportByName;
-
+	@Basic
 	private String durationFlag;
-
+	@Basic
 	private String durationDepict;
-
-	private String errorInformation;
-
-	private String errorReason;
-
-	private Integer passStatus;
+	@Basic
+	private Integer status;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "reportTask")
+	private List<ReportTaskItem> reportTaskItem;
 
 	public long getId() {
 		return id;
@@ -58,14 +49,6 @@ public class ReportTask {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public long getOrgizationID() {
-		return orgizationID;
-	}
-
-	public void setOrgizationID(long orgizationID) {
-		this.orgizationID = orgizationID;
 	}
 
 	public long getTableGroupModel() {
@@ -84,12 +67,20 @@ public class ReportTask {
 		TableGroupModelName = tableGroupModelName;
 	}
 
-	public long getDurationID() {
+	public String getDurationID() {
 		return durationID;
 	}
 
-	public void setDurationID(long durationID) {
+	public void setDurationID(String durationID) {
 		this.durationID = durationID;
+	}
+
+	public List<ReportTaskItem> getReportTaskItem() {
+		return reportTaskItem;
+	}
+
+	public void setReportTaskItem(List<ReportTaskItem> reportTaskItem) {
+		this.reportTaskItem = reportTaskItem;
 	}
 
 	public Date getStartDate() {
@@ -108,52 +99,12 @@ public class ReportTask {
 		this.endDate = endDate;
 	}
 
-	public String getFlag() {
-		return flag;
-	}
-
-	public void setFlag(String flag) {
-		this.flag = flag;
-	}
-
 	public String getReportMode() {
 		return reportMode;
 	}
 
 	public void setReportMode(String reportMode) {
 		this.reportMode = reportMode;
-	}
-
-	public String getReportOrgizationID() {
-		return reportOrgizationID;
-	}
-
-	public void setReportOrgizationID(String reportOrgizationID) {
-		this.reportOrgizationID = reportOrgizationID;
-	}
-
-	public long getReportBy() {
-		return reportBy;
-	}
-
-	public void setReportBy(long reportBy) {
-		this.reportBy = reportBy;
-	}
-
-	public Date getReportAt() {
-		return reportAt;
-	}
-
-	public void setReportAt(Date reportAt) {
-		this.reportAt = reportAt;
-	}
-
-	public String getReportByName() {
-		return reportByName;
-	}
-
-	public void setReportByName(String reportByName) {
-		this.reportByName = reportByName;
 	}
 
 	public String getDurationFlag() {
@@ -172,28 +123,12 @@ public class ReportTask {
 		this.durationDepict = durationDepict;
 	}
 
-	public String getErrorInformation() {
-		return errorInformation;
+	public Integer getStatus() {
+		return status;
 	}
 
-	public void setErrorInformation(String errorInformation) {
-		this.errorInformation = errorInformation;
-	}
-
-	public String getErrorReason() {
-		return errorReason;
-	}
-
-	public void setErrorReason(String errorReason) {
-		this.errorReason = errorReason;
-	}
-
-	public Integer getPassStatus() {
-		return passStatus;
-	}
-
-	public void setPassStatus(Integer passStatus) {
-		this.passStatus = passStatus;
+	public void setStatus(Integer passStatus) {
+		this.status = passStatus;
 	}
 
 }
