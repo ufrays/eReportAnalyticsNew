@@ -1,16 +1,24 @@
 package org.sap.era.persistence;
 
-import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
-import org.sap.era.persistence.Person;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import org.sap.era.persistence.Orgnazition;
 
 @Entity
 @Table(name = "T_ORGNAZITION")
@@ -114,6 +122,7 @@ public class Orgnazition {
 		this.parentOrgnazition = parentOrgnazition;
 	}
 
+	@JsonIgnore
 	public List<Orgnazition> getChildOrgnazition() {
 		return childOrgnazition;
 	}

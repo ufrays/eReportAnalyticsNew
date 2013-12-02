@@ -46,7 +46,7 @@
 	<entity>
 		<entity-name>org.sap.era.persistence.Person</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>206</entity-height>
+		<entity-height>246</entity-height>
 		<entity-X-Coordinate>120</entity-X-Coordinate>
 		<entity-Y-Coordinate>84</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
@@ -68,9 +68,9 @@
 	<entity>
 		<entity-name>org.sap.era.persistence.PeriodicTableGroupAssignment</entity-name>
 		<entity-width>277</entity-width>
-		<entity-height>128</entity-height>
-		<entity-X-Coordinate>388</entity-X-Coordinate>
-		<entity-Y-Coordinate>450</entity-Y-Coordinate>
+		<entity-height>168</entity-height>
+		<entity-X-Coordinate>348</entity-X-Coordinate>
+		<entity-Y-Coordinate>407</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -90,7 +90,7 @@
 	<entity>
 		<entity-name>org.sap.era.persistence.TableGroupModel</entity-name>
 		<entity-width>182</entity-width>
-		<entity-height>226</entity-height>
+		<entity-height>306</entity-height>
 		<entity-X-Coordinate>692</entity-X-Coordinate>
 		<entity-Y-Coordinate>670</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
@@ -123,9 +123,9 @@
 	<entity>
 		<entity-name>org.sap.era.persistence.TimeCoordinate</entity-name>
 		<entity-width>187</entity-width>
-		<entity-height>148</entity-height>
-		<entity-X-Coordinate>99</entity-X-Coordinate>
-		<entity-Y-Coordinate>467</entity-Y-Coordinate>
+		<entity-height>188</entity-height>
+		<entity-X-Coordinate>20</entity-X-Coordinate>
+		<entity-Y-Coordinate>405</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
