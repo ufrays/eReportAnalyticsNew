@@ -39,7 +39,8 @@ public class ReportTemplateController {
 
 	@RequestMapping(value = "/uploadReportTemplate.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String uploadReportTemplate(HttpServletRequest request) throws IOException {
+	public String uploadReportTemplate(HttpServletRequest request)
+			throws IOException {
 
 		TableGroupModel tgm = new TableGroupModel();
 		String realPathOfApp = request.getServletContext().getRealPath("");
@@ -55,7 +56,8 @@ public class ReportTemplateController {
 
 	@RequestMapping(value = "/saveReportTemplate", method = RequestMethod.GET)
 	@ResponseBody
-	public String saveReportTemplate(TableGroupModel tgm) throws IOException, ParseException {
+	public String saveReportTemplate(TableGroupModel tgm) throws IOException,
+			ParseException {
 		CmisHelper cmis = new CmisHelper();
 		List<ExcelForm> listExcelForm;
 		String docID = tgm.getModelPath();
@@ -76,7 +78,8 @@ public class ReportTemplateController {
 	@RequestMapping(value = "/getReportTemplateList", method = RequestMethod.GET)
 	@ResponseBody
 	public List<TableGroupModel> getReportTemplateList() {
-		List<TableGroupModel> list = tableGroupModelService.getAllTableGroupModels();
+		List<TableGroupModel> list = tableGroupModelService
+				.getAllTableGroupModels();
 		return list;
 
 	}
@@ -85,7 +88,8 @@ public class ReportTemplateController {
 	@RequestMapping(value = "/getReportTemplateByID", method = RequestMethod.GET)
 	@ResponseBody
 	public TableGroupModel getReportTemplateByID(String groupID) {
-		TableGroupModel tableGroupModel = tableGroupModelService.getTableGroupModelByID(groupID);
+		TableGroupModel tableGroupModel = tableGroupModelService
+				.getTableGroupModelByID(groupID);
 		return tableGroupModel;
 
 	}
