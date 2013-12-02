@@ -87,17 +87,17 @@ Select Sheet:
 					
 					if (cell!=null){
 						int cellType = cell.getCellType();
-						if (cellType == CellModel.CELL_LABEL||cellType == CellModel.CELL_HIDDEN){
+						//if (cellType == CellModel.CELL_LABEL||cellType == CellModel.CELL_HIDDEN){
             			%>
              				<td colspan="<%=cell.getColspan()%>" rowspan="<%=cell.getRowspan()%>"><%=cell.getText()%></td>
             			<%
-						}
-						else{
+						//}
+						//else{
 							 %>
 				             	<td bgcolor="#FFFFCC" colspan="<%=cell.getColspan()%>" rowspan="<%=cell.getRowspan()%>">&nbsp;</td>
 				            <%
 							
-						}
+						//}
 					}
             	}
             %>
