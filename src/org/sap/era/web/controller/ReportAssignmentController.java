@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.sap.era.persistence.PeriodicTableGroupAssignment;
 import org.sap.era.persistence.TableGroupAssignment;
 import org.sap.era.service.TableGroupAssignmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,11 @@ public class ReportAssignmentController {
 	@RequestMapping("/report-assignment/get-all")
 	public List<TableGroupAssignment> getAll() {
 		return tgaService.getAllTableGroupAssignments();
+	}
+
+	@ResponseBody
+	@RequestMapping("/report-assignment/get-all-periodic")
+	public List<PeriodicTableGroupAssignment> getAllPeriodic() {
+		return tgaService.getAllPeriodicTableGroupAssignments();
 	}
 }

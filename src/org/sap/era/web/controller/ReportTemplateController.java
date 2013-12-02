@@ -81,6 +81,15 @@ public class ReportTemplateController {
 
 	}
 
+	// getReportTemplateByID reportID
+	@RequestMapping(value = "/getReportTemplateByID", method = RequestMethod.GET)
+	@ResponseBody
+	public TableGroupModel getReportTemplateByID(String groupID) {
+		TableGroupModel tableGroupModel = tableGroupModelService.getTableGroupModelByID(groupID);
+		return tableGroupModel;
+
+	}
+
 	@RequestMapping(value = "/download/TemplateFile", method = RequestMethod.GET)
 	public void downloadTemplateFile(String docID) {
 

@@ -1,5 +1,6 @@
 package org.sap.era.persistence;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Basic;
@@ -14,15 +15,17 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 @Entity
-@Table(name = "T_TABLEGROUPASSIGNMENT")
+@Table(name = "T_TABLE_GROUP_ASSIGNMENT")
 @NamedQueries({ @NamedQuery(name = "AllTableGroupAssignments", query = "select tga from TableGroupAssignment tga"),
 		@NamedQuery(name = "GetTableGroupAssignmentByID", query = "select tga from TableGroupAssignment tga where tga.id = :assignmentID") })
 public class TableGroupAssignment {
 
 	@Id
 	@GeneratedValue
-	private long id;
+	protected long id;
 
 	@Basic
 	private String durationModel;
@@ -30,7 +33,7 @@ public class TableGroupAssignment {
 	@ManyToOne
 	private TableGroupModel tableGroupModel;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "tableGroupAssignment")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "tableGroupAssignment")
 	private List<AssignedOrgnazition> assignedOrgnazition;
 
 	@Basic
@@ -39,6 +42,7 @@ public class TableGroupAssignment {
 	@Basic
 	private String description;
 
+	@JsonIgnore
 	public long getId() {
 		return id;
 	}
@@ -64,6 +68,9 @@ public class TableGroupAssignment {
 	}
 
 	public List<AssignedOrgnazition> getAssignedOrgnazition() {
+		if (this.assignedOrgnazition == null) {
+			assignedOrgnazition = new ArrayList<AssignedOrgnazition>();
+		}
 		return assignedOrgnazition;
 	}
 

@@ -24,7 +24,7 @@
 	<entity>
 		<entity-name>org.sap.era.persistence.CellModel</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>246</entity-height>
+		<entity-height>266</entity-height>
 		<entity-X-Coordinate>120</entity-X-Coordinate>
 		<entity-Y-Coordinate>660</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
@@ -66,9 +66,20 @@
 	</entity>
 
 	<entity>
+		<entity-name>org.sap.era.persistence.PeriodicTableGroupAssignment</entity-name>
+		<entity-width>277</entity-width>
+		<entity-height>128</entity-height>
+		<entity-X-Coordinate>388</entity-X-Coordinate>
+		<entity-Y-Coordinate>450</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
 		<entity-name>org.sap.era.persistence.TableData</entity-name>
 		<entity-width>150</entity-width>
-		<entity-height>266</entity-height>
+		<entity-height>306</entity-height>
 		<entity-X-Coordinate>373</entity-X-Coordinate>
 		<entity-Y-Coordinate>1011</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
@@ -104,6 +115,17 @@
 		<entity-height>326</entity-height>
 		<entity-X-Coordinate>396</entity-X-Coordinate>
 		<entity-Y-Coordinate>24</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>org.sap.era.persistence.TimeCoordinate</entity-name>
+		<entity-width>187</entity-width>
+		<entity-height>148</entity-height>
+		<entity-X-Coordinate>99</entity-X-Coordinate>
+		<entity-Y-Coordinate>467</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>

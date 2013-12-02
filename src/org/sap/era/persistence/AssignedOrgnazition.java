@@ -1,6 +1,7 @@
 package org.sap.era.persistence;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -8,16 +9,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "T_ASSIGNEDORGNAZITION")
+@Table(name = "T_ASSIGNED_ORGNAZITION")
 public class AssignedOrgnazition {
 
 	@Id
 	@GeneratedValue
 	private long id;
-	@ManyToOne
+
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Orgnazition orgnazition;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tableGroupAssignment", nullable = false)
 	private TableGroupAssignment tableGroupAssignment;
 

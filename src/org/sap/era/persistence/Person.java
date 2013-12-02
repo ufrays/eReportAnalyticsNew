@@ -3,7 +3,6 @@ package org.sap.era.persistence;
 import javax.persistence.*;
 
 import org.sap.era.persistence.Orgnazition;
-import static javax.persistence.GenerationType.AUTO;
 
 @Entity
 @Table(name = "T_PERSON")

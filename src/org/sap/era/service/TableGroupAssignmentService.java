@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.sap.era.dao.PeriodicTableGroupAssignmentDAO;
 import org.sap.era.dao.TableGroupAssignmentDAO;
 import org.sap.era.persistence.Orgnazition;
+import org.sap.era.persistence.PeriodicTableGroupAssignment;
 import org.sap.era.persistence.TableGroupAssignment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,12 +19,20 @@ public class TableGroupAssignmentService {
 	@Resource
 	private TableGroupAssignmentDAO tableGroupAssignmentDAO;
 
+	@Autowired
+	@Resource
+	private PeriodicTableGroupAssignmentDAO prgaDao;
+
 	/**
 	 * 
 	 * @return
 	 */
 	public List<TableGroupAssignment> getAllTableGroupAssignments() {
 		return tableGroupAssignmentDAO.getAllTableGroupAssignments();
+	}
+
+	public List<PeriodicTableGroupAssignment> getAllPeriodicTableGroupAssignments() {
+		return (List<PeriodicTableGroupAssignment>) prgaDao.retrieve(PeriodicTableGroupAssignment.class);
 	}
 
 	/**

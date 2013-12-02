@@ -1,44 +1,92 @@
-sap.ui.controller('ereportanalyticsnew.reportTemplate', {
+sap.ui.controller("ereportanalyticsnew.reportTemplate", {
 
+	/**
+	 * Called when a controller is instantiated and its View controls (if
+	 * available) are already created. Can be used to modify the View before it
+	 * is displayed, to bind event handlers and do other one-time
+	 * initialization.
+	 * 
+	 * @memberOf ereportanalyticsnew.reportTemplate
+	 */
+	// onInit: function() {
+	//
+	// },
 	getReportTemplateList : function() {
 		jQuery.ajax({
-			url : 'getReportTemplateList.do',
+			url : "getReportTemplateList.do",
 			type : 'GET',
-			dataType : 'json',
+			dataType : "json",
 			success : function(data) {
-				var oTable = sap.ui.getCore().getControl('ReportTemplate_T1');
+				var oTable = sap.ui.getCore().getControl("ReportTemplate_T1");
 				var oModel = new sap.ui.model.json.JSONModel();
 				oModel.setData({
-					'reportTemplate' : data,
+					"reportTemplate" : data
 				});
 				oTable.setModel(oModel);
-				oTable.unbindRows().bindRows('/reportTemplate');
+				oTable.unbindRows().bindRows("/reportTemplate");
 
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
 				// TODO improve error handling
-				sap.ui.commons.MessageBox.alert('Failed to retrieve data: ' + textStatus + '\n' + errorThrown);
+				sap.ui.commons.MessageBox.alert("Failed to retrieve data: " + textStatus + "\n" + errorThrown);
 			}
 		});
 	},
 
 	createReportTemplate : function() {
+		sap.ui.getCore().getControl("myShell").destroyContent();
 		var oCreateReportTemplate = sap.ui.view({
-			viewName : 'ereportanalyticsnew.addReportTemplate',
+			viewName : "ereportanalyticsnew.addReportTemplate",
 			type : sap.ui.core.mvc.ViewType.JS
 		});
-		sap.ui.getCore().getControl('myShell').setContent(oCreateReportTemplate);
+		sap.ui.getCore().getControl("myShell").setContent(oCreateReportTemplate);
 	},
-/**
- * Called when a controller is instantiated and its View controls (if available)
- * are already created. Can be used to modify the View before it is displayed,
- * to bind event handlers and do other one-time initialization.
- * 
- * @memberOf ereportanalyticsnew.reportTemplate
- */
-// onInit: function() {
-//
-// },
+
+	editReportTemplate : function(oTable) {
+		var oModel = oTable.getModel();
+		var selRowContext = oTable.getContextByIndex(oTable.getSelectedIndex());
+		var selectedID = oModel.getProperty("id", selRowContext);
+		var selectedStatus = oModel.getProperty("status", selRowContext);
+		sap.ui.getCore().getControl("myShell").destroyContent();
+		var oReportTemplate = sap.ui.view({
+			viewName : "ereportanalyticsnew.addReportTemplate",
+			type : sap.ui.core.mvc.ViewType.JS
+		});
+		sap.ui.getCore().getControl("myShell").setContent(oReportTemplate);
+		oReportTemplate.getController().onEditOrViewInit(selectedStatus, selectedID);
+	},
+
+	deleteReportTemplate : function(oTable) {
+
+	},
+
+	releaseReportTemplate : function(oTable) {
+
+	},
+
+	tableRowSelected : function(oTable) {
+		var oModel = oTable.getModel();
+		var selRowContext = oTable.getContextByIndex(oTable.getSelectedIndex());
+		var selectedStatus = oModel.getProperty("status", selRowContext);
+		console.log(selectedStatus);
+		if (oTable.getSelectedIndex() != -1) {
+			if (selectedStatus == "New") {
+				sap.ui.getCore().getControl("reportTemplate.B0").setEnabled(true);
+				sap.ui.getCore().getControl("reportTemplate.B1").setEnabled(true);
+				sap.ui.getCore().getControl("reportTemplate.B3").setEnabled(true);
+			} else {
+				sap.ui.getCore().getControl("reportTemplate.B0").setEnabled(true);
+				sap.ui.getCore().getControl("reportTemplate.B1").setEnabled(false);
+				sap.ui.getCore().getControl("reportTemplate.B3").setEnabled(false);
+			}
+		} else {
+			sap.ui.getCore().getControl("reportTemplate.B0").setEnabled(true);
+			sap.ui.getCore().getControl("reportTemplate.B1").setEnabled(false);
+			sap.ui.getCore().getControl("reportTemplate.B3").setEnabled(false);
+		}
+
+	},
+
 /**
  * Similar to onAfterRendering, but this hook is invoked before the controller's
  * View is re-rendered (NOT before the first rendering! onInit() is used for

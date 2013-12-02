@@ -7,7 +7,6 @@ import javax.persistence.*;
 
 import static javax.persistence.TemporalType.DATE;
 import org.sap.era.persistence.CellModel;
-import java.util.Collection;
 import static javax.persistence.GenerationType.AUTO;
 
 @Entity

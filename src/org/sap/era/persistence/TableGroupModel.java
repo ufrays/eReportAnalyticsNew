@@ -23,7 +23,8 @@ import org.sap.era.main.CustomDateSerializer;
 
 @Entity
 @Table(name = "T_TABLEGROUPMODEL")
-@NamedQueries({ @NamedQuery(name = "AllTableGroupModels", query = "select tgm from TableGroupModel tgm"),
+@NamedQueries({
+		@NamedQuery(name = "AllTableGroupModels", query = "select tgm from TableGroupModel tgm"),
 		@NamedQuery(name = "GetTableGroupModelByID", query = "select tgm from TableGroupModel tgm where tgm.id = :groupID") })
 public class TableGroupModel {
 
@@ -31,9 +32,13 @@ public class TableGroupModel {
 	@GeneratedValue(strategy = AUTO)
 	private long id;
 	@Basic
-	private int flag;
+	private int flag;// Model Type
+	@Basic
+	private int category; //
 	@Basic
 	private String name;
+	@Basic
+	private String status;
 	@Basic
 	@Temporal(DATE)
 	private Date createdOn;
@@ -41,6 +46,10 @@ public class TableGroupModel {
 	private int createdBy;
 	@Basic
 	private String modelPath;
+	@Basic
+	private String description;
+	@Basic
+	private String modelPath2;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "tableGroupModel")
 	private List<TableModel> tableModel;
 
@@ -100,6 +109,38 @@ public class TableGroupModel {
 
 	public void setTableModel(List<TableModel> tableModel) {
 		this.tableModel = tableModel;
+	}
+
+	public int getCategory() {
+		return category;
+	}
+
+	public void setCategory(int category) {
+		this.category = category;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getModelPath2() {
+		return modelPath2;
+	}
+
+	public void setModelPath2(String modelPath2) {
+		this.modelPath2 = modelPath2;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

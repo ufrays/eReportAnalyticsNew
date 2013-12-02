@@ -1,5 +1,6 @@
 package org.sap.era.dao;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -9,8 +10,13 @@ import javax.annotation.Resource;
 
 import org.sap.era.persistence.AssignedOrgnazition;
 import org.sap.era.persistence.Orgnazition;
+import org.sap.era.persistence.PeriodicTableGroupAssignment;
 import org.sap.era.persistence.Person;
 import org.sap.era.persistence.TableGroupAssignment;
+import org.sap.era.persistence.TimeCoordinate;
+import org.sap.era.persistence.enums.EIntervalTag;
+import org.sap.era.persistence.enums.EOriginTag;
+import org.sap.era.persistence.enums.EPeriodTag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,39 +31,44 @@ public class DataInitializationContext {
 
 	@Autowired
 	@Resource
-	private OrgnazitionDAO orgDao;
+	private OrgnazitionDAO orgnazitionDAO;
 
 	@Autowired
 	@Resource
-	private AssignedOrganizationDAO aoDao;
+	private AssignedOrganizationDAO assignedOrganizationDAO;
 
 	@Autowired
 	@Resource
-	private CellModelDAO cmDao;
+	private CellModelDAO cellModelDAO;
 
 	@Autowired
 	@Resource
-	private TableModelDAO tmDao;
+	private TableModelDAO tableModelDAO;
 
 	@Autowired
 	@Resource
-	private TableGroupModelDAO tgmDao;
+	private TableGroupModelDAO tableGroupModelDAO;
 
 	@Autowired
 	@Resource
-	private TableGroupAssignmentDAO tgaDao;
+	private TableGroupAssignmentDAO tableGroupAssignmentDAO;
+
+	@Autowired
+	@Resource
+	private PeriodicTableGroupAssignmentDAO periodicTableGroupAssignmentDAO;
 
 	@PostConstruct
 	public void initial() {
 		if (checkWhetherShouldInitial()) {
 			initialOrg();
 			initialPerson();
-			initialReportAssignment();
+			// initialReportAssignment();
+			initialPeriodicReportAssignment();
 		}
 	}
 
 	private boolean checkWhetherShouldInitial() {
-		return orgDao.getAllOrgnazitions().size() == 0;
+		return orgnazitionDAO.getAllOrgnazitions().size() == 0;
 	}
 
 	private void initialOrg() {
@@ -67,7 +78,7 @@ public class DataInitializationContext {
 		List<Orgnazition> orgsWithLevel = new ArrayList<Orgnazition>(1);
 		Orgnazition rootOrg = createOrg(0, 0);
 		orgsWithLevel.add(rootOrg);
-		rootOrg = orgDao.persist(rootOrg);
+		rootOrg = orgnazitionDAO.persist(rootOrg);
 		int currentLevel = 1;
 		while (currentLevel++ < MAX_LEVEL) {
 			orgsWithLevel = createSubOrgs(currentLevel, orgsWithLevel);
@@ -85,7 +96,7 @@ public class DataInitializationContext {
 				orgs.add(subOrg);
 			}
 		}
-		return orgDao.persist(orgs);
+		return orgnazitionDAO.persist(orgs);
 	}
 
 	private Orgnazition createOrg(int idx, int level) {
@@ -102,7 +113,7 @@ public class DataInitializationContext {
 	}
 
 	private void initialPerson() {
-		List<Orgnazition> orgList = orgDao.getAllOrgnazitions();
+		List<Orgnazition> orgList = orgnazitionDAO.getAllOrgnazitions();
 		if (orgList == null || orgList.size() == 0) {
 			// TODO: Throw exception if necessary
 			return;
@@ -125,7 +136,7 @@ public class DataInitializationContext {
 	}
 
 	private void initialReportAssignment() {
-		List<Orgnazition> orgListHost = orgDao.getAllOrgnazitions();
+		List<Orgnazition> orgListHost = orgnazitionDAO.getAllOrgnazitions();
 		if (orgListHost == null || orgListHost.size() == 0) {
 			// TODO: Throw exception if necessary
 			return;
@@ -137,7 +148,7 @@ public class DataInitializationContext {
 			tga.setName("Test Report Assignment " + R_INST.nextInt(900) + 100);
 			tga.setDurationModel("Duration Model Type A");
 			tga.setDescription("Test Report Assignment " + R_INST.nextInt(9000) + 1000);
-			tga = tgaDao.persist(tga);
+			tga = tableGroupAssignmentDAO.persist(tga);
 			// Create assigned organizations
 			fetchSize = R_INST.nextInt(fetchSize);
 			fetchSize = fetchSize < 1 ? 1 : fetchSize;
@@ -150,7 +161,84 @@ public class DataInitializationContext {
 				tga.getAssignedOrgnazition().add(assignedOrg);
 				assignedOrgs.add(assignedOrg);
 			}
-			aoDao.persist(assignedOrgs);
+			assignedOrganizationDAO.persist(assignedOrgs);
+		}
+	}
+
+	private void initialPeriodicReportAssignment() {
+		List<Orgnazition> orgListHost = orgnazitionDAO.getAllOrgnazitions();
+		if (orgListHost == null || orgListHost.size() == 0) {
+			// TODO: Throw exception if necessary
+			return;
+		}
+		int fetchSize = orgListHost.size();
+
+		for (int i = 0; i < 10; i++) {
+			PeriodicTableGroupAssignment ptga = new PeriodicTableGroupAssignment();
+			ptga.setName("Test Report Assignment " + R_INST.nextInt(900) + 100);
+			ptga.setDurationModel("Duration Model Type A");
+			ptga.setDescription("Test Report Assignment " + R_INST.nextInt(9000) + 1000);
+
+			// Period type - e.g. Yearly, Monthly
+			ptga.setPeriodTag(this.getRandomEnum(EPeriodTag.class));
+			// Rule for Create date
+			TimeCoordinate createTimeCoordinate = new TimeCoordinate();
+			createTimeCoordinate.setIntervalTag(this.getRandomEnum(EIntervalTag.class));
+			createTimeCoordinate.setOriginTag(this.getRandomEnum(EOriginTag.class));
+			createTimeCoordinate.setOffsetDays(R_INST.nextInt(14) - 7);
+			ptga.setCreateTimeCoordinate(createTimeCoordinate);
+			// Rule for Start date
+			TimeCoordinate startTimeCoordinate = new TimeCoordinate();
+			startTimeCoordinate.setIntervalTag(this.getRandomEnum(EIntervalTag.class));
+			startTimeCoordinate.setOriginTag(this.getRandomEnum(EOriginTag.class));
+			startTimeCoordinate.setOffsetDays(R_INST.nextInt(14) - 7);
+			ptga.setStartTimeCoordinate(startTimeCoordinate);
+			// Rule for End date
+			TimeCoordinate endTimeCoordinate = new TimeCoordinate();
+			endTimeCoordinate.setIntervalTag(this.getRandomEnum(EIntervalTag.class));
+			endTimeCoordinate.setOriginTag(this.getRandomEnum(EOriginTag.class));
+			endTimeCoordinate.setOffsetDays(R_INST.nextInt(14) - 7);
+			ptga.setEndTimeCoordinate(endTimeCoordinate);
+
+			ptga = periodicTableGroupAssignmentDAO.persist(ptga);
+			// Create assigned organizations
+			fetchSize = R_INST.nextInt(fetchSize);
+			fetchSize = fetchSize < 1 ? 1 : fetchSize;
+			List<Orgnazition> originalOrgs = orgListHost.subList(0, fetchSize);
+			List<AssignedOrgnazition> assignedOrgs = new ArrayList<AssignedOrgnazition>(originalOrgs.size());
+			for (int j = 0; j < originalOrgs.size(); j++) {
+				AssignedOrgnazition assignedOrg = new AssignedOrgnazition();
+				assignedOrg.setOrgnazition(originalOrgs.get(j));
+				assignedOrg.setTableGroupAssignment(ptga);
+				ptga.getAssignedOrgnazition().add(assignedOrg);
+				assignedOrgs.add(assignedOrg);
+			}
+			assignedOrganizationDAO.persist(assignedOrgs);
+		}
+	}
+
+	private <TEnum> TEnum getRandomEnum(Class<TEnum> enumType) {
+		final Random rInst = new Random();
+		if (!enumType.isEnum()) {
+			// throw new SystemException("Only enum type is allowed!");
+			return null;
+		}
+		ArrayList<TEnum> allEnumFields = new ArrayList<TEnum>();
+		for (Field field : enumType.getFields()) {
+			if (field.isEnumConstant()) {
+				try {
+					allEnumFields.add((TEnum) field.get(null));
+				} catch (IllegalArgumentException | IllegalAccessException ex) {
+					ex.printStackTrace();
+					// throw new SystemException(ex.getMessage());
+					return null;
+				}
+			}
+		}
+		if (allEnumFields.size() > 0) {
+			return allEnumFields.get(rInst.nextInt(allEnumFields.size()));
+		} else {
+			return null;
 		}
 	}
 }
