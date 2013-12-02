@@ -23,37 +23,38 @@ public class FileDownloadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 	private Document doc;
-	
-	 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public FileDownloadServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String action = request.getParameter("action"); 
-        if (action != null && action.equalsIgnoreCase("getfile")) {  
-            String docId = request.getParameter("docid");  
-            
-            CmisHelper cmisHelper = CmisHelper.retrieveCmisHelperClass(request);  
-            Document doc = cmisHelper.getDocumentById(docId);
-            response.setContentType(CONTENT_TYPE);
-            //doc.get
-            response.setHeader("Content-Disposition","attachment;filename="+ doc.getName());
-            cmisHelper.streamOutDocument(response, docId);  
-            
-        }  
+	public FileDownloadServlet() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		String action = request.getParameter("action");
+		if (action != null && action.equalsIgnoreCase("getfile")) {
+			String docId = request.getParameter("docid");
+
+			CmisHelper cmisHelper = CmisHelper.retrieveCmisHelperClass(request);
+			Document doc = cmisHelper.getDocumentById(docId);
+			response.setContentType(CONTENT_TYPE);
+			// doc.get
+			response.setHeader("Content-Disposition", "attachment;filename=" + doc.getName());
+			cmisHelper.streamOutDocument(response, docId);
+
+		}
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub

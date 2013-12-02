@@ -2,18 +2,26 @@ package org.sap.era.persistence;
 
 import java.util.List;
 
-import javax.persistence.*;
-import org.sap.era.persistence.TableGroupModel;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "T_TABLEGROUPASSIGNMENT")
-@NamedQueries({
-	@NamedQuery(name = "AllTableGroupAssignments", query = "select tga from TableGroupAssignment tga"),
-	@NamedQuery(name = "GetTableGroupAssignmentByID", query = "select tga from TableGroupAssignment tga where tga.id = :assignmentID")
-})
+@NamedQueries({ @NamedQuery(name = "AllTableGroupAssignments", query = "select tga from TableGroupAssignment tga"),
+		@NamedQuery(name = "GetTableGroupAssignmentByID", query = "select tga from TableGroupAssignment tga where tga.id = :assignmentID") })
 public class TableGroupAssignment {
 
 	@Id
+	@GeneratedValue
 	private long id;
 
 	@Basic
@@ -59,8 +67,7 @@ public class TableGroupAssignment {
 		return assignedOrgnazition;
 	}
 
-	public void setAssignedOrgnazition(
-			List<AssignedOrgnazition> assignedOrgnazition) {
+	public void setAssignedOrgnazition(List<AssignedOrgnazition> assignedOrgnazition) {
 		this.assignedOrgnazition = assignedOrgnazition;
 	}
 

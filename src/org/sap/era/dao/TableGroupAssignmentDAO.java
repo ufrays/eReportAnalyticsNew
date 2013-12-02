@@ -3,50 +3,48 @@ package org.sap.era.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.sap.era.persistence.Orgnazition;
 import org.sap.era.persistence.TableGroupAssignment;
+import org.springframework.stereotype.Repository;
 
-public class TableGroupAssignmentDAO {
+@Repository(value = "tableGroupAssignmentDAO")
+public class TableGroupAssignmentDAO extends BaseDAO<TableGroupAssignment, Long> {
 
-	private EntityManagerFactory entityManagerFactory;
-
-	public EntityManagerFactory getEntityManagerFactory() {
-		return entityManagerFactory;
-	}
-
-	public void setEntityManagerFactory(
-			EntityManagerFactory entityManagerFactory) {
-		this.entityManagerFactory = entityManagerFactory;
-	}
-	
-	//
-	public List<TableGroupAssignment> getAllTableGroupAssignments(){
+	/**
+	 * 
+	 * @return
+	 */
+	public List<TableGroupAssignment> getAllTableGroupAssignments() {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			List<TableGroupAssignment> tableGroupAssignments = em.createNamedQuery("AllTableGroupAssignments",TableGroupAssignment.class).getResultList();
+			List<TableGroupAssignment> tableGroupAssignments = em.createNamedQuery("AllTableGroupAssignments", TableGroupAssignment.class)
+					.getResultList();
 			return tableGroupAssignments;
 		} finally {
 			if (em != null) {
 				em.close();
 			}
 		}
-		
+
 	}
-	
-	//
-	public TableGroupAssignment getTableGroupAssignmentByID(long ID){
+
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public TableGroupAssignment getTableGroupAssignmentByID(long id) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
 			List<TableGroupAssignment> tableGroupAssignments;
-			Query query = em.createNamedQuery("GetTableGroupAssignmentByID",TableGroupAssignment.class);
-			query.setParameter("assignmentID", ID);
+			TypedQuery<TableGroupAssignment> query = em.createNamedQuery("GetTableGroupAssignmentByID", TableGroupAssignment.class);
+			query.setParameter("assignmentID", id);
 			tableGroupAssignments = query.getResultList();
-			if (tableGroupAssignments!=null && tableGroupAssignments.size()>0){
+			if (tableGroupAssignments != null && tableGroupAssignments.size() > 0) {
 				return tableGroupAssignments.get(0);
-			}else{
+			} else {
 				return null;
 			}
 		} finally {
@@ -54,11 +52,14 @@ public class TableGroupAssignmentDAO {
 				em.close();
 			}
 		}
-		
+
 	}
-	
-	//
-	public void addTableGroupAssignment(TableGroupAssignment tableGroupAssignment){
+
+	/**
+	 * 
+	 * @param tableGroupAssignment
+	 */
+	public void addTableGroupAssignment(TableGroupAssignment tableGroupAssignment) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
 			em.getTransaction().begin();
@@ -70,16 +71,19 @@ public class TableGroupAssignmentDAO {
 			}
 		}
 	}
-	
-	//
-	public List<Orgnazition> getUnselectedOrgnazition(long tableGroupAssignmentID){
+
+	/**
+	 * 
+	 * @param tableGroupAssignmentID
+	 * @return
+	 */
+	public List<Orgnazition> getUnselectedOrgnazition(long tableGroupAssignmentID) {
 		EntityManager em = entityManagerFactory.createEntityManager();
-		Query query = em.createQuery("select org from Orgnazition org where org.id is not in" +
-				" (select ao.orgnaztion.id from AssginedOrgnazition ao where ao.tableGroupAssignment.id=:assignmentID)");
+		TypedQuery<Orgnazition> query = em.createQuery("select org from Orgnazition org where org.id is not in"
+				+ " (select ao.orgnaztion.id from AssginedOrgnazition ao where ao.tableGroupAssignment.id = :assignmentID)", Orgnazition.class);
 		query.setParameter("assignmentID", tableGroupAssignmentID);
 		List<Orgnazition> orgList = query.getResultList();
 		return orgList;
 	}
-	
-	
+
 }

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 							http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-		version="2.5"
-		xmlns="http://java.sun.com/xml/ns/javaee">
+	version="2.5" xmlns="http://java.sun.com/xml/ns/javaee">
 	<display-name>eReportAnalyticsNew</display-name>
-	
+
 	<!-- Spring config -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -26,9 +25,9 @@
 		<servlet-name>dispatcher</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- ============================================================== -->
-	<!-- UI5 resource servlet used to handle application resources      -->
+	<!-- UI5 resource servlet used to handle application resources -->
 	<!-- ============================================================== -->
 
 	<servlet>
@@ -55,7 +54,7 @@
 
 
 	<!-- ============================================================== -->
-	<!-- Cache Control Filter to prevent caching of any resource        -->
+	<!-- Cache Control Filter to prevent caching of any resource -->
 	<!-- ============================================================== -->
 
 	<filter>
@@ -86,7 +85,7 @@
 
 
 	<!-- ============================================================== -->
-	<!-- UI5 proxy servlet                                              -->
+	<!-- UI5 proxy servlet -->
 	<!-- ============================================================== -->
 
 	<servlet>
@@ -100,7 +99,7 @@
 
 
 	<!-- ============================================================== -->
-	<!-- Welcome file list                                              -->
+	<!-- Welcome file list -->
 	<!-- ============================================================== -->
 
 	<welcome-file-list>
@@ -121,7 +120,7 @@
 	</context-param>
 
 	<!-- ============================================================== -->
-	<!-- Servlet                                              -->
+	<!-- Servlet -->
 	<!-- ============================================================== -->
 
 	<servlet>
@@ -134,7 +133,7 @@
 		<servlet-name>HelloWorld</servlet-name>
 		<url-pattern>/HelloWorld</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<description></description>
 		<display-name>HelloWorldServlet</display-name>
@@ -145,14 +144,14 @@
 		<servlet-name>HelloWorldServlet</servlet-name>
 		<url-pattern>/HelloWorldServlet</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- ============================================================== -->
-	<!-- CMIS                                              -->
+	<!-- CMIS -->
 	<!-- ============================================================== -->
-	
+
 	<resource-ref>
-	   <res-ref-name>EcmService</res-ref-name>
-	   <res-type>com.sap.ecm.api.EcmService</res-type>
+		<res-ref-name>EcmService</res-ref-name>
+		<res-type>com.sap.ecm.api.EcmService</res-type>
 	</resource-ref>
-	
+
 </web-app>

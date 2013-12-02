@@ -1,17 +1,22 @@
 package org.sap.era.persistence;
 
-import javax.persistence.*;
-
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "T_ASSIGNEDORGNAZITION")
 public class AssignedOrgnazition {
 
 	@Id
+	@GeneratedValue
 	private long id;
 	@ManyToOne
 	private Orgnazition orgnazition;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "tableGroupAssignment", nullable = false)
 	private TableGroupAssignment tableGroupAssignment;
@@ -39,7 +44,4 @@ public class AssignedOrgnazition {
 	public void setTableGroupAssignment(TableGroupAssignment tableGroupAssignment) {
 		this.tableGroupAssignment = tableGroupAssignment;
 	}
-
-	
-	
 }

@@ -32,9 +32,9 @@ public class TableData {
 	private String uploadedDocmentID;
 	@Basic
 	private Integer reportOrgnizationID;
-	@OneToMany(mappedBy="tableData")
+	@OneToMany(mappedBy = "tableData")
 	private Collection<CellData> cellData;
-	
+
 	public long getId() {
 		return id;
 	}

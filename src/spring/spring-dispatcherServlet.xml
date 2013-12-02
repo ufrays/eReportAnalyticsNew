@@ -13,11 +13,26 @@
        default-autowire="byName">  
       
     <!-- Enables the Spring MVC @Controller programming model -->  
-    <mvc:annotation-driven />  
-      
+    <mvc:annotation-driven />
+    
+    <!-- ============================================================== -->
+	<!-- Beans configurations -->
+	<!-- ============================================================== -->
+	<import resource="classpath:org/sap/era/dao/beans.xml" />
+	<import resource="classpath:org/sap/era/service/beans.xml" />
+	<import resource="classpath:org/sap/era/web/controller/beans.xml" />
+	
+	<!-- ============================================================== -->
+	<!-- Auto Beans Scan -->
+	<!-- ============================================================== -->
+    <context:component-scan base-package="org.sap.era.dao" />  
+    <context:component-scan base-package="org.sap.era.service" />
     <context:component-scan base-package="org.sap.era.web.controller" />  
+    
       
-      
+      <!-- ============================================================== -->
+	<!-- Web Resource Resolver -->
+	<!-- ============================================================== -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
         <property name="prefix" value="/pages/" />  
         <property name="suffix" value=".jsp" />  

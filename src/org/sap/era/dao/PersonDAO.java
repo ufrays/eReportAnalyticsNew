@@ -1,29 +1,20 @@
 package org.sap.era.dao;
 
 import java.util.List;
+
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
-import org.sap.era.persistence.Orgnazition;
 import org.sap.era.persistence.Person;
+import org.springframework.stereotype.Repository;
 
-public class PersonDAO {
-	private EntityManagerFactory entityManagerFactory;
-
-	public EntityManagerFactory getEntityManagerFactory() {
-		return entityManagerFactory;
-	}
-
-	public void setEntityManagerFactory(
-			EntityManagerFactory entityManagerFactory) {
-		this.entityManagerFactory = entityManagerFactory;
-	}
+@Repository(value = "personDAO")
+public class PersonDAO extends BaseDAO<Person, Long> {
 
 	public List<Person> getAllPersons() {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			List<Person> persons = em.createNamedQuery("AllPersons",Person.class).getResultList();
+			List<Person> persons = em.createNamedQuery("AllPersons", Person.class).getResultList();
 			return persons;
 		} finally {
 			if (em != null) {
@@ -31,12 +22,12 @@ public class PersonDAO {
 			}
 		}
 	}
-	
+
 	public List<Person> getPersonsByOrgID(String orgID) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			Query query = em.createNamedQuery("PersonsByOrgID",Person.class);
-			query.setParameter("orgID", Long.parseLong(orgID)) ;
+			TypedQuery<Person> query = em.createNamedQuery("PersonsByOrgID", Person.class);
+			query.setParameter("orgID", Long.parseLong(orgID));
 			List<Person> persons = query.getResultList();
 			return persons;
 		} finally {
@@ -49,8 +40,8 @@ public class PersonDAO {
 	public List<Person> getPersonsByUserName(String userName) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			Query query = em.createNamedQuery("PersonsByUserName",Person.class);
-			query.setParameter("userName", userName) ;
+			TypedQuery<Person> query = em.createNamedQuery("PersonsByUserName", Person.class);
+			query.setParameter("userName", userName);
 			List<Person> persons = query.getResultList();
 			return persons;
 		} finally {
@@ -59,7 +50,7 @@ public class PersonDAO {
 			}
 		}
 	}
-	
+
 	public void addPerson(Person person) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {

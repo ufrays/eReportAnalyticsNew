@@ -10,7 +10,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.sap.era.service.*;
 import org.sap.era.service.excel.*;
 
-
 public class Test {
 
 	/**
@@ -21,8 +20,8 @@ public class Test {
 			XSSFWorkbook wb = new XSSFWorkbook(new FileInputStream("C:\\temp\\test.xlsx"));
 			XSSFSheet sheet = wb.getSheetAt(0);
 			ExcelForm excelForm = new ExcelForm();
-			
-			excelForm = ExcelReadService.parseExcelFile(new XSSFWorkbook (new FileInputStream("C:\\temp\\test.xlsx")), "Sheet1");
+
+			excelForm = ExcelReadService.parseExcelFile(new XSSFWorkbook(new FileInputStream("C:\\temp\\test.xlsx")), "Sheet1");
 			Set set = excelForm.getCells().entrySet();
 			Iterator itr = set.iterator();
 			while (itr.hasNext()) {
@@ -34,15 +33,14 @@ public class Test {
 				String value = ((Control) me.getValue()).getText();
 				boolean isMerge = ((Control) me.getValue()).getIsMerge();
 				int colspan = ((Control) me.getValue()).getColspan();
-				int rowspan = ((Control) me.getValue()).getRowspan();			
-				System.out.println("INSERT INTO CellModel(tableModel,type,label,row,col,colspan,rowspan ) VALUES  (50," 
-						 + type+",'"+ value +"',"+ (rowId) +","+ columnId + ","+colspan+","+rowspan+")");
-			
+				int rowspan = ((Control) me.getValue()).getRowspan();
+				System.out.println("INSERT INTO CellModel(tableModel,type,label,row,col,colspan,rowspan ) VALUES  (50," + type + ",'" + value + "',"
+						+ (rowId) + "," + columnId + "," + colspan + "," + rowspan + ")");
+
 			}
 			int i = 0;
-			i =2;
-		}
-		catch (Exception ex) {
+			i = 2;
+		} catch (Exception ex) {
 
 		}
 	}

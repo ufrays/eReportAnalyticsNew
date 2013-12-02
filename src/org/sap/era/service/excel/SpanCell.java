@@ -7,13 +7,13 @@ public class SpanCell {
 	private Cell cell;
 
 	private int firstrow;
-	
+
 	private int lastrow;
-	
+
 	private int firstcol;
-	
+
 	private int lastcol;
-	
+
 	public int getFirstrow() {
 		return firstrow;
 	}

@@ -3,28 +3,18 @@ package org.sap.era.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-import org.sap.era.persistence.*;
+import javax.persistence.TypedQuery;
 
-public class TableGroupModelDAO {
+import org.sap.era.persistence.TableGroupModel;
+import org.springframework.stereotype.Repository;
 
-	private EntityManagerFactory entityManagerFactory;
-
-	public EntityManagerFactory getEntityManagerFactory() {
-		return entityManagerFactory;
-	}
-
-	public void setEntityManagerFactory(
-			EntityManagerFactory entityManagerFactory) {
-		this.entityManagerFactory = entityManagerFactory;
-	}
-	
+@Repository(value = "tableGroupModelDAO")
+public class TableGroupModelDAO extends BaseDAO<TableGroupModel, Long> {
 
 	public List<TableGroupModel> getAllTableGroupModels() {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			Query query = em.createNamedQuery("AllTableGroupModels",TableGroupModel.class);
+			TypedQuery<TableGroupModel> query = em.createNamedQuery("AllTableGroupModels", TableGroupModel.class);
 			List<TableGroupModel> tableGroupModelList = query.getResultList();
 			return tableGroupModelList;
 		} finally {
@@ -33,32 +23,32 @@ public class TableGroupModelDAO {
 			}
 		}
 	}
-	
+
 	public TableGroupModel getTableGroupModelByID(long groupID) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			Query query = em.createNamedQuery("GetTableGroupModelByID",TableGroupModel.class);
+			TypedQuery<TableGroupModel> query = em.createNamedQuery("GetTableGroupModelByID", TableGroupModel.class);
 			query.setParameter("groupID", groupID);
 			List<TableGroupModel> tableGroupModelList = query.getResultList();
-			if(tableGroupModelList!= null && tableGroupModelList.size()>0){
+			if (tableGroupModelList != null && tableGroupModelList.size() > 0) {
 				return tableGroupModelList.get(0);
-			}else{
+			} else {
 				return null;
 			}
-			
+
 		} finally {
 			if (em != null) {
 				em.close();
 			}
 		}
 	}
-	
+
 	public void addTableGroupModel(TableGroupModel tableGroupModel) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
 			em.getTransaction().begin();
 			em.persist(tableGroupModel);
-			
+
 			em.getTransaction().commit();
 		} finally {
 			if (em != null) {

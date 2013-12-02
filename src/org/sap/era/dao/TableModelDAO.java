@@ -3,28 +3,18 @@ package org.sap.era.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
 import org.sap.era.persistence.TableModel;
+import org.springframework.stereotype.Repository;
 
-public class TableModelDAO {
-
-	private EntityManagerFactory entityManagerFactory;
-
-	public EntityManagerFactory getEntityManagerFactory() {
-		return entityManagerFactory;
-	}
-
-	public void setEntityManagerFactory(
-			EntityManagerFactory entityManagerFactory) {
-		this.entityManagerFactory = entityManagerFactory;
-	}
-	
+@Repository(value = "tableModelDAO")
+public class TableModelDAO extends BaseDAO<TableModel, Long> {
 
 	public List<TableModel> getAllTableModelsByTableGroupModel(String tableGroupModelID) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			Query query = em.createNamedQuery("AllTableModelsByTableGroupModel",TableModel.class);
+			TypedQuery<TableModel> query = em.createNamedQuery("AllTableModelsByTableGroupModel", TableModel.class);
 			query.setParameter("tableGroupModelID", tableGroupModelID);
 			List<TableModel> tableModelList = query.getResultList();
 			return tableModelList;
@@ -34,7 +24,7 @@ public class TableModelDAO {
 			}
 		}
 	}
-	
+
 	public void addTableModel(TableModel tableModel) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
@@ -47,6 +37,5 @@ public class TableModelDAO {
 			}
 		}
 	}
-	
-	
+
 }

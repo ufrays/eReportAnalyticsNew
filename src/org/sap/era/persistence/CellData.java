@@ -21,9 +21,9 @@ public class CellData {
 	@Basic
 	private String dataText;
 	@ManyToOne
-	@JoinColumn(name="tableData", nullable=false)
+	@JoinColumn(name = "tableData", nullable = false)
 	private TableData tableData;
-	
+
 	public long getId() {
 		return id;
 	}

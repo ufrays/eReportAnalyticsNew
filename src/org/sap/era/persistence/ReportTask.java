@@ -4,19 +4,24 @@ import static javax.persistence.TemporalType.DATE;
 
 import java.util.Date;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 @Entity
 @Table(name = "T_REPORTTASK")
 public class ReportTask {
 
 	@Id
+	@GeneratedValue
 	private long id;
 
 	private long orgizationID;
 
 	private long TableGroupModel;
-	
+
 	private String TableGroupModelName;
 
 	private long durationID;
@@ -34,17 +39,17 @@ public class ReportTask {
 	private long reportBy;
 	@Temporal(DATE)
 	private Date reportAt;
-	
+
 	private String reportByName;
-	
+
 	private String durationFlag;
-	
+
 	private String durationDepict;
-	
+
 	private String errorInformation;
-	
+
 	private String errorReason;
-	
+
 	private Integer passStatus;
 
 	public long getId() {
@@ -190,8 +195,5 @@ public class ReportTask {
 	public void setPassStatus(Integer passStatus) {
 		this.passStatus = passStatus;
 	}
-	
-	
-	
-	
+
 }

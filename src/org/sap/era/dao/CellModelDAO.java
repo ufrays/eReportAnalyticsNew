@@ -3,30 +3,18 @@ package org.sap.era.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.sap.era.persistence.CellModel;
-import org.sap.era.persistence.Person;
+import org.springframework.stereotype.Repository;
 
-public class CellModelDAO {
+@Repository(value = "cellModelDAO")
+public class CellModelDAO extends BaseDAO<CellModel, Long> {
 
-	private EntityManagerFactory entityManagerFactory;
-
-	public EntityManagerFactory getEntityManagerFactory() {
-		return entityManagerFactory;
-	}
-
-	public void setEntityManagerFactory(
-			EntityManagerFactory entityManagerFactory) {
-		this.entityManagerFactory = entityManagerFactory;
-	}
-	
-	
 	public List<CellModel> getAllCellModelsforLabelByTableModel(long tableModelID) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			Query query = em.createNamedQuery("AllCellModelsfoLabelByTableModel",CellModel.class);
+			TypedQuery<CellModel> query = em.createNamedQuery("AllCellModelsfoLabelByTableModel", CellModel.class);
 			query.setParameter("tableModelID", tableModelID);
 			List<CellModel> cellModelList = query.getResultList();
 			return cellModelList;
@@ -36,11 +24,11 @@ public class CellModelDAO {
 			}
 		}
 	}
-	
+
 	public List<CellModel> getAllCellModelsforParmByTableModel(long tableModelID) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			Query query = em.createNamedQuery("AllCellModelsforParmByTableModel",CellModel.class);
+			TypedQuery<CellModel> query = em.createNamedQuery("AllCellModelsforParmByTableModel", CellModel.class);
 			query.setParameter("tableModelID", tableModelID);
 			List<CellModel> cellModelList = query.getResultList();
 			return cellModelList;
@@ -50,11 +38,11 @@ public class CellModelDAO {
 			}
 		}
 	}
-	
+
 	public List<CellModel> getAllCellModelsforDataByTableModel(long tableModelID) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			Query query = em.createNamedQuery("AllCellModelsforDataByTableModel",CellModel.class);
+			TypedQuery<CellModel> query = em.createNamedQuery("AllCellModelsforDataByTableModel", CellModel.class);
 			query.setParameter("tableModelID", tableModelID);
 			List<CellModel> cellModelList = query.getResultList();
 			return cellModelList;
@@ -64,12 +52,11 @@ public class CellModelDAO {
 			}
 		}
 	}
-	
-	
+
 	public List<CellModel> getAllCellModelsByTableModel(long tableModelID) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			Query query = em.createNamedQuery("AllCellModelsByTableModel",CellModel.class);
+			TypedQuery<CellModel> query = em.createNamedQuery("AllCellModelsByTableModel", CellModel.class);
 			query.setParameter("tableModelID", tableModelID);
 			List<CellModel> cellModelList = query.getResultList();
 			return cellModelList;
@@ -79,7 +66,7 @@ public class CellModelDAO {
 			}
 		}
 	}
-	
+
 	public void addCellModel(CellModel cellModel) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
@@ -92,5 +79,4 @@ public class CellModelDAO {
 			}
 		}
 	}
-	
 }

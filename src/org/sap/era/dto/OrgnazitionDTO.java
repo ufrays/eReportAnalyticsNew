@@ -2,10 +2,8 @@ package org.sap.era.dto;
 
 import org.sap.era.persistence.Orgnazition;
 
+public class OrgnazitionDTO extends Orgnazition {
 
-public class OrgnazitionDTO extends Orgnazition{
-
-	
 	private int personCount;
 
 	public int getPersonCount() {
@@ -15,7 +13,5 @@ public class OrgnazitionDTO extends Orgnazition{
 	public void setPersonCount(int personCount) {
 		this.personCount = personCount;
 	}
-	
-	
-	
+
 }
