@@ -97,20 +97,20 @@ public class DataInitializationContext {
 			}
 		}
 		ArrayList<Orgnazition> result = orgnazitionDAO.persist(orgs);
-		orgnazitionDAO.merge(parentOrgs);
+		// orgnazitionDAO.merge(parentOrgs);
 
 		return result;
 	}
 
 	private Orgnazition createOrg(int idx, int level) {
 		Orgnazition subOrg = new Orgnazition();
-		subOrg.setName("Org_level_" + idx);
+		subOrg.setName("Org_with_level_" + level + "_" + idx);
 		subOrg.setOrgnazitionLevel(level);
 		subOrg.setParentName("#");
 		subOrg.setTypeID("0");
 		subOrg.setType("0");
 		subOrg.setReportDirect("1");
-		subOrg.setDescription("Demo Head Quater " + idx);
+		subOrg.setDescription("Org_" + level + "_" + idx);
 		return subOrg;
 	}
 
@@ -125,7 +125,7 @@ public class DataInitializationContext {
 			int createSize = R_INST.nextInt(4) + 2;
 			for (int idx = 0; idx < createSize; idx++) {
 				Person person = new Person();
-				person.setFirstName("Test_Person ");
+				person.setFirstName("Test Person");
 				person.setLastName("00" + String.valueOf(idx));
 				person.setName(person.getLastName() + "_" + person.getFirstName());
 				person.setOrgnazition(org);
