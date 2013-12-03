@@ -9,11 +9,17 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.NamedQueries;
 
 @Entity
 @Table(name = "T_REPORTTASKITEM")
+@NamedQueries({ 
+	@NamedQuery(name = "GetAllReportTaskItems", query = "select t from ReportTaskItem t"), 
+	@NamedQuery(name = "GetReportTaskItemByOrgID", query = "select t from ReportTaskItem t where t.orgnazition.id = :orgId") 
+})
 public class ReportTaskItem {
 
 	@Id
