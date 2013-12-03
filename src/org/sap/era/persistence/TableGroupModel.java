@@ -23,8 +23,7 @@ import org.sap.era.main.CustomDateSerializer;
 
 @Entity
 @Table(name = "T_TABLEGROUPMODEL")
-@NamedQueries({
-		@NamedQuery(name = "AllTableGroupModels", query = "select tgm from TableGroupModel tgm"),
+@NamedQueries({ @NamedQuery(name = "AllTableGroupModels", query = "select tgm from TableGroupModel tgm"),
 		@NamedQuery(name = "GetTableGroupModelByID", query = "select tgm from TableGroupModel tgm where tgm.id = :groupID") })
 public class TableGroupModel {
 

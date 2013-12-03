@@ -147,6 +147,34 @@ public class CmisHelper {
 	}
 
 	/**
+	 * This method deletes a file via it's document name
+	 * 
+	 * 
+	 */
+	public void deleteDocumentByName(String fileName) {
+		List<MyDocsDTO> list = this.getDocumentsList();
+		for (int i = 0; i < list.size(); i++) {
+			MyDocsDTO dto = list.get(i);
+			if (dto.getFilename().equals(fileName)) {
+				this.deleteDocument(dto.getId());
+			}
+		}
+
+	}
+
+	/**
+	 * This method deletes all documents
+	 * 
+	 * 
+	 */
+	public void deleteAllDocument() {
+		List<MyDocsDTO> list = this.getDocumentsList();
+		for (int i = 0; i < list.size(); i++) {
+			this.deleteDocument(list.get(i).getId());
+		}
+	}
+
+	/**
 	 * 
 	 * @param documentId
 	 *            the document id of the file in the CMIS system

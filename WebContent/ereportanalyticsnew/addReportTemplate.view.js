@@ -58,6 +58,11 @@ sap.ui.jsview("ereportanalyticsnew.addReportTemplate", {
 				
 			}
 		});
+//		var oLink = new sap.ui.commons.Link({
+//			text: "?",
+//			press: function() {alert('Alert from ' + oLink.getText());}});
+		
+		//oCell = new sap.ui.commons.layout.MatrixLayoutCell({content: [oFileUploader, ""], rowSpan : 1, colSpan : 2});
 		oLabel = new sap.ui.commons.Label({text: 'Template File', labelFor: oFileUploader});
 		oLayout1.createRow(oLabel, oFileUploader);
 		//selectedKey
@@ -71,7 +76,7 @@ sap.ui.jsview("ereportanalyticsnew.addReportTemplate", {
 		// 1.3 Template Name
 		oTF = new sap.ui.commons.TextField("addReportTemplate.name",{tooltip: 'Template Name', editable: true, value: '{name}', width: '400px'});
 		oLabel = new sap.ui.commons.Label({text: 'Template Name', labelFor: oTF});
-		oLayout1.createRow(oLabel, oTF);
+		oLayout1.createRow(oLabel, oTF); 
 		// 1.4 Template Description
 		oInput = new sap.ui.commons.TextArea("addReportTemplate.description",{value:"{description}",cols : 100, row: 4});
 		oInput.setRows(10);
@@ -116,8 +121,9 @@ sap.ui.jsview("ereportanalyticsnew.addReportTemplate", {
 		oTF = new sap.ui.commons.Link({
 			text: "Download",
 			press: function() {alert('download');}});
-		oLabel = new sap.ui.commons.Label({text: 'Template for Design', labelFor: oTF});
-		oLayout2.createRow(oLabel, oTF);
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({content: [oTF],colSpan : 1});
+		oLabel = new sap.ui.commons.Label({text: 'Template for Design', labelFor: oCell});
+		oLayout2.createRow(oLabel, oCell);
 		// 2.2 Template for Report
 		oTF = new sap.ui.commons.Link({
 			text: "Download",
@@ -128,16 +134,16 @@ sap.ui.jsview("ereportanalyticsnew.addReportTemplate", {
 		oTF = new sap.ui.commons.TextField({tooltip: 'Template Name', editable: true, value: '{name}', width: '400px'});
 		oLabel = new sap.ui.commons.Label({text: 'Sheet Preview', labelFor: oTF});
 		oLayout2.createRow(oLabel, oTF);
-	    // 2.4 create the HTML control for tab2
-        var html1 = new sap.ui.core.HTML({
-        	    content:"<iframe src='/eReportAnalyticsGit/pages/reportAdmin/ReportTemplatePreview.jsp?groupID=1' height='600px' width='100%' scrolling='yes'/>",
-                preferDOM : false,                      
-                // use the afterRendering event for 2 purposes
-                afterRendering : function(e) {
-                	  
-                }
-        });
-		oLayout2.createRow(html1);
+	        // 2.4 create the HTML control for tab2
+                var html1 = new sap.ui.core.HTML({
+                	    content:"<iframe src='/eReportAnalyticsGit/pages/reportAdmin/ReportTemplatePreview.jsp?groupID=1' height='600px' width='100%' scrolling='yes'/>",
+                        preferDOM : false,                      
+                        // use the afterRendering event for 2 purposes
+                        afterRendering : function(e) {
+                        	  
+                        }
+                });
+		oLayout2.createRow(html1,"");
 		oTab2.addContent(oLayout2);
 		oTabStrip1.addTab(oTab2);
 		oTabStrip1.attachSelect(function(oEvent){
