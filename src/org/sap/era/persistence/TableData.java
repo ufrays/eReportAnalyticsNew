@@ -2,10 +2,16 @@ package org.sap.era.persistence;
 
 import static javax.persistence.TemporalType.DATE;
 
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 @Entity
 @Table(name = "T_TABLEDATA")
@@ -33,7 +39,25 @@ public class TableData {
 	@Basic
 	private Integer reportOrgnizationID;
 	@OneToMany(mappedBy = "tableData")
-	private Collection<CellData> cellData;
+	private List<CellData> cellData;
+	@ManyToOne
+	private TableModel tableModel;
+
+	public List<CellData> getCellData() {
+		return cellData;
+	}
+
+	public void setCellData(List<CellData> cellData) {
+		this.cellData = cellData;
+	}
+
+	public TableModel getTableModel() {
+		return tableModel;
+	}
+
+	public void setTableModel(TableModel tableModel) {
+		this.tableModel = tableModel;
+	}
 
 	public long getId() {
 		return id;
@@ -97,14 +121,6 @@ public class TableData {
 
 	public void setReportOrgnizationID(Integer reportOrgnizationID) {
 		this.reportOrgnizationID = reportOrgnizationID;
-	}
-
-	public Collection<CellData> getCellData() {
-		return cellData;
-	}
-
-	public void setCellData(Collection<CellData> cellData) {
-		this.cellData = cellData;
 	}
 
 	public long getTableModelID() {

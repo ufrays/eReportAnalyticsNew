@@ -24,8 +24,8 @@ sap.ui.jsview('ereportanalyticsnew.report-assignment.owl', {
 		var tblReportAssignment = new sap.ui.table.Table(
 		// Query all pipeline setting
 		{
-			// visibleRowCount : 10,
-			// firstVisibleRow : 0,
+			visibleRowCount : 10,
+			firstVisibleRow : 3,
 			selectionMode : sap.ui.table.SelectionMode.Single,
 			// navigationMode : sap.ui.table.NavigationMode.Paginator,
 			fixedColumnCount : 0,
@@ -55,7 +55,7 @@ sap.ui.jsview('ereportanalyticsnew.report-assignment.owl', {
 			// ***********************************
 			columns :
 			[
-					// @Column - ID (To be hidden in release)
+					// @Column - ID (Hidden in release)
 					(function() {
 						var clnPipelineId = new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -77,22 +77,21 @@ sap.ui.jsview('ereportanalyticsnew.report-assignment.owl', {
 							sortProperty : 'Id',
 							filterProperty : 'Id',
 						});
-						return clnPipelineId;
+						// return clnPipelineId;
 					})(),
-					// @Column - DurationModel
+
+					// @Column - Name
 					(function() {
-						var clnPipelinePriority = new sap.ui.table.Column({
+						var clnPipelineServiceAdvisor = new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
-								text : 'Duration Model'
+								text : 'Name'
 							}),
 							width : 200 + 'px',
-							template : new sap.ui.commons.TextField().bindValue('durationModel', function(oriVal) {
-								return oriVal;
-							}),
-							sortProperty : 'durationModel',
-							filterProperty : 'durationModel',
+							template : new sap.ui.commons.TextField().bindValue('name'),
+							sortProperty : 'name',
+							filterProperty : 'name',
 						});
-						return clnPipelinePriority;
+						return clnPipelineServiceAdvisor;
 					})(),
 					// @Column - TableGroupModel
 					(function() {
@@ -107,20 +106,59 @@ sap.ui.jsview('ereportanalyticsnew.report-assignment.owl', {
 						});
 						return clnPipelineCustomerName;
 					})(),
-					// @Column - Name
+					// @Column - Period for the rule
 					(function() {
 						var clnPipelineServiceAdvisor = new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
-								text : 'Name'
+								text : 'Period'
 							}),
 							width : 200 + 'px',
-							template : new sap.ui.commons.TextField().bindValue('name'),
-							sortProperty : 'name',
-							filterProperty : 'name',
+							template : new sap.ui.commons.TextField().bindValue('periodTag'),
+							sortProperty : 'periodTag',
+							filterProperty : 'periodTag',
 						});
 						return clnPipelineServiceAdvisor;
 					})(),
-					// @Column - Description
+					// @Column - Rule of create date
+					(function() {
+						var clnPipelineServiceAdvisor = new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : 'Create Date'
+							}),
+							width : 200 + 'px',
+							template : new sap.ui.commons.TextField().bindValue('createTimeCoordinate/description'),
+							sortProperty : 'createTimeCoordinate/description',
+							filterProperty : 'createTimeCoordinate/description',
+						});
+						return clnPipelineServiceAdvisor;
+					})(),
+					// @Column - Rule of start date
+					(function() {
+						var clnPipelineServiceAdvisor = new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : 'Start Date'
+							}),
+							width : 200 + 'px',
+							template : new sap.ui.commons.TextField().bindValue('startTimeCoordinate/description'),
+							sortProperty : 'startTimeCoordinate/description',
+							filterProperty : 'startTimeCoordinate/description',
+						});
+						return clnPipelineServiceAdvisor;
+					})(),
+					// @Column - Rule of end date
+					(function() {
+						var clnPipelineServiceAdvisor = new sap.ui.table.Column({
+							label : new sap.ui.commons.Label({
+								text : 'End Date'
+							}),
+							width : 200 + 'px',
+							template : new sap.ui.commons.TextField().bindValue('endTimeCoordinate/description'),
+							sortProperty : 'endTimeCoordinate/description',
+							filterProperty : 'endTimeCoordinate/description',
+						});
+						return clnPipelineServiceAdvisor;
+					})(),
+					// @Column - Description (Disable Temporirily)
 					(function() {
 						var clnPipelineRequestTitle = new sap.ui.table.Column({
 							label : new sap.ui.commons.Label({
@@ -131,7 +169,7 @@ sap.ui.jsview('ereportanalyticsnew.report-assignment.owl', {
 							sortProperty : 'description',
 							filterProperty : 'description',
 						});
-						return clnPipelineRequestTitle;
+						// return clnPipelineRequestTitle;
 					})(),
 			],
 			rowSelectionChange : function(rowContext, rowIndex, rowIndices) {
