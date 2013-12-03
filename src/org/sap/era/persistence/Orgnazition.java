@@ -25,10 +25,13 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 @NamedQueries({ @NamedQuery(name = "AllOrgnazitions", query = "select o from Orgnazition o"),
 		@NamedQuery(name = "OrgnazitionsByParentID", query = "select o from Orgnazition o where o.parentOrgnazition.id= :parentID"),
 		@NamedQuery(name = "OrgnazitionByID", query = "select o from Orgnazition o where o.id= :ID"),
-		@NamedQuery(name = "OrgnazitionOfTop", query = "select o from Orgnazition o where o.OrgnazitionLevel= 0") })
+		@NamedQuery(name = "OrgnazitionOfTop", query = "select o from Orgnazition o where o.orgnazitionLevel= 0") })
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Orgnazition {
 
+	/*
+	 * Fields
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
@@ -45,17 +48,24 @@ public class Orgnazition {
 	@Basic
 	private String reportDirect;
 	@Basic
-	private int OrgnazitionLevel;
+	private int orgnazitionLevel;
 	@Basic
 	private String description;
+
+	/*
+	 * Navigations
+	 */
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "orgnazition")
 	private List<Person> person = new ArrayList<Person>();
 	@ManyToOne(cascade = { CascadeType.REFRESH }, optional = true)
 	@JoinColumn(name = "parentOrgnazition")
 	private Orgnazition parentOrgnazition;
 	@OneToMany(cascade = { CascadeType.REFRESH, CascadeType.REMOVE }, fetch = FetchType.LAZY, mappedBy = "parentOrgnazition")
-	private List<Orgnazition> childOrgnazition;
+	private List<Orgnazition> childOrgnazitions;
 
+	/*
+	 * Getters & Setters
+	 */
 	public long getId() {
 		return id;
 	}
@@ -124,30 +134,35 @@ public class Orgnazition {
 
 	@JsonIgnore
 	public List<Orgnazition> getChildOrgnazition() {
-		return childOrgnazition;
+		if (this.childOrgnazitions == null) {
+			childOrgnazitions = new ArrayList<Orgnazition>();
+		}
+		return childOrgnazitions;
 	}
 
 	public void setChildOrgnazition(List<Orgnazition> childOrgnazition) {
-		this.childOrgnazition = childOrgnazition;
+		this.childOrgnazitions = childOrgnazition;
 	}
 
 	public int getOrgnazitionLevel() {
-		return OrgnazitionLevel;
+		return orgnazitionLevel;
 	}
 
 	public void setOrgnazitionLevel(int orgnazitionLevel) {
-		OrgnazitionLevel = orgnazitionLevel;
+		this.orgnazitionLevel = orgnazitionLevel;
 	}
 
 	public void addOrgChild(Orgnazition child) {
-		this.childOrgnazition.add(child);
+		this.childOrgnazitions.add(child);
 	}
 
 	public void removeOrgChild(Orgnazition child) {
-		for (int i = 0; i < this.childOrgnazition.size(); i++) {
-			if (childOrgnazition.get(i).getId() == child.getId()) {
-				this.childOrgnazition.remove(i);
-				break;
+		if (!this.childOrgnazitions.remove(child)) {
+			for (int i = 0; i < this.childOrgnazitions.size(); i++) {
+				if (childOrgnazitions.get(i).getId() == child.getId()) {
+					this.childOrgnazitions.remove(i);
+					break;
+				}
 			}
 		}
 	}
