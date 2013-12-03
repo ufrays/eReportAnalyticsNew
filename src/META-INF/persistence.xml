@@ -14,7 +14,5 @@
 			<class>org.sap.era.persistence.ReportTask</class>
 			<class>org.sap.era.persistence.AssignedOrgnazition</class>
 			<class>org.sap.era.persistence.ReportTaskItem</class>
-			<class>org.sap.era.persistence.PeriodicTableGroupAssignment</class>
-			<class>org.sap.era.persistence.TimeCoordinate</class>
 	</persistence-unit>
 </persistence>
