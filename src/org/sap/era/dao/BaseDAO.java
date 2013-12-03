@@ -137,7 +137,7 @@ public class BaseDAO<TEntity, Tid> {
 	 * @param id
 	 * @param entityType
 	 */
-	public void delete(final Tid id, final Class<? extends TEntity> entityType) {
+	public void delete(final Tid id, final Class<TEntity> entityType) {
 		new TransactionWrapper<Void>() {
 			@Override
 			protected Void runAsTransactional(EntityManager em) {
@@ -161,7 +161,7 @@ public class BaseDAO<TEntity, Tid> {
 	 * @param lockModeType
 	 * @return
 	 */
-	public TEntity retrieve(final Class<? extends TEntity> entityType, final Tid id, final LockModeType lockModeType) {
+	public TEntity retrieve(final Class<TEntity> entityType, final Tid id, final LockModeType lockModeType) {
 		return new TransactionWrapper<TEntity>() {
 			@Override
 			protected TEntity runAsTransactional(EntityManager em) {
@@ -183,7 +183,7 @@ public class BaseDAO<TEntity, Tid> {
 	 * @param entityType
 	 * @param id
 	 */
-	public TEntity retrieve(final Class<? extends TEntity> entityType, final Tid id) {
+	public TEntity retrieve(final Class<TEntity> entityType, final Tid id) {
 		return retrieve(entityType, id, LockModeType.PESSIMISTIC_READ);
 	}
 
@@ -193,13 +193,13 @@ public class BaseDAO<TEntity, Tid> {
 	 * @param entityType
 	 * @return
 	 */
-	public List<? extends TEntity> retrieve(final Class<? extends TEntity> entityType) {
-		return new TransactionWrapper<List<? extends TEntity>>() {
+	public List<TEntity> retrieve(final Class<TEntity> entityType) {
+		return new TransactionWrapper<List<TEntity>>() {
 			@Override
-			protected List<? extends TEntity> runAsTransactional(EntityManager em) {
+			protected List<TEntity> runAsTransactional(EntityManager em) {
 				CriteriaBuilder cb = em.getCriteriaBuilder();
-				CriteriaQuery<? extends TEntity> query = cb.createQuery(entityType);
-				List<? extends TEntity> allEntities = em.createQuery(query).getResultList();
+				CriteriaQuery<TEntity> query = cb.createQuery(entityType);
+				List<TEntity> allEntities = em.createQuery(query).getResultList();
 				return allEntities;
 			}
 		}.run();

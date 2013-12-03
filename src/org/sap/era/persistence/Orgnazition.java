@@ -132,7 +132,6 @@ public class Orgnazition {
 		this.parentOrgnazition = parentOrgnazition;
 	}
 
-	@JsonIgnore
 	public List<Orgnazition> getChildOrgnazition() {
 		if (this.childOrgnazitions == null) {
 			childOrgnazitions = new ArrayList<Orgnazition>();
