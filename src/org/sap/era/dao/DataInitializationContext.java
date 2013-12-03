@@ -96,7 +96,10 @@ public class DataInitializationContext {
 				orgs.add(subOrg);
 			}
 		}
-		return orgnazitionDAO.persist(orgs);
+		ArrayList<Orgnazition> result = orgnazitionDAO.persist(orgs);
+		orgnazitionDAO.merge(parentOrgs);
+
+		return result;
 	}
 
 	private Orgnazition createOrg(int idx, int level) {
@@ -107,7 +110,6 @@ public class DataInitializationContext {
 		subOrg.setTypeID("0");
 		subOrg.setType("0");
 		subOrg.setReportDirect("1");
-		subOrg.setOrgnazitionLevel(0);
 		subOrg.setDescription("Demo Head Quater " + idx);
 		return subOrg;
 	}
