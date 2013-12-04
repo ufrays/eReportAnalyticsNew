@@ -57,6 +57,38 @@ public class DataInitializationContext {
 	@Resource
 	private PeriodicTableGroupAssignmentDAO periodicTableGroupAssignmentDAO;
 
+	public void setPersonDao(PersonDAO personDao) {
+		this.personDao = personDao;
+	}
+
+	public void setOrgnazitionDAO(OrgnazitionDAO orgnazitionDAO) {
+		this.orgnazitionDAO = orgnazitionDAO;
+	}
+
+	public void setAssignedOrganizationDAO(AssignedOrganizationDAO assignedOrganizationDAO) {
+		this.assignedOrganizationDAO = assignedOrganizationDAO;
+	}
+
+	public void setCellModelDAO(CellModelDAO cellModelDAO) {
+		this.cellModelDAO = cellModelDAO;
+	}
+
+	public void setTableModelDAO(TableModelDAO tableModelDAO) {
+		this.tableModelDAO = tableModelDAO;
+	}
+
+	public void setTableGroupModelDAO(TableGroupModelDAO tableGroupModelDAO) {
+		this.tableGroupModelDAO = tableGroupModelDAO;
+	}
+
+	public void setTableGroupAssignmentDAO(TableGroupAssignmentDAO tableGroupAssignmentDAO) {
+		this.tableGroupAssignmentDAO = tableGroupAssignmentDAO;
+	}
+
+	public void setPeriodicTableGroupAssignmentDAO(PeriodicTableGroupAssignmentDAO periodicTableGroupAssignmentDAO) {
+		this.periodicTableGroupAssignmentDAO = periodicTableGroupAssignmentDAO;
+	}
+
 	@PostConstruct
 	public void initial() {
 		if (checkWhetherShouldInitial()) {

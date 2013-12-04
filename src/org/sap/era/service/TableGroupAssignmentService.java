@@ -23,6 +23,14 @@ public class TableGroupAssignmentService {
 	@Resource
 	private PeriodicTableGroupAssignmentDAO prgaDao;
 
+	public void setTableGroupAssignmentDAO(TableGroupAssignmentDAO tableGroupAssignmentDAO) {
+		this.tableGroupAssignmentDAO = tableGroupAssignmentDAO;
+	}
+
+	public void setPrgaDao(PeriodicTableGroupAssignmentDAO prgaDao) {
+		this.prgaDao = prgaDao;
+	}
+
 	/**
 	 * 
 	 * @return

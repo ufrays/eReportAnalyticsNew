@@ -17,6 +17,10 @@ public class CellModelService {
 	@Resource
 	private CellModelDAO cellModelDAO;
 
+	public void setCellModelDAO(CellModelDAO cellModelDAO) {
+		this.cellModelDAO = cellModelDAO;
+	}
+
 	/**
 	 * 
 	 * @param cellModel

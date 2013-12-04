@@ -24,6 +24,10 @@ public class TableModelService {
 	@Resource
 	private TableModelDAO tableModelDAO;
 
+	public void setTableModelDAO(TableModelDAO tableModelDAO) {
+		this.tableModelDAO = tableModelDAO;
+	}
+
 	/**
 	 * 
 	 * @param tableGroupModelID

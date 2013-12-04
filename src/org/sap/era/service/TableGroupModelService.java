@@ -23,6 +23,10 @@ public class TableGroupModelService {
 	@Resource
 	private TableGroupModelDAO tableGroupModelDAO;
 
+	public void setTableGroupModelDAO(TableGroupModelDAO tableGroupModelDAO) {
+		this.tableGroupModelDAO = tableGroupModelDAO;
+	}
+
 	/**
 	 * 
 	 * @return

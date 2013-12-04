@@ -16,6 +16,10 @@ public class PersonService {
 	@Resource
 	private PersonDAO personDao;
 
+	public void setPersonDao(PersonDAO personDao) {
+		this.personDao = personDao;
+	}
+
 	public void addPerson(String firstName, String lastName) {
 		Person person = new Person();
 		person.setFirstName(firstName);

@@ -122,9 +122,8 @@ sap.ui.jsview("ereportanalyticsnew.addReportTemplate", {
 		//var tableGroupModel = this.getModel().getProperty("/newTemplate");
 		oTF = new sap.ui.commons.Link({
 			text: "Download",
-			href:"/download/TemplateFile.do?docID=",
 		        target:"_blank"
-		});
+		}).bindProperty("href","/download/TemplateFile.do?docID='{modelPath}'");
 		oLabel = new sap.ui.commons.Label({text: 'Template for Design', labelFor: oTF});
 		oLayout2.createRow(oLabel, oTF);
 		// 2.2 Template for Report

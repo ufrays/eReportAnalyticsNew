@@ -1,12 +1,16 @@
 package org.sap.era.web.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -29,6 +33,8 @@ public class ReportTemplateController {
 	@Autowired
 	@Resource
 	private TableGroupModelService tableGroupModelService;
+
+	private static final int BUFFER_SIZE = 4096;
 
 	public ReportTemplateController() {
 		// ApplicationContext context = new ClassPathXmlApplicationContext(new
@@ -102,7 +108,46 @@ public class ReportTemplateController {
 	}
 
 	@RequestMapping(value = "/download/TemplateFile", method = RequestMethod.GET)
-	public void downloadTemplateFile(String docID) {
+	public void downloadTemplateFile(String docID, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		// get absolute path of the application
+		ServletContext context = request.getServletContext();
+		String appPath = context.getRealPath("");
+		System.out.println("appPath = " + appPath);
 
+		// construct the complete absolute path of the file
+		CmisHelper cmis = new CmisHelper();
+		Document doc = cmis.getDocumentById(docID);
+		FileInputStream inputStream = (FileInputStream) doc.getContentStream().getStream();
+
+		// get MIME type of the file
+		String mimeType = doc.getContentStreamMimeType();
+		if (mimeType == null) {
+			// set to binary type if MIME mapping not found
+			mimeType = "application/octet-stream";
+		}
+		System.out.println("MIME type: " + mimeType);
+
+		// set content attributes for the response
+		response.setContentType(mimeType);
+		response.setContentLength((int) doc.getContentStreamLength());
+
+		// set headers for the response
+		String headerKey = "Content-Disposition";
+		String headerValue = String.format("attachment; filename=\"%s\"", doc.getName());
+		response.setHeader(headerKey, headerValue);
+
+		// get output stream of the response
+		OutputStream outStream = response.getOutputStream();
+
+		byte[] buffer = new byte[BUFFER_SIZE];
+		int bytesRead = -1;
+
+		// write bytes read from the input stream into the output stream
+		while ((bytesRead = inputStream.read(buffer)) != -1) {
+			outStream.write(buffer, 0, bytesRead);
+		}
+
+		inputStream.close();
+		outStream.close();
 	}
 }
