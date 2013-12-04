@@ -115,43 +115,52 @@ sap.ui.jsview("ereportanalyticsnew.addReportTemplate", {
 		oTab2 = new sap.ui.commons.Tab();
 		oTab2.setTooltip("Detail");
 		oTab2.setTitle(new sap.ui.commons.Title({text:"Content Preview",icon:"images/doc_excel_table.png"}));
-		var oLayout2 = new sap.ui.commons.layout.MatrixLayout({columns: 2, width:"100%"});
-		oLayout2.setWidths(['100%']);
+		var oLayout2 = new sap.ui.commons.layout.MatrixLayout({columns: 2});
+		oLayout2.setWidths(['10%', '90%']);
+		oLayout1.bindElement("/newTemplate");
 		// 2.1 Template for Design
+		//var tableGroupModel = this.getModel().getProperty("/newTemplate");
 		oTF = new sap.ui.commons.Link({
 			text: "Download",
-			press: function() {alert('download');}});
-		oCell = new sap.ui.commons.layout.MatrixLayoutCell({content: [oTF],colSpan : 1});
-		oLabel = new sap.ui.commons.Label({text: 'Template for Design', labelFor: oCell});
-		oLayout2.createRow(oLabel, oCell);
+			href:"/download/TemplateFile.do?docID=",
+		        target:"_blank"
+		});
+		oLabel = new sap.ui.commons.Label({text: 'Template for Design', labelFor: oTF});
+		oLayout2.createRow(oLabel, oTF);
 		// 2.2 Template for Report
 		oTF = new sap.ui.commons.Link({
 			text: "Download",
-			press: function() {alert('download');}});
+			href:"/download/TemplateFile.do?docID=",
+		        target:"_blank"
+		});
 		oLabel = new sap.ui.commons.Label({text: 'Tempate for Report', labelFor: oTF});
 		oLayout2.createRow(oLabel, oTF);
 		// 2.3 Sheet Preview
-		oTF = new sap.ui.commons.TextField({tooltip: 'Template Name', editable: true, value: '{name}', width: '400px'});
-		oLabel = new sap.ui.commons.Label({text: 'Sheet Preview', labelFor: oTF});
-		oLayout2.createRow(oLabel, oTF);
+		oLabel = new sap.ui.commons.Label({text: 'Sheet Preview', labelFor: ""});
+		oLayout2.createRow(oLabel, "");
 	        // 2.4 create the HTML control for tab2
+		
                 var html1 = new sap.ui.core.HTML({
-                	    content:"<iframe src='/eReportAnalyticsGit/pages/reportAdmin/ReportTemplatePreview.jsp?groupID=1' height='600px' width='100%' scrolling='yes'/>",
+                	    content:"",
                         preferDOM : false,                      
                         // use the afterRendering event for 2 purposes
                         afterRendering : function(e) {
                         	  
                         }
                 });
-		oLayout2.createRow(html1,"");
+                oCell = new sap.ui.commons.layout.MatrixLayoutCell({content: [html1],colSpan :2});
+		oLayout2.createRow(oCell);
 		oTab2.addContent(oLayout2);
+		
 		oTabStrip1.addTab(oTab2);
 		oTabStrip1.attachSelect(function(oEvent){
 			console.log(oTabStrip1.getSelectedIndex());
 			if (oTabStrip1.getSelectedIndex() == 0){
 				oTabStrip1.setHeight("350px");
 			}else{
-				oTabStrip1.setHeight("750px");
+				oTabStrip1.setHeight("680px");
+				//set content for html1
+				oController.setHTMLContent(html1);
 			}
   		});
 		//

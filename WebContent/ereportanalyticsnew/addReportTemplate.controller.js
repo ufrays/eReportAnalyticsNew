@@ -81,12 +81,14 @@ sap.ui.controller("ereportanalyticsnew.addReportTemplate", {
 		    success : function(data) {
 			sap.ui.commons.MessageBox.show(data, "SUCCESS",
 				"Save Success");
-			sap.ui.getCore().getControl("myShell")
-				.setContent(
-					sap.ui.getCore().getControl(
-						"idReportTemplate"));
-			sap.ui.getCore().getControl("idReportTemplate")
-				.getController().getReportTemplateList();
+			sap.ui.getCore().getControl("myShell").destroyContent();
+			var oReportTemplate = sap.ui.view({
+			    id : 'idReportTemplate',
+			    viewName : 'ereportanalyticsnew.reportTemplate',
+			    type : sap.ui.core.mvc.ViewType.JS
+			});
+			sap.ui.getCore().getControl("myShell").setContent(oReportTemplate);
+			sap.ui.getCore().getControl("idReportTemplate").getController().getReportTemplateList();
 		    },
 		    error : function(jqXHR, textStatus, errorThrown) {
 			// TODO improve error handling
@@ -106,10 +108,17 @@ sap.ui.controller("ereportanalyticsnew.addReportTemplate", {
 	    viewName : 'ereportanalyticsnew.reportTemplate',
 	    type : sap.ui.core.mvc.ViewType.JS
 	});
-	oShell.setContent(oReportTemplate);
+	//oShell.setContent(oReportTemplate);
 	sap.ui.getCore().getControl("myShell").setContent(oReportTemplate);
-	sap.ui.getCore().getControl("idReportTemplate").getController()
-		.getReportTemplateList();
+	sap.ui.getCore().getControl("idReportTemplate").getController().getReportTemplateList();
+    },
+    
+    setHTMLContent : function(html) {
+	var _this = this;
+	var oModel = _this.getView().getModel();
+	var newTemplate = oModel.getProperty("/newTemplate");
+	var id = eval(newTemplate).id; 
+	html.setContent("<iframe src='/eReportAnalyticsGit/pages/reportAdmin/ReportTemplatePreview.jsp?groupID="+id+"' height='550px' width='100%' scrolling='yes'/>");
     }
 
 /**

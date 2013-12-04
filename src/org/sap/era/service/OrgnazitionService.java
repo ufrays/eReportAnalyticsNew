@@ -16,6 +16,10 @@ public class OrgnazitionService {
 	@Resource
 	private OrgnazitionDAO orgnazitionDAO;
 
+	public void setOrgnazitionDAO(OrgnazitionDAO orgnazitionDAO) {
+		this.orgnazitionDAO = orgnazitionDAO;
+	}
+
 	public void addOrgnazition(Orgnazition orgnazition) {
 		this.orgnazitionDAO.mergeOrgnazition(orgnazition);
 	}

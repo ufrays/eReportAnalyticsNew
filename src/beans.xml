@@ -86,7 +86,7 @@
 	<!-- DAO List End -->
 
 	<!-- EntityManagerFactory Configuration -->
-	<bean id="entity-manager-factory"
+	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
 		scope="singleton">
 		<property name="dataSource" ref="dataSource" />
