@@ -92,27 +92,17 @@ sap.ui.jsview("ereportanalyticsnew.addReportTemplate", {
 				oController.saveTemplate();
 			},
 			layoutData: new sap.ui.commons.form.GridElementData({hCells: "1"})});
-		var oBtn3 = new sap.ui.commons.Button({text: "Save and Close",
-			press: function() {
-				oController.saveTemplate();
-			},
-			layoutData: new sap.ui.commons.form.GridElementData({hCells: "1"})});
-		var oBtn4 = new sap.ui.commons.Button({text: "Release",
-			press: function() {
-				oController.saveTemplate();
-			},
-			layoutData: new sap.ui.commons.form.GridElementData({hCells: "1"})});
 		var oBtn2 = new sap.ui.commons.Button({text: "Cancel",
 			tooltip: "",
 			press: function() {oController.cancel();}});
 		
-		oCell = new sap.ui.commons.layout.MatrixLayoutCell({content: [oBtn1, oBtn3,oBtn4, oBtn2],colSpan : 4});
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({content: [oBtn1, oBtn2],colSpan : 4});
 		oLayout1.createRow(oCell);
 		//oTabStrip1.createTab("New Report Template",oLayout1);
 		oTab1.addContent(oLayout1);
 		oTabStrip1.addTab(oTab1);
 		// 2. tab: address data (use separate tab element)
-		oTab2 = new sap.ui.commons.Tab();
+		oTab2 = new sap.ui.commons.Tab("addReportTemplate.tab2");
 		oTab2.setTooltip("Detail");
 		oTab2.setTitle(new sap.ui.commons.Title({text:"Content Preview",icon:"images/doc_excel_table.png"}));
 		var oLayout2 = new sap.ui.commons.layout.MatrixLayout({columns: 2});
@@ -129,7 +119,7 @@ sap.ui.jsview("ereportanalyticsnew.addReportTemplate", {
 		// 2.2 Template for Report
 		oTF = new sap.ui.commons.Link({
 			text: "Download",
-			href:"/download/TemplateFile.do?docID=",
+			href:"/download/TemplateFile.do?docID='{modelPath}'",
 		        target:"_blank"
 		});
 		oLabel = new sap.ui.commons.Label({text: 'Tempate for Report', labelFor: oTF});

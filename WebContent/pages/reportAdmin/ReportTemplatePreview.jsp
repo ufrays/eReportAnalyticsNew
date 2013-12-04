@@ -65,7 +65,7 @@
 			%>
 		</select>
 	</form>
-	<table width="800" border="1">
+	<table  border="1">
 		<%
 			ExcelForm excelForm = excelForms.get(selectedExcelForm);
 				Map<String, Control> controlMap = excelForm.getCells();
@@ -87,13 +87,16 @@
 								int cellType = cell.getCellType();
 								if (cellType == CellModel.CELL_TYPE_LABEL || cellType == CellModel.CELL_TYPE_HIDDEN) {
 			%>
-			<td colspan="<%=cell.getColspan()%>" rowspan="<%=cell.getRowspan()%>"><%=cell.getText()%></td>
+			        <td colspan="<%=cell.getColspan()%>" rowspan="<%=cell.getRowspan()%>"><%=cell.getText()%></td>
 			<%
-				} else {
+				} else if (cellType == CellModel.CELL_TYPE_DATA) {
 			%>
-			<td bgcolor="#FFFFCC" colspan="<%=cell.getColspan()%>"
-				rowspan="<%=cell.getRowspan()%>">&nbsp;</td>
+			                <td bgcolor="#FFFFCC" colspan="<%=cell.getColspan()%>" rowspan="<%=cell.getRowspan()%>">&nbsp;</td>
 			<%
+				}else{
+					%>
+	                <td colspan="<%=cell.getColspan()%>" rowspan="<%=cell.getRowspan()%>">&nbsp;</td>
+					<%
 				}
 							}
 						}

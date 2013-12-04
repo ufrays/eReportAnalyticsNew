@@ -16,7 +16,8 @@ sap.ui.controller("ereportanalyticsnew.addReportTemplate", {
 	    "status" : "New",
 	    "flag" : 0
 	};
-
+	//disable addReportTemplate.tab2
+	sap.ui.getCore().getControl("addReportTemplate.tab2").setEnabled(false);
     },
 
     onEditOrViewInit : function(editOrView, reportID) {
@@ -47,6 +48,7 @@ sap.ui.controller("ereportanalyticsnew.addReportTemplate", {
 					+ "\n" + errorThrown);
 		    }
 		});
+	sap.ui.getCore().getControl("addReportTemplate.tab2").setEnabled(true);
 	if (editOrView == "New") {
 	    sap.ui.getCore().getControl("addReportTemplate.flag").setEnabled(
 		    false);

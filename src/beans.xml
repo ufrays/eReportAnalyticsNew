@@ -44,17 +44,17 @@
 	</bean>
 	<!-- Service List End -->
 
-	<!-- Data Initialization -->
+	<!-- Data Initialization 
 	<bean id="data-initialization-context" class="org.sap.era.dao.DataInitializationContext" scope="singleton" init-method="initial">
-		<property name="personDao" ref="personDAO" />
-		<property name="orgDao" ref="orgnazitionDAO" />
-		<property name="aoDao" ref="assignedOrganizationDAO" />
-		<property name="cmDao" ref="cellModelDAO" />
-		<property name="tmDao" ref="tableModelDAO" />
-		<property name="tgmDao" ref="tableGroupModelDAO" />
-		<property name="tgaDao" ref="tableGroupAssignmentDAO" />
+		<property name="personDAO" ref="personDAO" />
+		<property name="orgnazitionDAO" ref="orgnazitionDAO" />
+		<property name="assignedOrganizationDAO" ref="assignedOrganizationDAO" />
+		<property name="cellModelDAO" ref="cellModelDAO" />
+		<property name="tableModelDAO" ref="tableModelDAO" />
+		<property name="tableGroupModelDAO" ref="tableGroupModelDAO" />
+		<property name="tableGroupAssignmentDAO" ref="tableGroupAssignmentDAO" />
 	</bean>
-
+	-->
 	<!-- DAO List -->
 	<bean id="personDAO" class="org.sap.era.dao.PersonDAO">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
