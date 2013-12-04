@@ -11,21 +11,24 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
 @Entity
 @Table(name = "T_REPORTTASK")
+@NamedQueries({ @NamedQuery(name = "GetAllReportTask", query = "select t from ReportTask t") })
 public class ReportTask {
 
 	@Id
 	@GeneratedValue
 	private long id;
 	@Basic
-	private long TableGroupModel;
+	private long tableGroupModel;
 	@Basic
-	private String TableGroupModelName;
+	private String tableGroupModelName;
 	@Basic
 	private String durationID;
 	@Temporal(DATE)
@@ -52,19 +55,19 @@ public class ReportTask {
 	}
 
 	public long getTableGroupModel() {
-		return TableGroupModel;
+		return tableGroupModel;
 	}
 
 	public void setTableGroupModel(long tableGroupModel) {
-		TableGroupModel = tableGroupModel;
+		this.tableGroupModel = tableGroupModel;
 	}
 
 	public String getTableGroupModelName() {
-		return TableGroupModelName;
+		return tableGroupModelName;
 	}
 
 	public void setTableGroupModelName(String tableGroupModelName) {
-		TableGroupModelName = tableGroupModelName;
+		this.tableGroupModelName = tableGroupModelName;
 	}
 
 	public String getDurationID() {
@@ -73,14 +76,6 @@ public class ReportTask {
 
 	public void setDurationID(String durationID) {
 		this.durationID = durationID;
-	}
-
-	public List<ReportTaskItem> getReportTaskItem() {
-		return reportTaskItem;
-	}
-
-	public void setReportTaskItem(List<ReportTaskItem> reportTaskItem) {
-		this.reportTaskItem = reportTaskItem;
 	}
 
 	public Date getStartDate() {
@@ -127,8 +122,16 @@ public class ReportTask {
 		return status;
 	}
 
-	public void setStatus(Integer passStatus) {
-		this.status = passStatus;
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public List<ReportTaskItem> getReportTaskItem() {
+		return reportTaskItem;
+	}
+
+	public void setReportTaskItem(List<ReportTaskItem> reportTaskItem) {
+		this.reportTaskItem = reportTaskItem;
 	}
 
 }
