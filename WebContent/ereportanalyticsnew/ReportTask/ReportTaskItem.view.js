@@ -19,6 +19,7 @@ sap.ui.jsview("ereportanalyticsnew.ReportTask.ReportTaskItem", {
 	 * @memberOf ereportanalyticsnew.ReportTask.ReportTaskItem
 	 */
 	createContent : function(oController) {
+
 		var oTaskTable = new sap.ui.table.Table({
 			title : "Pending Reports",
 			visibleRowCount : 7,
@@ -29,8 +30,8 @@ sap.ui.jsview("ereportanalyticsnew.ReportTask.ReportTaskItem", {
 					label : new sap.ui.commons.Label({
 						text : "Duration"
 					}),
-					width : 150 + 'px',
-					template : new sap.ui.commons.TextField().bindValue('reportTask.durationID'),
+					// width : 150 + 'px',
+					template : new sap.ui.commons.TextField().bindValue('reportTask/durationID'),
 					sortProperty : "reportTask.durationID",
 					filterProperty : 'filterProperty'
 				});
@@ -40,9 +41,9 @@ sap.ui.jsview("ereportanalyticsnew.ReportTask.ReportTaskItem", {
 					label : new sap.ui.commons.Label({
 						text : 'ID'
 					}),
-					width : 50 + 'px',
+					// width : 50 + 'px',
 					sorted : true,
-					template : new sap.ui.commons.TextField().bindValue('reportTask.tableGroupModel'),
+					template : new sap.ui.commons.TextField().bindValue('reportTask/tableGroupModel'),
 					sortProperty : 'reportTask.tableGroupModel',
 					filterProperty : 'reportTask.tableGroupModel',
 				});
@@ -52,15 +53,67 @@ sap.ui.jsview("ereportanalyticsnew.ReportTask.ReportTaskItem", {
 					label : new sap.ui.commons.Label({
 						text : 'Report Name'
 					}),
-					width : 200 + 'px',
-					template : new sap.ui.commons.TextField().bindValue('reportTask.tableGroupModelName'),
+					// width : 200 + 'px',
+					template : new sap.ui.commons.TextField().bindValue('reportTask/tableGroupModelName'),
 					sortProperty : 'reportTask.tableGroupModelName',
 					filterProperty : 'reportTask.tableGroupModelName',
 				});
 
 				return clnTableGroupModelName;
-			})(), ]
+			})(), (function() {
+				var clnValidFrom = new sap.ui.table.Column({
+					label : new sap.ui.commons.Label({
+						text : 'Valid From'
+					}),
+					// width : 150 + 'px',
+					template : new sap.ui.commons.TextField().bindValue('reportTask/startDate'),
+					sortProperty : 'reportTask.startDate',
+					filterProperty : 'reportTask.startDate',
+				});
+				return clnValidFrom;
+			})(), (function() {
+				var clnValidTo = new sap.ui.table.Column({
+					label : new sap.ui.commons.Label({
+						text : 'Valid to'
+					}),
+					// width : 150 + 'px',
+					template : new sap.ui.commons.TextField().bindValue('reportTask/endDate'),
+					sortProperty : 'reportTask.endDate',
+					filterProperty : 'reportTask.endDate',
+				});
+				return clnValidTo;
+			})(), (function() {
+				var clnStatus = new sap.ui.table.Column({
+					label : new sap.ui.commons.Label({
+						text : 'Status'
+					}),
+
+					template : new sap.ui.commons.TextField().bindValue('itemStatus'),
+					sortProperty : 'itemStatus',
+					filterProperty : 'itemStatus',
+				});
+				return clnStatus;
+			})(), (function() {
+				var clnStatus = new sap.ui.table.Column({
+
+					// width : 150 + 'px',
+					sortProperty : 'itemStatus',
+					filterProperty : 'itemStatus',
+					template : new sap.ui.commons.Link({
+						text : "upload",
+						press : oController.pressUpload
+					})
+				});
+				return clnStatus;
+			})() ]
 		});
+
+		oController.loadTask(function(sender, args) {
+			oTaskTable.setModel(args.dataModel);
+			oTaskTable.bindRows('/');
+		});
+
+		return oTaskTable;
 
 	}
 

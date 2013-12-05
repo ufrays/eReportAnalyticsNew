@@ -18,14 +18,14 @@ public class ReportTaskController {
 	@Resource
 	private ReportTaskService reportTaskService;
 
-	@RequestMapping("/getAllReportTaskItems")
+	@RequestMapping("/reportTask/getAllReportTaskItems")
 	@ResponseBody
 	public List<ReportTaskItem> GetAllReportTaskItem() {
 
 		return reportTaskService.GetAllReportTaskItem();
 	}
 
-	@RequestMapping(value = "/getAllReportTaskItemsByOrgID", method = RequestMethod.GET)
+	@RequestMapping(value = "/reportTask/getAllReportTaskItemsByOrgID", method = RequestMethod.GET)
 	@ResponseBody
 	public List<ReportTaskItem> GetAllReportTaskItemsByOrgID(String orgID) {
 

@@ -17,6 +17,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.sap.era.main.CustomDateSerializer;
+
 @Entity
 @Table(name = "T_REPORTTASK")
 @NamedQueries({ @NamedQuery(name = "GetAllReportTask", query = "select t from ReportTask t") })
@@ -78,6 +82,7 @@ public class ReportTask {
 		this.durationID = durationID;
 	}
 
+	@JsonSerialize(using = CustomDateSerializer.class)
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -86,6 +91,7 @@ public class ReportTask {
 		this.startDate = startDate;
 	}
 
+	@JsonSerialize(using = CustomDateSerializer.class)
 	public Date getEndDate() {
 		return endDate;
 	}
@@ -126,6 +132,7 @@ public class ReportTask {
 		this.status = status;
 	}
 
+	@JsonIgnore
 	public List<ReportTaskItem> getReportTaskItem() {
 		return reportTaskItem;
 	}

@@ -2,6 +2,7 @@ package org.sap.era.dao;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
@@ -12,6 +13,8 @@ import org.sap.era.persistence.AssignedOrgnazition;
 import org.sap.era.persistence.Orgnazition;
 import org.sap.era.persistence.PeriodicTableGroupAssignment;
 import org.sap.era.persistence.Person;
+import org.sap.era.persistence.ReportTask;
+import org.sap.era.persistence.ReportTaskItem;
 import org.sap.era.persistence.TableGroupAssignment;
 import org.sap.era.persistence.TimeCoordinate;
 import org.sap.era.persistence.enums.EIntervalTag;
@@ -57,6 +60,22 @@ public class DataInitializationContext {
 	@Resource
 	private PeriodicTableGroupAssignmentDAO periodicTableGroupAssignmentDAO;
 
+	@Autowired
+	@Resource
+	private ReportTaskItemDAO reportTaskItemDAO;
+
+	@Autowired
+	@Resource
+	private ReportTaskDAO reportTaskDAO;
+
+	public void setReportTaskDAO(ReportTaskDAO reportTaskDAO) {
+		this.reportTaskDAO = reportTaskDAO;
+	}
+
+	public void setReportTaskItemDAO(ReportTaskItemDAO reportTaskItemDAO) {
+		this.reportTaskItemDAO = reportTaskItemDAO;
+	}
+
 	public void setPersonDao(PersonDAO personDao) {
 		this.personDao = personDao;
 	}
@@ -96,6 +115,7 @@ public class DataInitializationContext {
 			initialPerson();
 			// initialReportAssignment();
 			initialPeriodicReportAssignment();
+			initReportTasks();
 		}
 	}
 
@@ -274,5 +294,41 @@ public class DataInitializationContext {
 		} else {
 			return null;
 		}
+	}
+
+	private void initReportTasks() {
+		List<ReportTask> tasks = this.reportTaskDAO.getAllReportTaskItem();
+		// if (tasks == null || tasks.size() == 0) {
+		//
+		// return;
+		// }
+		for (int i = 0; i < 10; i++) {
+			ReportTask task = new ReportTask();
+			List<ReportTaskItem> taskItems = new ArrayList<ReportTaskItem>();
+			task.setDurationDepict("TestDurationDesc");
+			task.setDurationFlag("flag");
+			task.setDurationID("100" + i);
+			task.setEndDate(Calendar.getInstance().getTime());
+			task.setReportMode("Yearly");
+			task.setStartDate(Calendar.getInstance().getTime());
+			task.setStatus(1);
+			task.setTableGroupModel(1000 + i);
+			task.setTableGroupModelName("TestGroupModelName" + i);
+
+			for (int j = 0; j < 10; j++) {
+				ReportTaskItem taskItem = new ReportTaskItem();
+				taskItem.setFilePath("about:blank");
+				taskItem.setItemStatus("Finished");
+				taskItem.setOrgnazition(orgnazitionDAO.getOrgnazitionOfTop().get(0));
+				taskItem.setReportDate(Calendar.getInstance().getTime());
+				taskItem.setReportOrgnazition(null);
+				taskItem.setReportPerson(null);
+				taskItem.setReportTask(task);
+				taskItems.add(taskItem);
+			}
+			task.setReportTaskItem(taskItems);
+			this.reportTaskDAO.merge(task);
+		}
+
 	}
 }
