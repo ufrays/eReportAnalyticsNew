@@ -14,9 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.sap.era.dto.TableGroupModelDTO;
 import org.sap.era.persistence.TableGroupModel;
+import org.sap.era.persistence.TableModel;
 import org.sap.era.service.ExcelReadService;
 import org.sap.era.service.TableGroupModelService;
+import org.sap.era.service.TableModelService;
 import org.sap.era.service.excel.CmisHelper;
 import org.sap.era.service.excel.ExcelForm;
 import org.sap.era.service.excel.ParseException;
@@ -33,6 +36,10 @@ public class ReportTemplateController {
 	@Autowired
 	@Resource
 	private TableGroupModelService tableGroupModelService;
+
+	@Autowired
+	@Resource
+	private TableModelService tableModelService;
 
 	private static final int BUFFER_SIZE = 4096;
 
@@ -74,16 +81,41 @@ public class ReportTemplateController {
 		tgm.setModelPath(doc.getId());
 		tgm.setCreatedBy(1);
 		tgm.setCreatedOn(new java.util.Date());
-		tgm.setFlag(0);
+
 		// tgm.setTableModel(tableModel)
-		tableGroupModelService.addTableGroupModel(tgm, listExcelForm);
+		if (tgm.getId() > 0) {
+			TableGroupModel tgm_edit = tableGroupModelService.getTableGroupModelByID(tgm.getId());
+			tgm_edit.setName(tgm.getName());
+			tgm_edit.setDescription(tgm.getDescription());
+			tgm_edit.setCategory(tgm.getCategory());
+			tableGroupModelService.updateTableGroupModel(tgm_edit);
+		} else {
+			tableGroupModelService.addTableGroupModel(tgm, listExcelForm);
+		}
+
 		return "The report template was saved!";
+	}
+
+	@RequestMapping(value = "/deleteReportTemplate", method = RequestMethod.GET)
+	@ResponseBody
+	public String deleteReportTemplate(String groupID) {
+		tableGroupModelService.deleteTableGroupModel(Long.parseLong(groupID));
+		return "The report template was deleted!";
+	}
+
+	@RequestMapping(value = "/releaseReportTemplate", method = RequestMethod.GET)
+	@ResponseBody
+	public String releaseReportTemplate(String groupID) {
+		TableGroupModel tgm_release = tableGroupModelService.getTableGroupModelByID(Long.parseLong(groupID));
+		tgm_release.setStatus("Released");
+		tableGroupModelService.updateTableGroupModel(tgm_release);
+		return "The report template was released!";
 	}
 
 	@RequestMapping(value = "/getReportTemplateList", method = RequestMethod.GET)
 	@ResponseBody
-	public List<TableGroupModel> getReportTemplateList() {
-		List<TableGroupModel> list = tableGroupModelService.getAllTableGroupModels();
+	public List<TableGroupModelDTO> getReportTemplateList() {
+		List<TableGroupModelDTO> list = tableGroupModelService.getAllTableGroupModelDTO();
 		return list;
 
 	}
@@ -92,8 +124,26 @@ public class ReportTemplateController {
 	@RequestMapping(value = "/getReportTemplateByID", method = RequestMethod.GET)
 	@ResponseBody
 	public TableGroupModel getReportTemplateByID(String groupID) {
-		TableGroupModel tableGroupModel = tableGroupModelService.getTableGroupModelByID(groupID);
+		TableGroupModel tableGroupModel = tableGroupModelService.getTableGroupModelByID(Long.parseLong(groupID));
 		return tableGroupModel;
+
+	}
+
+	// getTableModelByGroupID GroupID
+	@RequestMapping(value = "/getTableModelByGroupID", method = RequestMethod.GET)
+	@ResponseBody
+	public List<TableModel> getTableModelByGroupID(String groupID) {
+		List<TableModel> list = tableModelService.getAllTableModelsByTableGroupModel(groupID);
+		return list;
+
+	}
+
+	// getTableModelByGroupID GroupID
+	@RequestMapping(value = "/getTableGroupModelByModelIDTest", method = RequestMethod.GET)
+	@ResponseBody
+	public TableGroupModel getTableGroupModelByModelIDTest(String groupID) {
+		List<TableModel> list = tableModelService.getAllTableModelsByTableGroupModel(groupID);
+		return list.get(0).getTableGroupModel();
 
 	}
 

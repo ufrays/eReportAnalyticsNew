@@ -27,6 +27,13 @@ import org.sap.era.main.CustomDateSerializer;
 		@NamedQuery(name = "GetTableGroupModelByID", query = "select tgm from TableGroupModel tgm where tgm.id = :groupID") })
 public class TableGroupModel {
 
+	static public int TABLEGROUPMODEL_FLAG_FIXED_COLUMN = 0;
+	static public int TABLEGROUPMODEL_FLAG_FIXED_COLUMN_AND_ROW = 1;
+
+	static public String[] TABLEGROUPMODEL_FLAG = { "Fixed Column Report", "Fixed Column & Row Report" };
+
+	static public String[] TABLEGROUPMODEL_CATEGORY = { "Inventory", "Sales", "Others" };
+
 	@Id
 	@GeneratedValue(strategy = AUTO)
 	private long id;

@@ -24,7 +24,6 @@ sap.ui.controller("ereportanalyticsnew.reportTemplate", {
 				});
 				oTable.setModel(oModel);
 				oTable.unbindRows().bindRows("/reportTemplate");
-
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
 				// TODO improve error handling
@@ -57,13 +56,47 @@ sap.ui.controller("ereportanalyticsnew.reportTemplate", {
 	},
 
 	deleteReportTemplate : function(oTable) {
-
+	    var _this = this;
+		var oModel = oTable.getModel();
+		var selRowContext = oTable.getContextByIndex(oTable.getSelectedIndex());
+		var selectedID = oModel.getProperty("id", selRowContext);
+	    jQuery
+		.ajax({
+		    url : "deleteReportTemplate.do?groupID="+selectedID,
+		    type : 'GET',
+		    dataType : "text",
+		    success : function(data) {
+			sap.ui.commons.MessageBox.show(data, "SUCCESS",	data);
+			_this.getReportTemplateList();
+		    },
+		    error : function(jqXHR, textStatus, errorThrown) {
+			// TODO improve error handling
+			sap.ui.commons.MessageBox.alert("Could not execute action: "+ textStatus);
+		    }
+		});
 	},
 
 	releaseReportTemplate : function(oTable) {
-
+	    var _this = this;
+		var oModel = oTable.getModel();
+		var selRowContext = oTable.getContextByIndex(oTable.getSelectedIndex());
+		var selectedID = oModel.getProperty("id", selRowContext);
+	    jQuery
+		.ajax({
+		    url : "releaseReportTemplate.do?groupID="+selectedID,
+		    type : 'GET',
+		    dataType : "text",
+		    success : function(data) {
+			sap.ui.commons.MessageBox.show(data, "SUCCESS",	data);
+			_this.getReportTemplateList();
+		    },
+		    error : function(jqXHR, textStatus, errorThrown) {
+			// TODO improve error handling
+			sap.ui.commons.MessageBox.alert("Could not execute action: "+ textStatus);
+		    }
+		});
 	},
-
+	
 	tableRowSelected : function(oTable) {
 		var oModel = oTable.getModel();
 		var selRowContext = oTable.getContextByIndex(oTable.getSelectedIndex());

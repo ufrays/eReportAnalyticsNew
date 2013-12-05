@@ -3,7 +3,7 @@ package org.sap.era.service.excel;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.sap.era.service.excel.Control;
+import org.sap.era.persistence.CellModel;
 
 public class ExcelForm {
 
@@ -28,6 +28,32 @@ public class ExcelForm {
 	public void addCell(int row, int col, Control control) {
 
 		cells.put(String.valueOf(row).concat("-").concat(String.valueOf(col)), control);
+	}
+
+	public static ExcelForm DuplicateDataCellByRow(int duplicateRow, ExcelForm excelForm) {
+		Map<String, Control> map = excelForm.getCells();
+		System.out.println("a:");
+		for (Map.Entry<String, Control> entry : map.entrySet()) {
+			String key = entry.getKey();
+			Control cell = entry.getValue();
+			System.out.println("b:" + key);
+			String rc[] = key.split("-");
+			int row = Integer.parseInt(rc[0]);
+			int col = Integer.parseInt(rc[1]);
+			if (cell.getCellType() == CellModel.CELL_TYPE_DATA) {
+				for (int i = 0; i < duplicateRow; i++) {
+					System.out.println("c" + i);
+					Control newCell = new LabelControl();
+					newCell = cell;
+					excelForm.addCell(row + i + 1, col, newCell);
+				}
+			}
+			// map.remove(entry.getKey());
+			System.out.println("d");
+			// ...
+		}
+		excelForm.setRows(excelForm.getRows() + duplicateRow);
+		return excelForm;
 	}
 
 	public int getCols() {

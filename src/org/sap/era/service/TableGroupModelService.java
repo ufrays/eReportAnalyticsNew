@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.sap.era.dao.TableGroupModelDAO;
+import org.sap.era.dto.TableGroupModelDTO;
 import org.sap.era.persistence.CellModel;
 import org.sap.era.persistence.TableGroupModel;
 import org.sap.era.persistence.TableModel;
@@ -23,8 +24,14 @@ public class TableGroupModelService {
 	@Resource
 	private TableGroupModelDAO tableGroupModelDAO;
 
+	private PersonService personService;
+
 	public void setTableGroupModelDAO(TableGroupModelDAO tableGroupModelDAO) {
 		this.tableGroupModelDAO = tableGroupModelDAO;
+	}
+
+	public void setPersonService(PersonService personService) {
+		this.personService = personService;
 	}
 
 	/**
@@ -36,13 +43,34 @@ public class TableGroupModelService {
 
 	}
 
+	public List<TableGroupModelDTO> getAllTableGroupModelDTO() {
+		List<TableGroupModel> list = this.tableGroupModelDAO.getAllTableGroupModels();
+		List<TableGroupModelDTO> listDTO = new ArrayList();
+		for (int i = 0; i < list.size(); i++) {
+			TableGroupModelDTO dto = new TableGroupModelDTO();
+			// Person person =
+			// personService.getPersonsByID(list.get(i).getCreatedBy());
+			dto.setId(list.get(i).getId());
+			dto.setName(list.get(i).getName());
+			dto.setFlag(TableGroupModel.TABLEGROUPMODEL_FLAG[list.get(i).getFlag()]);
+			dto.setStatus(list.get(i).getStatus());
+			dto.setCreatedOn(list.get(i).getCreatedOn());
+			dto.setCreatedBy("Test Person, 003");// (person.getLastName()
+													// + ", " +
+													// person.getFirstName());
+			dto.setCategory(TableGroupModel.TABLEGROUPMODEL_CATEGORY[list.get(i).getCategory()]);
+			listDTO.add(dto);
+		}
+		return listDTO;
+	}
+
 	/**
 	 * 
 	 * @param groupID
 	 * @return
 	 */
-	public TableGroupModel getTableGroupModelByID(String groupID) {
-		return this.tableGroupModelDAO.getTableGroupModelByID(Long.parseLong(groupID));
+	public TableGroupModel getTableGroupModelByID(long groupID) {
+		return this.tableGroupModelDAO.getTableGroupModelByID(groupID);
 
 	}
 
@@ -52,6 +80,22 @@ public class TableGroupModelService {
 	 */
 	public void addTableGroupModel(TableGroupModel tableGroupModel) {
 		this.tableGroupModelDAO.addTableGroupModel(tableGroupModel);
+	}
+
+	/**
+	 * 
+	 * @param tableGroupModel
+	 */
+	public void updateTableGroupModel(TableGroupModel tableGroupModel) {
+		this.tableGroupModelDAO.updateTableGroupModel(tableGroupModel);
+	}
+
+	/**
+	 * 
+	 * @param long
+	 */
+	public void deleteTableGroupModel(long groupID) {
+		this.tableGroupModelDAO.delete(groupID, TableGroupModel.class);
 	}
 
 	/**

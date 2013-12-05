@@ -15,7 +15,8 @@ import javax.persistence.Table;
 @Table(name = "T_PERSON")
 @NamedQueries({ @NamedQuery(name = "AllPersons", query = "select p from Person p"),
 		@NamedQuery(name = "PersonsByOrgID", query = "select p from Person p where p.orgnazition.id = :orgID"),
-		@NamedQuery(name = "PersonsByUserName", query = "select p from Person p where p.name = :userName") })
+		@NamedQuery(name = "PersonsByUserName", query = "select p from Person p where p.name = :userName"),
+		@NamedQuery(name = "PersonsByID", query = "select p from Person p where p.id = :id") })
 public class Person {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

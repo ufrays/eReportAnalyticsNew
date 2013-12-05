@@ -15,7 +15,7 @@ public class TableModelDAO extends BaseDAO<TableModel, Long> {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
 			TypedQuery<TableModel> query = em.createNamedQuery("AllTableModelsByTableGroupModel", TableModel.class);
-			query.setParameter("tableGroupModelID", tableGroupModelID);
+			query.setParameter("tableGroupModelID", Long.parseLong(tableGroupModelID));
 			List<TableModel> tableModelList = query.getResultList();
 			return tableModelList;
 		} finally {

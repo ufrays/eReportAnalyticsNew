@@ -27,7 +27,7 @@ sap.ui.jsview("ereportanalyticsnew.reportTemplate", {
 			text : "Release",
 			enabled : false,
 			press : function() {
-
+			    oController.releaseReportTemplate(oTable);
 			}
 		});
 		// Button - New
@@ -43,7 +43,7 @@ sap.ui.jsview("ereportanalyticsnew.reportTemplate", {
 			text : "Delete",
 			enabled : false,
 			press : function() {
-
+			    oController.deleteReportTemplate(oTable);
 			}
 		});
 		// Create an instance of the table control

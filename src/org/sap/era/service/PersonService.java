@@ -51,4 +51,8 @@ public class PersonService {
 		return this.personDao.getPersonsByUserName(userName);
 	}
 
+	public Person getPersonsByID(long id) {
+		return this.personDao.getPersonsByID(id);
+	}
+
 }
