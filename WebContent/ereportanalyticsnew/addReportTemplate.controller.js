@@ -101,6 +101,7 @@ sap.ui.controller("ereportanalyticsnew.addReportTemplate", {
 		});
     },
 
+    
     cancel : function() {
 	var oModel = this.getView().getModel();
 	oModel.getData().newTemplate = {};

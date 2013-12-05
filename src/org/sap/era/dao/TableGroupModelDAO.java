@@ -43,6 +43,20 @@ public class TableGroupModelDAO extends BaseDAO<TableGroupModel, Long> {
 		}
 	}
 
+	public void updateTableGroupModel(TableGroupModel tableGroupModel) {
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			em.getTransaction().begin();
+			em.merge(tableGroupModel);
+
+			em.getTransaction().commit();
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
+	}
+
 	public void addTableGroupModel(TableGroupModel tableGroupModel) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {

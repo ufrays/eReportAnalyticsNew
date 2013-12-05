@@ -51,6 +51,20 @@ public class PersonDAO extends BaseDAO<Person, Long> {
 		}
 	}
 
+	public Person getPersonsByID(long id) {
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			TypedQuery<Person> query = em.createNamedQuery("PersonsByID", Person.class);
+			query.setParameter("id", id);
+			List<Person> persons = query.getResultList();
+			return persons.get(0);
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
+	}
+
 	public void addPerson(Person person) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {

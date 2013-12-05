@@ -32,8 +32,9 @@
 		TableGroupModel tableGroupModel;
 		if (groupID != null && !groupID.equals("")) {
 			//
-			tableGroupModel = tableGroupModelService.getTableGroupModelByID(groupID);
+			tableGroupModel = tableGroupModelService.getTableGroupModelByID(Long.parseLong(groupID));
 			List<ExcelForm> excelForms = tableModelService.convertTableModles2ExcelModels(tableGroupModel.getTableModel());
+
 			//ExcelForm excelForm = new ExcelForm();
 			int selectedExcelForm = 0;
 	%>
@@ -68,6 +69,9 @@
 	<table  border="1">
 		<%
 			ExcelForm excelForm = excelForms.get(selectedExcelForm);
+//				if (tableGroupModel.getFlag() == TableGroupModel.TABLEGROUPMODEL_FLAG_FIXED_COLUMN){
+//					excelForm = ExcelForm.DuplicateDataCellByRow(5, excelForm);
+//				}
 				Map<String, Control> controlMap = excelForm.getCells();
 				int in = 0;
 				int rowCount = excelForm.getRows();

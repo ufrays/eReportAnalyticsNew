@@ -35,8 +35,8 @@ sap.ui.jsview("ereportanalyticsnew.addReportTemplate", {
 		var  oRBtn = new sap.ui.commons.RadioButtonGroup("addReportTemplate.flag",{
 			 columns : 2,
 			 selectedIndex : "{flag}",
-				items: [new sap.ui.core.Item({text: "Column-Fixed Report"}),
-						new sap.ui.core.Item({text: "Fixed Compound Report"})
+				items: [new sap.ui.core.Item({text: "Fixed Column Report"}),
+						new sap.ui.core.Item({text: "Fixed Column & Row Report"})
 				]});
 		var oLabel = new sap.ui.commons.Label({text: 'Template Type', labelFor: oTF});
 		oLayout1.createRow(oLabel, oRBtn);
@@ -67,9 +67,9 @@ sap.ui.jsview("ereportanalyticsnew.addReportTemplate", {
 		oLayout1.createRow(oLabel, oFileUploader);
 		//selectedKey
 		oTF = new sap.ui.commons.DropdownBox("addReportTemplate.category",{
-			items: [new sap.ui.core.ListItem({text: "Inventory", key: "1"}),
-			        new sap.ui.core.ListItem({text: "Sales", key: "2"}),
-			        new sap.ui.core.ListItem({text: "Others", key: "3"})]
+			items: [new sap.ui.core.ListItem({text: "Inventory", key: "0"}),
+			        new sap.ui.core.ListItem({text: "Sales", key: "1"}),
+			        new sap.ui.core.ListItem({text: "Others", key: "2"})]
 			}).bindProperty("selectedKey","category");
 		oLabel = new sap.ui.commons.Label({text: 'Template Category', labelFor: oTF});
 		oLayout1.createRow(oLabel, oTF);
