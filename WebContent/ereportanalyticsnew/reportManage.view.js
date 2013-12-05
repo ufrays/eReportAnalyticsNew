@@ -23,7 +23,79 @@ sap.ui.jsview("ereportanalyticsnew.reportManage", {
 				oController.getDetail(oTable);
 			}
 		});
-		// Create an instance of the table control
+		// 1.create a standalone toolbar
+		var oToolbar1 = new sap.ui.commons.Toolbar("reportTemplate.tb1");
+		oToolbar1.setDesign(sap.ui.commons.ToolbarDesign.Standard);
+		// add a combobox as Template
+		var oLabel = new sap.ui.commons.Label({text: 'Template:'});
+		var oComboBox = new sap.ui.commons.ComboBox("reportTemplate.template",{
+			items : [ new sap.ui.core.ListItem({
+				text : ""
+			}),new sap.ui.core.ListItem({
+				text : "#1"
+			}), new sap.ui.core.ListItem({
+				text : "Do it!"
+			}), new sap.ui.core.ListItem({
+				text : "Hello world!"
+			}), new sap.ui.core.ListItem({
+				text : "Yet another stupid button text"
+			}) ]
+		});
+		oToolbar1.addItem(oLabel);
+		oToolbar1.addItem(oComboBox);
+		oToolbar1.addItem(new sap.ui.commons.ToolbarSeparator({
+			design: sap.ui.commons.ToolbarSeparatorDesign.FullHeight
+		}));
+		//add a combobox as Status
+		oLabel = new sap.ui.commons.Label({text: 'Status:'});
+		oComboBox = new sap.ui.commons.ComboBox("reportTemplate.status",{
+			items : [ new sap.ui.core.ListItem({
+				text : ""
+			}),new sap.ui.core.ListItem({
+				text : "In Progress"
+			}), new sap.ui.core.ListItem({
+				text : "Expired"
+			}), new sap.ui.core.ListItem({
+				text : "Finished"
+			}) ]
+		});
+		oToolbar1.addItem(oLabel);
+		oToolbar1.addItem(oComboBox);
+		oToolbar1.addItem(new sap.ui.commons.ToolbarSeparator({
+			design: sap.ui.commons.ToolbarSeparatorDesign.FullHeight
+		}));
+		// add a combobox as Duration Type & Duration ID
+		oLabel = new sap.ui.commons.Label({text: 'Duration: '});
+		oComboBox = new sap.ui.commons.ComboBox("reportTemplate.durationType",{
+			items : [ new sap.ui.core.ListItem({
+				text : ""
+			}), new sap.ui.core.ListItem({
+				text : "Weekly"
+			}), new sap.ui.core.ListItem({
+				text : "Monthly"
+			}), new sap.ui.core.ListItem({
+				text : "Quarterly"
+			}), new sap.ui.core.ListItem({
+				text : "Yearly"
+			})]
+		});
+		oToolbar1.addItem(oLabel);
+		oToolbar1.addItem(oComboBox);
+		oComboBox = new sap.ui.commons.ComboBox("reportTemplate.durationID",{
+			items : [ new sap.ui.core.ListItem({
+				text : ""
+			}),new sap.ui.core.ListItem({
+				text : "#1"
+			}), new sap.ui.core.ListItem({
+				text : "Do it!"
+			}), new sap.ui.core.ListItem({
+				text : "Hello world!"
+			}), new sap.ui.core.ListItem({
+				text : "Yet another stupid button text"
+			}) ]
+		});
+		oToolbar1.addItem(oComboBox);
+		// 2.Create an instance of the table control
 		var oTable = new sap.ui.table.Table("ReportManage_T1", {
 			visibleRowCount : 10,
 			firstVisibleRow : 3,
@@ -32,8 +104,7 @@ sap.ui.jsview("ereportanalyticsnew.reportManage", {
 				items : [ 
 				          oBtn_Detail 
 				          ]
-			}),
-			extension: [oBtn_Detail]
+			})
 		});
 		// oBtn_New.attachPress(function(oEvent){oController.detailApprove(oTable.getModel());});
 
@@ -83,11 +154,16 @@ sap.ui.jsview("ereportanalyticsnew.reportManage", {
 			}),
 			template : new sap.ui.commons.TextField().bindProperty("value", "status")
 		}));
+		var oProgressIndicator1 = new sap.ui.commons.ProgressIndicator({
+			width: "80%", 
+			percentValue: 33, 
+			displayValue: "33%"
+			});
 		oTable.addColumn(new sap.ui.table.Column({
 			label : new sap.ui.commons.Label({
-				text : "Handed|Rejected|All"
+				text : "Completion Rate"
 			}),
-			template : new sap.ui.commons.TextField().bindProperty("value", "counter")
+			template : oProgressIndicator1
 		}));
 		oTable.attachRowSelectionChange(function(oEvent) {
 			// oEvent.preventDefault();
@@ -97,8 +173,8 @@ sap.ui.jsview("ereportanalyticsnew.reportManage", {
 		// Create a model and bind the table rows to this model
 		oController.getReportTaskList();
 
-		var oLayout = new sap.ui.commons.layout.VerticalLayout("L_ReportTemplate1", {
-			content : [ oTable ]
+		var oLayout = new sap.ui.commons.layout.VerticalLayout("L_ReportManage1", {
+			content : [ oToolbar1,oTable ]
 		});
 
 		return oLayout;

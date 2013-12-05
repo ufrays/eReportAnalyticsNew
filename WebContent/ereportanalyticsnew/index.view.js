@@ -114,6 +114,13 @@ sap.ui.jsview('ereportanalyticsnew.index', {
 					});
 					oShell.setContent(oBusinessUser);
 					break;
+				case 'WI_2_1':
+					oShell.destroyContent();
+					oShell.setContent(sap.ui.view({
+						viewName : 'ereportanalyticsnew.reportManage',
+						type : sap.ui.core.mvc.ViewType.JS
+					}));
+					break;
 				case 'WI_3_1':
 					oShell.destroyContent();
 					var oReportTemplate = sap.ui.view({

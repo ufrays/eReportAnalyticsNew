@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.sap.era.dto.ReportTaskDTO;
 import org.sap.era.persistence.ReportTask;
 import org.sap.era.persistence.ReportTaskItem;
 import org.sap.era.service.ReportTaskService;
@@ -20,6 +21,13 @@ public class ReportManageController {
 	@Autowired
 	@Resource
 	private ReportTaskService reportTaskService;
+
+	@RequestMapping(value = "/getReportTaskListByDTO", method = RequestMethod.GET)
+	@ResponseBody
+	public List<ReportTask> getReportTaskListByDTO(ReportTaskDTO reportTaskDTO) {
+		List<ReportTask> list = reportTaskService.getReportTaskListByDTO(reportTaskDTO);
+		return list;
+	}
 
 	@RequestMapping(value = "/getReportTaskList", method = RequestMethod.GET)
 	@ResponseBody

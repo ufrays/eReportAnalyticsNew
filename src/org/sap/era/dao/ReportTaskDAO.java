@@ -4,7 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
+import org.sap.era.dto.ReportTaskDTO;
 import org.sap.era.persistence.ReportTask;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +25,49 @@ public class ReportTaskDAO extends BaseDAO<ReportTask, Long> {
 				em.close();
 			}
 		}
+	}
+
+	public List<ReportTask> getReportTaskListByDTO(ReportTaskDTO dto) {
+		EntityManager em = entityManagerFactory.createEntityManager();
+		// write the sql
+		String sql = "select t from ReportTask t";
+		boolean hasCondition = false;
+		// 1
+		if (dto.getTableGroupModel() > 0) {
+			sql = sql + " where " + " t.tableGroupModel = " + dto.getTableGroupModel();
+			hasCondition = true;
+		}
+		// 2
+		if (dto.getStatus() != null) {
+			if (hasCondition) {
+				sql = sql + " and " + " t.status = " + dto.getStatus();
+			} else {
+				sql = sql + " where " + " t.status = " + dto.getStatus();
+				hasCondition = true;
+			}
+		}
+		// 3
+		if (dto.getDurationFlag() != null && !dto.getDurationFlag().equals("")) {
+			if (hasCondition) {
+				sql = sql + " and " + " t.status = " + dto.getDurationFlag();
+			} else {
+				sql = sql + " where " + " t.status = " + dto.getDurationFlag();
+				hasCondition = true;
+			}
+		}
+		// 4
+		if (dto.getDurationID() != null && !dto.getDurationID().equals("")) {
+			if (hasCondition) {
+				sql = sql + " and " + " t.status = " + dto.getDurationID();
+			} else {
+				sql = sql + " where " + " t.status = " + dto.getDurationID();
+				hasCondition = true;
+			}
+		}
+		//
+		TypedQuery<ReportTask> query = (TypedQuery<ReportTask>) em.createQuery(sql);
+		List<ReportTask> results = query.getResultList();
+		return results;
 	}
 
 	public Long createNewReportTask(String durationID, String durationDepict, String durationFlag, Date endDate, String reportMode, Date startDate,

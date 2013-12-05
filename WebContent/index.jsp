@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-
+		<title>E-Report Collection & Analytics</title>
 		<script src="resources/sap-ui-core.js"
 				id="sap-ui-bootstrap"
 				data-sap-ui-libs="sap.ui.commons,sap.ui.table,sap.ui.ux3,sap.ui.core"
