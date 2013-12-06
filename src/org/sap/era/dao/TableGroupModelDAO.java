@@ -24,6 +24,19 @@ public class TableGroupModelDAO extends BaseDAO<TableGroupModel, Long> {
 		}
 	}
 
+	public List<TableGroupModel> getAllReleasedTableGroupModels() {
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			TypedQuery<TableGroupModel> query = em.createNamedQuery("AllReleasedTableGroupModel", TableGroupModel.class);
+			List<TableGroupModel> tableGroupModelList = query.getResultList();
+			return tableGroupModelList;
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
+	}
+
 	public TableGroupModel getTableGroupModelByID(long groupID) {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {

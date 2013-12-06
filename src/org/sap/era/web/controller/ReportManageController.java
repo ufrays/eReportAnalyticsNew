@@ -7,7 +7,9 @@ import javax.annotation.Resource;
 import org.sap.era.dto.ReportTaskDTO;
 import org.sap.era.persistence.ReportTask;
 import org.sap.era.persistence.ReportTaskItem;
+import org.sap.era.persistence.TableGroupModel;
 import org.sap.era.service.ReportTaskService;
+import org.sap.era.service.TableGroupModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +22,18 @@ public class ReportManageController {
 
 	@Autowired
 	@Resource
+	private TableGroupModelService tableGroupModelService;
+
+	@Autowired
+	@Resource
 	private ReportTaskService reportTaskService;
+
+	@RequestMapping(value = "/getReleasedReportTemplateList", method = RequestMethod.GET)
+	@ResponseBody
+	public List<TableGroupModel> getReleasedReportTemplateList() {
+
+		return tableGroupModelService.getAllReleasedTableGroupModels();
+	}
 
 	@RequestMapping(value = "/getReportTaskListByDTO", method = RequestMethod.GET)
 	@ResponseBody

@@ -43,6 +43,15 @@ public class TableGroupModelService {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public List<TableGroupModel> getAllReleasedTableGroupModels() {
+		return this.tableGroupModelDAO.getAllReleasedTableGroupModels();
+
+	}
+
 	public List<TableGroupModelDTO> getAllTableGroupModelDTO() {
 		List<TableGroupModel> list = this.tableGroupModelDAO.getAllTableGroupModels();
 		List<TableGroupModelDTO> listDTO = new ArrayList();

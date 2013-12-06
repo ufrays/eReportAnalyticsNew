@@ -24,7 +24,8 @@ import org.sap.era.main.CustomDateSerializer;
 @Entity
 @Table(name = "T_TABLEGROUPMODEL")
 @NamedQueries({ @NamedQuery(name = "AllTableGroupModels", query = "select tgm from TableGroupModel tgm"),
-		@NamedQuery(name = "GetTableGroupModelByID", query = "select tgm from TableGroupModel tgm where tgm.id = :groupID") })
+		@NamedQuery(name = "GetTableGroupModelByID", query = "select tgm from TableGroupModel tgm where tgm.id = :groupID"),
+		@NamedQuery(name = "AllReleasedTableGroupModel", query = "select tgm from TableGroupModel tgm where tgm.status = 'Released'") })
 public class TableGroupModel {
 
 	static public int TABLEGROUPMODEL_FLAG_FIXED_COLUMN = 0;

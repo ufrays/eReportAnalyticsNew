@@ -149,7 +149,7 @@ public class DataInitializationContext {
 			}
 		}
 		ArrayList<Orgnazition> result = orgnazitionDAO.persist(orgs);
-		// orgnazitionDAO.merge(parentOrgs);
+		orgnazitionDAO.merge(parentOrgs);
 
 		return result;
 	}

@@ -17,7 +17,7 @@ sap.ui.jsview("ereportanalyticsnew.reportManage", {
 		// Create the button
 		// Button - Detail
 		var oBtn_Detail = new sap.ui.commons.Button("reportTemplate.B0", {
-			text : "Edit",
+			text : "Detail",
 			enabled : false,
 			press : function() {
 				oController.getDetail(oTable);
@@ -29,17 +29,7 @@ sap.ui.jsview("ereportanalyticsnew.reportManage", {
 		// add a combobox as Template
 		var oLabel = new sap.ui.commons.Label({text: 'Template:'});
 		var oComboBox = new sap.ui.commons.ComboBox("reportTemplate.template",{
-			items : [ new sap.ui.core.ListItem({
-				text : ""
-			}),new sap.ui.core.ListItem({
-				text : "#1"
-			}), new sap.ui.core.ListItem({
-				text : "Do it!"
-			}), new sap.ui.core.ListItem({
-				text : "Hello world!"
-			}), new sap.ui.core.ListItem({
-				text : "Yet another stupid button text"
-			}) ]
+		    items: {path:"/", template:new sap.ui.core.ListItem({text:"{name}"})}
 		});
 		oToolbar1.addItem(oLabel);
 		oToolbar1.addItem(oComboBox);
@@ -68,15 +58,15 @@ sap.ui.jsview("ereportanalyticsnew.reportManage", {
 		oLabel = new sap.ui.commons.Label({text: 'Duration: '});
 		oComboBox = new sap.ui.commons.ComboBox("reportTemplate.durationType",{
 			items : [ new sap.ui.core.ListItem({
-				text : ""
+				text : "", key:""
 			}), new sap.ui.core.ListItem({
-				text : "Weekly"
+				text : "Weekly", key:"WEEKLY"
 			}), new sap.ui.core.ListItem({
-				text : "Monthly"
+				text : "Monthly", key:"MONTHLY"
 			}), new sap.ui.core.ListItem({
-				text : "Quarterly"
+				text : "Quarterly", key:"QUARTERLY"
 			}), new sap.ui.core.ListItem({
-				text : "Yearly"
+				text : "Yearly", key:"YEARLY"
 			})]
 		});
 		oToolbar1.addItem(oLabel);
@@ -176,6 +166,7 @@ sap.ui.jsview("ereportanalyticsnew.reportManage", {
 		var oLayout = new sap.ui.commons.layout.VerticalLayout("L_ReportManage1", {
 			content : [ oToolbar1,oTable ]
 		});
+		
 
 		return oLayout;
 	}
