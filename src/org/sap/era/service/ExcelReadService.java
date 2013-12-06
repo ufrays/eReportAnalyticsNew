@@ -17,6 +17,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.sap.era.persistence.CellData;
 import org.sap.era.persistence.CellModel;
+import org.sap.era.persistence.TableGroupModel;
 import org.sap.era.persistence.TableModel;
 import org.sap.era.service.excel.Control;
 import org.sap.era.service.excel.ExcelForm;
@@ -144,6 +145,11 @@ public class ExcelReadService {
 						control.setCellDataType(CellModel.CELL_DATA_TYPE_STRING);
 						control.setText(cell.toString());
 						excelForm.addCell(i + 1, j + 1, control);
+					} else if (cell.toString().startsWith("#D")) {
+						control.setCellType(CellModel.CELL_TYPE_DATA);
+						control.setCellDataType(CellModel.CELL_DATA_TYPE_DATE);
+						control.setText(cell.toString());
+						excelForm.addCell(i + 1, j + 1, control);
 					} else {
 						control.setCellType(CellModel.CELL_TYPE_LABEL);
 						control.setCellDataType(CellModel.CELL_DATA_TYPE_STRING);
@@ -167,14 +173,21 @@ public class ExcelReadService {
 	}
 
 	//
-	public List readDataCellsFromTableModelGroup(Document doc, String tableModelGroupID) {
+	public List<ValidatorSheetErrors> readDataCellsFromTableModelGroup(Document doc, String tableModelGroupID) {
 		//
-		List<TableModel> list = (List<TableModel>) tableModelService.getAllTableModelsByTableGroupModel(tableModelGroupID);
+		TableGroupModel tmg = tableGroupModelService.getTableGroupModelByID(Long.parseLong(tableModelGroupID));
+		List<TableModel> list = tmg.getTableModel();
+		List<ValidatorSheetErrors> errorList = new ArrayList();
 		for (int i = 0; i < list.size(); i++) {
-
+			ValidatorSheetErrors sheetErrors;
+			if (tmg.getFlag() == 0) {
+				sheetErrors = this.readMiltiLineCellsFromTableModel(doc, list.get(i));
+			} else {
+				sheetErrors = this.readFixedCellsFromTableModel(doc, list.get(i));
+			}
+			errorList.add(sheetErrors);
 		}
-
-		return null;
+		return errorList;
 	}
 
 	/*

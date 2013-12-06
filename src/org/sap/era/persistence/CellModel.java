@@ -1,7 +1,16 @@
 package org.sap.era.persistence;
 
 import static javax.persistence.GenerationType.AUTO;
-import javax.persistence.*;
+
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "T_CELLMODEL")
@@ -10,7 +19,6 @@ import javax.persistence.*;
 		@NamedQuery(name = "AllCellModelsforDataByTableModel", query = "select cm from CellModel cm where (cm.tableModel.id = :tableModelID and cm.type = 1)"),
 		@NamedQuery(name = "AllCellModelsfoLabelByTableModel", query = "select cm from CellModel cm where (cm.tableModel.id = :tableModelID and cm.type = 0)"),
 		@NamedQuery(name = "AllCellModelsforParmByTableModel", query = "select cm from CellModel cm where (cm.tableModel.id = :tableModelID and cm.type = 4)") })
-
 public class CellModel {
 
 	// Type - Indicate the usage of the cell.
@@ -27,6 +35,7 @@ public class CellModel {
 	public static final int CELL_DATA_TYPE_BLANK = 3;
 	public static final int CELL_DATA_TYPE_BOOLEAN = 4;
 	public static final int CELL_DATA_TYPE_ERROR = 5;
+	public static final int CELL_DATA_TYPE_DATE = 6;
 
 	@Id
 	@GeneratedValue(strategy = AUTO)
