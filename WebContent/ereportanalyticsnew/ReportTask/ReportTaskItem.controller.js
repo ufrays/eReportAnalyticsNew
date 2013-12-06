@@ -65,7 +65,15 @@ sap.ui.controller("ereportanalyticsnew.ReportTask.ReportTaskItem", {
 	},
 
 	pressUpload : function() {
-		alert("pressed");
+		var oUploadReport = sap.ui.getCore().getControl("idUploadReport");
+		if (oUploadReport == null || typeof (oUploadReport) == "undefined") {
+			oUploadReport = sap.ui.view({
+				id : 'idUploadReport',
+				viewName : 'ereportanalyticsnew.ReportTask.UploadReport',
+				type : sap.ui.core.mvc.ViewType.JS
+			});
+		}
+		sap.ui.getCore().getControl("myShell").setContent(oUploadReport);
 	}
 
 });
