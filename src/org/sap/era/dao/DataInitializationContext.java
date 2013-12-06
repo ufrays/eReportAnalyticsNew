@@ -318,7 +318,11 @@ public class DataInitializationContext {
 			for (int j = 0; j < 10; j++) {
 				ReportTaskItem taskItem = new ReportTaskItem();
 				taskItem.setFilePath("about:blank");
-				taskItem.setItemStatus("Finished");
+				if (R_INST.nextBoolean()) {
+					taskItem.setItemStatus("Finished");
+				} else {
+					taskItem.setItemStatus("Preparing");
+				}
 				taskItem.setOrgnazition(orgnazitionDAO.getOrgnazitionOfTop().get(0));
 				taskItem.setReportDate(Calendar.getInstance().getTime());
 				taskItem.setReportOrgnazition(null);

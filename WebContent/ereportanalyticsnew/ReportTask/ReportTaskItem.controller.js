@@ -65,7 +65,7 @@ sap.ui.controller("ereportanalyticsnew.ReportTask.ReportTaskItem", {
 	},
 
 	pressUpload : function() {
-		alter("pressed");
+		alert("pressed");
 	}
 
 });
