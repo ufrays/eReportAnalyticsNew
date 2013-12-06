@@ -100,8 +100,13 @@ sap.ui.jsview("ereportanalyticsnew.ReportTask.ReportTaskItem", {
 					sortProperty : 'itemStatus',
 					filterProperty : 'itemStatus',
 					template : new sap.ui.commons.Link({
-						text : "upload",
 						press : oController.pressUpload
+					}).bindProperty("text", "itemStatus", function(bValue) {
+						if (bValue == "Finished") {
+							return "View";
+						} else {
+							return "Upload";
+						}
 					})
 				});
 				return clnStatus;
