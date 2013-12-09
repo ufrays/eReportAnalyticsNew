@@ -90,6 +90,15 @@ sap.ui.jsview('ereportanalyticsnew.index', {
 					text : 'Job Schedule'
 				}) ]
 			}) ],
+			headerItems: [
+					new sap.ui.commons.MenuButton({
+						text: "Help",
+						tooltip: "Help Menu",
+						menu: new sap.ui.commons.Menu({items:[
+							new sap.ui.commons.MenuItem({text:"Help"}),
+							new sap.ui.commons.MenuItem({text:"Report Incident"}),
+							new sap.ui.commons.MenuItem({text:"About"})]})
+					})],
 			worksetItemSelected : function(oEvent) {
 				var sId = oEvent.getParameter('id');
 				var oShell = oEvent.oSource;
@@ -136,6 +145,13 @@ sap.ui.jsview('ereportanalyticsnew.index', {
 				case 'WI_3_2':
 					break;
 				case 'WI_3_3':
+					oShell.destroyContent();
+					var oReportTemplate = sap.ui.view({
+						id : 'idJobSchedule',
+						viewName : 'ereportanalyticsnew.taskSchedule',
+						type : sap.ui.core.mvc.ViewType.JS
+					});
+					oShell.setContent(oReportTemplate);
 					break;
 				case 'WI_1_1':
 					oShell.destroyContent();

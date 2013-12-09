@@ -42,6 +42,13 @@ public class OrgnazitionController {
 		List<Orgnazition> list = orgnazitionService.getOrgnazitionOfTop();
 		return list;
 	}
+	
+	@RequestMapping("/getOrgnazitionList")
+	@ResponseBody
+	public List<Orgnazition> getOrgnazitionList() {
+		List<Orgnazition> list = orgnazitionService.getAllOrgnazitions();
+		return list;
+	}
 
 	@RequestMapping(value = "/saveOrgnazition", method = RequestMethod.GET)
 	@ResponseBody

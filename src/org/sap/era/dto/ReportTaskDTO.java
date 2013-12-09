@@ -4,11 +4,19 @@ public class ReportTaskDTO {
 
 	private long tableGroupModel;
 
+	private String tableGroupModelName;
+	
 	private String durationID;
 
 	private String durationFlag;
 
 	private Integer status;
+	
+	private String startDate;
+
+	private String endDate;
+	
+	private boolean isAllReporters;
 
 	public long getTableGroupModel() {
 		return tableGroupModel;
@@ -41,5 +49,39 @@ public class ReportTaskDTO {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
+	public boolean isAllReporters() {
+		return isAllReporters;
+	}
+
+	public void setAllReporters(boolean isAllReporters) {
+		this.isAllReporters = isAllReporters;
+	}
+
+	public String getTableGroupModelName() {
+		return tableGroupModelName;
+	}
+
+	public void setTableGroupModelName(String tableGroupModelName) {
+		this.tableGroupModelName = tableGroupModelName;
+	}
+
+
 
 }

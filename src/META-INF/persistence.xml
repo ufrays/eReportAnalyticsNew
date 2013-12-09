@@ -16,8 +16,5 @@
 			<class>org.sap.era.persistence.ReportTaskItem</class>
 			<class>org.sap.era.persistence.PeriodicTableGroupAssignment</class>
 			<class>org.sap.era.persistence.TimeCoordinate</class>
-			<properties>
-				<property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
-			</properties>
 	</persistence-unit>
 </persistence>
