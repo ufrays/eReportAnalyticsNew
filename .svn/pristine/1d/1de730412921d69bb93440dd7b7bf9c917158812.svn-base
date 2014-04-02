@@ -1,0 +1,109 @@
+package org.sap.era.dao;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+
+import org.sap.era.dto.ReportTaskDTO;
+import org.sap.era.persistence.ReportTask;
+import org.springframework.stereotype.Repository;
+
+@Repository(value = "reportTaskDAO")
+public class ReportTaskDAO extends BaseDAO<ReportTask, Long> {
+
+	public List<ReportTask> getAllReportTaskItem() {
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+
+			// @to do
+			List<ReportTask> reportTasks = em.createNamedQuery("GetAllReportTaskItems", ReportTask.class).getResultList();
+			return reportTasks;
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
+	}
+
+	public List<ReportTask> getReportTaskListByDTO(ReportTaskDTO dto) {
+		EntityManager em = entityManagerFactory.createEntityManager();
+		// write the sql
+		String sql = "select t from ReportTask t";
+		boolean hasCondition = false;
+		// 1
+		if (dto.getTableGroupModel() > 0) {
+			sql = sql + " where " + " t.tableGroupModel = " + dto.getTableGroupModel();
+			hasCondition = true;
+		}
+		// 2
+		if (dto.getStatus() != null) {
+			if (hasCondition) {
+				sql = sql + " and " + " t.status = " + dto.getStatus();
+			} else {
+				sql = sql + " where " + " t.status = " + dto.getStatus();
+				hasCondition = true;
+			}
+		}
+		// 3
+		if (dto.getDurationFlag() != null && !dto.getDurationFlag().equals("")) {
+			if (hasCondition) {
+				sql = sql + " and " + " t.status = " + dto.getDurationFlag();
+			} else {
+				sql = sql + " where " + " t.status = " + dto.getDurationFlag();
+				hasCondition = true;
+			}
+		}
+		// 4
+		if (dto.getDurationID() != null && !dto.getDurationID().equals("")) {
+			if (hasCondition) {
+				sql = sql + " and " + " t.status = " + dto.getDurationID();
+			} else {
+				sql = sql + " where " + " t.status = " + dto.getDurationID();
+				hasCondition = true;
+			}
+		}
+		//
+		TypedQuery<ReportTask> query = em.createQuery(sql, ReportTask.class);
+		List<ReportTask> results = query.getResultList();
+		return results;
+	}
+
+	public Long createNewReportTask(String durationID, String durationDepict, String durationFlag, Date endDate, String reportMode, Date startDate,
+			long tableGroupModel, String tableGroupModelName) {
+		ReportTask newTask = new ReportTask();
+		newTask.setDurationID(durationID);
+		newTask.setDurationDepict(durationDepict);
+		newTask.setDurationFlag(durationFlag);
+		newTask.setEndDate(endDate);
+		newTask.setReportMode(reportMode);
+		newTask.setStartDate(startDate);
+		newTask.setTableGroupModel(tableGroupModel);
+		newTask.setTableGroupModelName(tableGroupModelName);
+
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			em.persist(newTask);
+			return newTask.getId();
+		} finally {
+			if (em != null)
+				em.close();
+		}
+
+	}
+
+	public Long createNewReportTask(ReportTask reportTask) {
+		if (reportTask != null) {
+			EntityManager em = entityManagerFactory.createEntityManager();
+			try {
+				em.merge(reportTask);
+				return reportTask.getId();
+			} finally {
+				if (em != null)
+					em.close();
+			}
+		}
+		return null;
+	}
+}

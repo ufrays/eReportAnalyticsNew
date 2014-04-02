@@ -3,12 +3,14 @@ package org.sap.era.dao;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
+import org.sap.era.dto.Constant;
 import org.sap.era.persistence.AssignedOrgnazition;
 import org.sap.era.persistence.Orgnazition;
 import org.sap.era.persistence.PeriodicTableGroupAssignment;
@@ -16,6 +18,7 @@ import org.sap.era.persistence.Person;
 import org.sap.era.persistence.ReportTask;
 import org.sap.era.persistence.ReportTaskItem;
 import org.sap.era.persistence.TableGroupAssignment;
+import org.sap.era.persistence.TableGroupModel;
 import org.sap.era.persistence.TimeCoordinate;
 import org.sap.era.persistence.enums.EIntervalTag;
 import org.sap.era.persistence.enums.EOriginTag;
@@ -26,7 +29,7 @@ import org.springframework.stereotype.Component;
 @Component(value = "dataInitializationContext")
 public class DataInitializationContext {
 
-	private final static Random R_INST = new Random();
+	protected final static Random R_INST = new Random();
 
 	@Autowired
 	@Resource
@@ -114,16 +117,17 @@ public class DataInitializationContext {
 			initialOrg();
 			initialPerson();
 			// initialReportAssignment();
-			initialPeriodicReportAssignment();
+			intialReportTemplate();
 			initReportTasks();
+			initialPeriodicReportAssignment();
 		}
 	}
 
-	private boolean checkWhetherShouldInitial() {
+	protected boolean checkWhetherShouldInitial() {
 		return orgnazitionDAO.getAllOrgnazitions().size() == 0;
 	}
 
-	private void initialOrg() {
+	protected void initialOrg() {
 		// Create levels of organizations
 		// 1. Loop the level
 		final int MAX_LEVEL = R_INST.nextInt(3) + 2;
@@ -137,7 +141,7 @@ public class DataInitializationContext {
 		}
 	}
 
-	private List<Orgnazition> createSubOrgs(int level, List<Orgnazition> parentOrgs) {
+	protected List<Orgnazition> createSubOrgs(int level, List<Orgnazition> parentOrgs) {
 		ArrayList<Orgnazition> orgs = new ArrayList<Orgnazition>(parentOrgs.size() * 3);
 		for (Orgnazition parentOrg : parentOrgs) {
 			int creatingSize = R_INST.nextInt(3) + 3;
@@ -154,7 +158,7 @@ public class DataInitializationContext {
 		return result;
 	}
 
-	private Orgnazition createOrg(int idx, int level) {
+	protected Orgnazition createOrg(int idx, int level) {
 		Orgnazition subOrg = new Orgnazition();
 		subOrg.setName("Org_with_level_" + level + "_" + idx);
 		subOrg.setOrgnazitionLevel(level);
@@ -166,7 +170,7 @@ public class DataInitializationContext {
 		return subOrg;
 	}
 
-	private void initialPerson() {
+	protected void initialPerson() {
 		List<Orgnazition> orgList = orgnazitionDAO.getAllOrgnazitions();
 		if (orgList == null || orgList.size() == 0) {
 			// TODO: Throw exception if necessary
@@ -189,7 +193,8 @@ public class DataInitializationContext {
 		personDao.persist(persons);
 	}
 
-	private void initialReportAssignment() {
+	@Deprecated
+	protected void initialReportAssignment() {
 		List<Orgnazition> orgListHost = orgnazitionDAO.getAllOrgnazitions();
 		if (orgListHost == null || orgListHost.size() == 0) {
 			// TODO: Throw exception if necessary
@@ -219,7 +224,57 @@ public class DataInitializationContext {
 		}
 	}
 
-	private void initialPeriodicReportAssignment() {
+	protected void intialReportTemplate() {
+		ArrayList<TableGroupModel> tgms = new ArrayList<TableGroupModel>(15);
+		for (int i = 0; i < 15; i++) {
+			TableGroupModel tgm = new TableGroupModel();
+			tgm.setCategory(R_INST.nextInt(2));
+			tgm.setCreatedBy(R_INST.nextInt(2));
+			tgm.setCreatedOn(new Date());
+			tgm.setDescription("Test table group model " + R_INST.nextInt(1000) + 10000);
+			tgm.setFlag(R_INST.nextInt(2));
+			tgm.setName("Test table group model " + R_INST.nextInt(10) + 100);
+			tgm.setStatus("Normal");
+			tgms.add(tgm);
+		}
+		tableGroupModelDAO.persist(tgms);
+	}
+
+	protected void initReportTasks() {
+		for (int i = 0; i < 10; i++) {
+			ReportTask task = new ReportTask();
+			List<ReportTaskItem> taskItems = new ArrayList<ReportTaskItem>();
+			task.setDurationDepict("TestDurationDesc");
+			task.setDurationFlag("flag");
+			task.setDurationID("100" + i);
+			task.setEndDate(Calendar.getInstance().getTime());
+			task.setReportMode("Yearly");
+			task.setStartDate(Calendar.getInstance().getTime());
+			task.setStatus(Constant.REPORT_TASK_ITEM_STATUS_NEW);
+			task.setTableGroupModel(1000 + i);
+			task.setTableGroupModelName("TestGroupModelName" + i);
+
+			for (int j = 0; j < 10; j++) {
+				ReportTaskItem taskItem = new ReportTaskItem();
+				taskItem.setFilePath("about:blank");
+				if (R_INST.nextBoolean()) {
+					taskItem.setItemStatus("Finished");
+				} else {
+					taskItem.setItemStatus("Preparing");
+				}
+				taskItem.setOrgnazition(orgnazitionDAO.getOrgnazitionOfTop().get(0));
+				taskItem.setReportDate(Calendar.getInstance().getTime());
+				taskItem.setReportOrgnazition(null);
+				taskItem.setReportPerson(null);
+				taskItem.setReportTask(task);
+				taskItems.add(taskItem);
+			}
+			task.setReportTaskItem(taskItems);
+			this.reportTaskDAO.merge(task);
+		}
+	}
+
+	protected void initialPeriodicReportAssignment() {
 		List<Orgnazition> orgListHost = orgnazitionDAO.getAllOrgnazitions();
 		if (orgListHost == null || orgListHost.size() == 0) {
 			// TODO: Throw exception if necessary
@@ -227,11 +282,14 @@ public class DataInitializationContext {
 		}
 		int fetchSize = orgListHost.size();
 
+		List<TableGroupModel> allTgms = tableGroupModelDAO.retrieve(TableGroupModel.class);
+		int tgmSize = allTgms.size();
 		for (int i = 0; i < 10; i++) {
 			PeriodicTableGroupAssignment ptga = new PeriodicTableGroupAssignment();
 			ptga.setName("Test Report Assignment " + R_INST.nextInt(900) + 100);
 			ptga.setDurationModel("Duration Model Type A");
 			ptga.setDescription("Test Report Assignment " + R_INST.nextInt(9000) + 1000);
+			ptga.setTableGroupModel(allTgms.get(R_INST.nextInt(tgmSize)));
 
 			// Period type - e.g. Yearly, Monthly
 			ptga.setPeriodTag(this.getRandomEnum(EPeriodTag.class));
@@ -239,24 +297,24 @@ public class DataInitializationContext {
 			TimeCoordinate createTimeCoordinate = new TimeCoordinate();
 			createTimeCoordinate.setIntervalTag(this.getRandomEnum(EIntervalTag.class));
 			createTimeCoordinate.setOriginTag(this.getRandomEnum(EOriginTag.class));
-			createTimeCoordinate.setOffsetDays(R_INST.nextInt(14) - 7);
+			createTimeCoordinate.setOffsetDays(R_INST.nextInt(7));
 			ptga.setCreateTimeCoordinate(createTimeCoordinate);
 			// Rule for Start date
 			TimeCoordinate startTimeCoordinate = new TimeCoordinate();
 			startTimeCoordinate.setIntervalTag(this.getRandomEnum(EIntervalTag.class));
 			startTimeCoordinate.setOriginTag(this.getRandomEnum(EOriginTag.class));
-			startTimeCoordinate.setOffsetDays(R_INST.nextInt(14) - 7);
+			startTimeCoordinate.setOffsetDays(R_INST.nextInt(7));
 			ptga.setStartTimeCoordinate(startTimeCoordinate);
 			// Rule for End date
 			TimeCoordinate endTimeCoordinate = new TimeCoordinate();
 			endTimeCoordinate.setIntervalTag(this.getRandomEnum(EIntervalTag.class));
 			endTimeCoordinate.setOriginTag(this.getRandomEnum(EOriginTag.class));
-			endTimeCoordinate.setOffsetDays(R_INST.nextInt(14) - 7);
+			endTimeCoordinate.setOffsetDays(R_INST.nextInt(7));
 			ptga.setEndTimeCoordinate(endTimeCoordinate);
 
 			ptga = periodicTableGroupAssignmentDAO.persist(ptga);
 			// Create assigned organizations
-			fetchSize = R_INST.nextInt(fetchSize);
+			fetchSize = R_INST.nextInt((fetchSize / 4) + 1);
 			fetchSize = fetchSize < 1 ? 1 : fetchSize;
 			List<Orgnazition> originalOrgs = orgListHost.subList(0, fetchSize);
 			List<AssignedOrgnazition> assignedOrgs = new ArrayList<AssignedOrgnazition>(originalOrgs.size());
@@ -271,7 +329,8 @@ public class DataInitializationContext {
 		}
 	}
 
-	private <TEnum> TEnum getRandomEnum(Class<TEnum> enumType) {
+	@SuppressWarnings("unchecked")
+	protected <TEnum> TEnum getRandomEnum(Class<TEnum> enumType) {
 		final Random rInst = new Random();
 		if (!enumType.isEnum()) {
 			// throw new SystemException("Only enum type is allowed!");
@@ -294,45 +353,5 @@ public class DataInitializationContext {
 		} else {
 			return null;
 		}
-	}
-
-	private void initReportTasks() {
-		List<ReportTask> tasks = this.reportTaskDAO.getAllReportTaskItem();
-		// if (tasks == null || tasks.size() == 0) {
-		//
-		// return;
-		// }
-		for (int i = 0; i < 10; i++) {
-			ReportTask task = new ReportTask();
-			List<ReportTaskItem> taskItems = new ArrayList<ReportTaskItem>();
-			task.setDurationDepict("TestDurationDesc");
-			task.setDurationFlag("flag");
-			task.setDurationID("100" + i);
-			task.setEndDate(Calendar.getInstance().getTime());
-			task.setReportMode("Yearly");
-			task.setStartDate(Calendar.getInstance().getTime());
-			task.setStatus(1);
-			task.setTableGroupModel(1000 + i);
-			task.setTableGroupModelName("TestGroupModelName" + i);
-
-			for (int j = 0; j < 10; j++) {
-				ReportTaskItem taskItem = new ReportTaskItem();
-				taskItem.setFilePath("about:blank");
-				if (R_INST.nextBoolean()) {
-					taskItem.setItemStatus("Finished");
-				} else {
-					taskItem.setItemStatus("Preparing");
-				}
-				taskItem.setOrgnazition(orgnazitionDAO.getOrgnazitionOfTop().get(0));
-				taskItem.setReportDate(Calendar.getInstance().getTime());
-				taskItem.setReportOrgnazition(null);
-				taskItem.setReportPerson(null);
-				taskItem.setReportTask(task);
-				taskItems.add(taskItem);
-			}
-			task.setReportTaskItem(taskItems);
-			this.reportTaskDAO.merge(task);
-		}
-
 	}
 }

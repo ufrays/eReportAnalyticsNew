@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Context>
+	<Resource name="jdbc/DefaultDB" auth="Container" type="javax.sql.DataSource"
+		factory="com.sap.jpaas.service.persistence.core.JNDIDataSourceFactory" />
+	<!--  <Resource
+        name="jdbc/test" type="javax.sql.DataSource"
+        maxActive="100" maxIdle="30" maxWait="10000" 
+        url="jdbc:mysql://localhost:3306/test"
+        driverClassName="com.mysql.jdbc.Driver"
+        username="root" password="admin"
+    /> -->
+</Context>

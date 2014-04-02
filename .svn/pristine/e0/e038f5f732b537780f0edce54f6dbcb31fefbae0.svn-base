@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><entities>
+	<entity>
+		<entity-name>org.sap.era.persistence.TableModel</entity-name>
+		<entity-width>150</entity-width>
+		<entity-height>406</entity-height>
+		<entity-X-Coordinate>373</entity-X-Coordinate>
+		<entity-Y-Coordinate>580</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>org.sap.era.persistence.ReportTask</entity-name>
+		<entity-width>171</entity-width>
+		<entity-height>428</entity-height>
+		<entity-X-Coordinate>950</entity-X-Coordinate>
+		<entity-Y-Coordinate>40</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>org.sap.era.persistence.CellModel</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>266</entity-height>
+		<entity-X-Coordinate>120</entity-X-Coordinate>
+		<entity-Y-Coordinate>660</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>org.sap.era.persistence.AssignedOrgnazition</entity-name>
+		<entity-width>188</entity-width>
+		<entity-height>128</entity-height>
+		<entity-X-Coordinate>689</entity-X-Coordinate>
+		<entity-Y-Coordinate>43</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>org.sap.era.persistence.Person</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>246</entity-height>
+		<entity-X-Coordinate>120</entity-X-Coordinate>
+		<entity-Y-Coordinate>84</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>org.sap.era.persistence.TableGroupAssignment</entity-name>
+		<entity-width>181</entity-width>
+		<entity-height>206</entity-height>
+		<entity-X-Coordinate>692</entity-X-Coordinate>
+		<entity-Y-Coordinate>360</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>org.sap.era.persistence.PeriodicTableGroupAssignment</entity-name>
+		<entity-width>277</entity-width>
+		<entity-height>168</entity-height>
+		<entity-X-Coordinate>348</entity-X-Coordinate>
+		<entity-Y-Coordinate>407</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>org.sap.era.persistence.TableData</entity-name>
+		<entity-width>150</entity-width>
+		<entity-height>306</entity-height>
+		<entity-X-Coordinate>373</entity-X-Coordinate>
+		<entity-Y-Coordinate>1011</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>org.sap.era.persistence.TableGroupModel</entity-name>
+		<entity-width>182</entity-width>
+		<entity-height>306</entity-height>
+		<entity-X-Coordinate>692</entity-X-Coordinate>
+		<entity-Y-Coordinate>670</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>org.sap.era.persistence.CellData</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>246</entity-height>
+		<entity-X-Coordinate>120</entity-X-Coordinate>
+		<entity-Y-Coordinate>1021</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>org.sap.era.persistence.Orgnazition</entity-name>
+		<entity-width>138</entity-width>
+		<entity-height>326</entity-height>
+		<entity-X-Coordinate>396</entity-X-Coordinate>
+		<entity-Y-Coordinate>24</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>org.sap.era.persistence.TimeCoordinate</entity-name>
+		<entity-width>187</entity-width>
+		<entity-height>188</entity-height>
+		<entity-X-Coordinate>20</entity-X-Coordinate>
+		<entity-Y-Coordinate>405</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+</entities>

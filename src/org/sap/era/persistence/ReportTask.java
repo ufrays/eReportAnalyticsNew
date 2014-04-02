@@ -46,7 +46,8 @@ public class ReportTask {
 	@Basic
 	private String durationDepict;
 	@Basic
-	private Integer status;
+	private String status;
+
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "reportTask")
 	private List<ReportTaskItem> reportTaskItem;
 
@@ -124,11 +125,11 @@ public class ReportTask {
 		this.durationDepict = durationDepict;
 	}
 
-	public Integer getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

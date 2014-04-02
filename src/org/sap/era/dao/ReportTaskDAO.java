@@ -65,7 +65,7 @@ public class ReportTaskDAO extends BaseDAO<ReportTask, Long> {
 			}
 		}
 		//
-		TypedQuery<ReportTask> query = (TypedQuery<ReportTask>) em.createQuery(sql);
+		TypedQuery<ReportTask> query = em.createQuery(sql, ReportTask.class);
 		List<ReportTask> results = query.getResultList();
 		return results;
 	}
@@ -97,7 +97,7 @@ public class ReportTaskDAO extends BaseDAO<ReportTask, Long> {
 		if (reportTask != null) {
 			EntityManager em = entityManagerFactory.createEntityManager();
 			try {
-				em.merge(reportTask);
+				em.persist(reportTask);
 				return reportTask.getId();
 			} finally {
 				if (em != null)

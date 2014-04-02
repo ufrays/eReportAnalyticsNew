@@ -1,22 +1,29 @@
 package org.sap.era.dto;
 
+import java.util.List;
+
+import org.sap.era.persistence.Orgnazition;
+import org.sap.era.persistence.ReportTaskItem;
+
 public class ReportTaskDTO {
 
 	private long tableGroupModel;
 
 	private String tableGroupModelName;
-	
+
 	private String durationID;
 
 	private String durationFlag;
+	
+	private String durationDepict;
 
 	private Integer status;
-	
+
 	private String startDate;
 
 	private String endDate;
-	
-	private boolean isAllReporters;
+
+	private List<Orgnazition> orgnazitions;
 
 	public long getTableGroupModel() {
 		return tableGroupModel;
@@ -24,6 +31,14 @@ public class ReportTaskDTO {
 
 	public void setTableGroupModel(long tableGroupModel) {
 		this.tableGroupModel = tableGroupModel;
+	}
+
+	public String getTableGroupModelName() {
+		return tableGroupModelName;
+	}
+
+	public void setTableGroupModelName(String tableGroupModelName) {
+		this.tableGroupModelName = tableGroupModelName;
 	}
 
 	public String getDurationID() {
@@ -40,6 +55,14 @@ public class ReportTaskDTO {
 
 	public void setDurationFlag(String durationFlag) {
 		this.durationFlag = durationFlag;
+	}
+
+	public String getDurationDepict() {
+		return durationDepict;
+	}
+
+	public void setDurationDepict(String durationDepict) {
+		this.durationDepict = durationDepict;
 	}
 
 	public Integer getStatus() {
@@ -66,22 +89,17 @@ public class ReportTaskDTO {
 		this.endDate = endDate;
 	}
 
-	public boolean isAllReporters() {
-		return isAllReporters;
+	public List<Orgnazition> getOrgnazitions() {
+		return orgnazitions;
 	}
 
-	public void setAllReporters(boolean isAllReporters) {
-		this.isAllReporters = isAllReporters;
-	}
-
-	public String getTableGroupModelName() {
-		return tableGroupModelName;
-	}
-
-	public void setTableGroupModelName(String tableGroupModelName) {
-		this.tableGroupModelName = tableGroupModelName;
+	public void setOrgnazitions(List<Orgnazition> orgnazitions) {
+		this.orgnazitions = orgnazitions;
 	}
 
 
 
+	
+	
+	
 }

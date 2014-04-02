@@ -7,33 +7,21 @@ sap.ui.controller("ereportanalyticsnew.addTaskSchedule", {
 */
 	onInit: function() {
 		console.log("init....");
-		var model = new sap.ui.model.json.JSONModel();
-		this.getView().setModel(model);
-		var oModel = this.getView().getModel();
-		oModel.getData().scheduleTask = {};
-		//get all template
+		var _this = this;
+		var scheduleTask = {};
+		var scheduleTaskModel = new sap.ui.model.json.JSONModel();
+		scheduleTaskModel.setData(scheduleTask);
+		_this.getView().setModel(scheduleTaskModel);
+		// 1. get all template
+		var releasedReportTemplateModel = new sap.ui.model.json.JSONModel();
 		jQuery.ajax({
 		    url : "getReleasedReportTemplateList.do",
 		    type : 'GET',
 		    dataType : "json",
 		    success : function(data) {
-		    	console.log(data);
-		    	oModel.setData({"scheduleTask/releasedReportTemplate":data});
-		    },
-		    error : function(jqXHR, textStatus, errorThrown) {
-				// TODO improve error handling
-				sap.ui.commons.MessageBox.alert("Failed to retrieve data: "	+ textStatus + "\n" + errorThrown);
-		    }
-		});
-		// get all orgnaztion
-		//get all template
-		jQuery.ajax({
-		    url : "getOrgnazitionList.do",
-		    type : 'GET',
-		    dataType : "json",
-		    success : function(data) {
-		    	console.log(data);
-		    	oModel.setData({"scheduleTask/orgnazitionList":data});
+		    		console.log(data);
+		    		releasedReportTemplateModel.setData(data);
+		    		_this.getView().byId("tableGroupModel").setModel(releasedReportTemplateModel);
 		    },
 		    error : function(jqXHR, textStatus, errorThrown) {
 				// TODO improve error handling
@@ -48,15 +36,18 @@ sap.ui.controller("ereportanalyticsnew.addTaskSchedule", {
 	
 	create: function() {
 		var oModel = this.getView().getModel();
-		var scheduleTask = oModel.getProperty("/scheduleTask");
+		// Information
+		var scheduleTask = oModel.getData();
+		// Add Orgs
+    	var oView = this.getView().byId("orgnazitionSelect").getContent();
+		scheduleTask.orgnazitions = oView[0].getModel().getData();
 		jQuery.ajax({
 		    url : "createReportTask.do",
-		    data : scheduleTask,
-		    type : 'GET',
-		    dataType : "text",
+		    data : JSON.stringify(scheduleTask),
+		    type : 'POST',
+		    contentType: "application/json; charset=utf-8",
 		    success : function(data) {
-				sap.ui.commons.MessageBox.show(data, "SUCCESS",
-					"Save Success");
+				sap.ui.commons.MessageBox.show(data, "SUCCESS", "Save Success");
 				sap.ui.getCore().getControl("myShell").destroyContent();
 				var oView = sap.ui.view({
 				    viewName : 'ereportanalyticsnew.taskSchedule',
@@ -71,7 +62,22 @@ sap.ui.controller("ereportanalyticsnew.addTaskSchedule", {
 			}
 		});
     },
-    	
+   
+    openOrgnazitionSelect: function(){
+    	this.getView().byId("orgnazitionSelect").open();
+    	var oView = this.getView().byId("orgnazitionSelect").getContent();
+    	oView[0].getController().getOrgList();
+    },
+    
+    selectOrgnazition: function(){
+    	var oDialog = this.getView().byId("orgnazitionSelect");
+    	var oView = oDialog.getContent();
+    	var oModel = new sap.ui.model.json.JSONModel();
+    	oModel.setData(oView[0].getModel().getData());
+    	this.getView().byId("orgnazitionList").setModel(oModel);
+    	oDialog.close();
+    },
+    
 	cancel: function() {
 	    
     	},

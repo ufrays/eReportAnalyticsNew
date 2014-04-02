@@ -1,10 +1,12 @@
 package org.sap.era.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.sap.era.dto.OrgnazitionDTO;
 import org.sap.era.persistence.Orgnazition;
 import org.sap.era.persistence.Person;
 import org.sap.era.service.OrgnazitionService;
@@ -40,9 +42,14 @@ public class OrgnazitionController {
 	@ResponseBody
 	public List<Orgnazition> getAllOrgnazition() {
 		List<Orgnazition> list = orgnazitionService.getOrgnazitionOfTop();
+//		ArrayList<OrgnazitionDTO> dtos = new ArrayList<OrgnazitionDTO>(list.size());
+//		for (Orgnazition orgnazition : list) {
+//			OrgnazitionDTO dto = new OrgnazitionDTO(orgnazition);
+//			dtos.add(dto);
+//		}
 		return list;
 	}
-	
+
 	@RequestMapping("/getOrgnazitionList")
 	@ResponseBody
 	public List<Orgnazition> getOrgnazitionList() {

@@ -13,8 +13,8 @@ sap.ui.jsview("ereportanalyticsnew.addTaskSchedule", {
 	* @memberOf ereportanalyticsnew.addTaskSchedule
 	*/ 
 	createContent : function(oController) {
+		var _this = this;
 		// Create a TabStrip instance
-		
 		var oTabStrip1 = new sap.ui.commons.TabStrip();
 		oTabStrip1.setHeight("550px");
 		// 1. tab: New Schedule Task
@@ -23,27 +23,30 @@ sap.ui.jsview("ereportanalyticsnew.addTaskSchedule", {
 		oTab1.setTitle(new sap.ui.commons.Title({text:"New Schedule Task"}));
 		
 		var oLayout1 = new sap.ui.commons.layout.MatrixLayout({columns: 2, width: "100%", widths : [ "10%", "90%" ]});
-		oLayout1.bindElement("/scheduleTask");
-		//oLayout1.setWidths(['150px']);
+		oLayout1.bindElement("/");
 		//1.1 Duration ID
-		var oTF = new sap.ui.commons.TextField({tooltip: 'Duration ID', editable: false, value: '{name}'});
+		var oTF = new sap.ui.commons.TextField({tooltip: 'Duration ID', editable: true, value: '{durationID}'});
 		var oLabel = new sap.ui.commons.Label({text: 'Duration ID', labelFor: oTF});
 		oLayout1.createRow(oLabel, oTF); 
 		//1.2.Template
 		var oItemTemplate = new sap.ui.core.ListItem({key:"{id}",text:"{name}"});
-		oTF = new sap.ui.commons.DropdownBox({
+		oTF = new sap.ui.commons.DropdownBox(_this.createId("tableGroupModel"),{
+				value:"{tableGroupModelName}",
+				selectedKey:"{tableGroupModel}",
 				items: {
-			        path: "/scheduleTask/releasedReportTemplate", 
+			        path: "/", 
 			        template: oItemTemplate
 			    }
 			});
-		oTF.bindProperty("selectedKey", "tableGroupModel");
-		oTF.bindProperty("value", "tableGroupModelName");
 		oLabel = new sap.ui.commons.Label({text: 'Template', labelFor: oTF});
 		oLayout1.createRow(oLabel, oTF);
 		//1.3.Duration Type
 		oTF = new sap.ui.commons.DropdownBox({
+			value:"{durationDepict}",
+			selectedKey:"{durationFlag}",
 			items: [ new sap.ui.core.ListItem({
+				text : "", key:""
+			}),new sap.ui.core.ListItem({
 				text : "Weekly", key:"WEEKLY"
 			}), new sap.ui.core.ListItem({
 				text : "Monthly", key:"MONTHLY"
@@ -59,7 +62,7 @@ sap.ui.jsview("ereportanalyticsnew.addTaskSchedule", {
 		oTF = new sap.ui.commons.DatePicker({
 			width: "10em",
 			value: {
-				path: "/startDate",
+				path: "startDate",
 				type: new sap.ui.model.type.Date({pattern: "yyyy-MM-dd"})
         		}
         		});
@@ -69,60 +72,40 @@ sap.ui.jsview("ereportanalyticsnew.addTaskSchedule", {
 		oTF = new sap.ui.commons.DatePicker({
 			width: "10em",
 			value: {
-				path: "/endDate",
+				path: "endDate",
 				type: new sap.ui.model.type.Date({pattern: "yyyy-MM-dd"})
     		}
     		});
 		oLabel = new sap.ui.commons.Label({text: 'Validity To', labelFor: oTF});
 		oLayout1.createRow(oLabel, oTF); 
-		//1.6.1.Orgnazition Select
-		oTF = new sap.ui.commons.CheckBox({
-			text : 'All Reporter Orgnazitions',
-			tooltip : 'All Reporter Orgnazitions will be assigned with this task.',
-			checked : "{isAllReporters}",
-			change : function() {
-				
-			  }
-			});
-		oLabel = new sap.ui.commons.Label({text: 'Duration ID', labelFor: oTF});
-		oLayout1.createRow(oLabel, oTF); 
-		//1.6.2
-		///
-		///orgnazitionList
-		oTF = new sap.ui.commons.ListBox({
+		//1.6 Assigned Orgnazition
+		var oLayout1_1 = new sap.ui.commons.layout.MatrixLayout({columns : 2,width : '400px',widths : ['70%', '30%'] });
+		oLabel = new sap.ui.commons.Label({text: 'Assigned Orgnazition', labelFor: oTF});
+		// Create Dialog
+		var oDialog = new  sap.ui.commons.Dialog(_this.createId("orgnazitionSelect"),{title: "Orgnazition Select", modal: true, width:"800px"});
+    	oDialog.addContent(new sap.ui.jsview("ereportanalyticsnew.commons.orgnazitionSelect"));
+		oDialog.addButton(new sap.ui.commons.Button(_this.createId("OK"),{text: "OK", enabled:true, press:function(){
+			oController.selectOrgnazition();
+			}}));
+		oDialog.addButton(new sap.ui.commons.Button({text: "Cancel", press:function(){oDialog.close();}}));
+		//1.6.1 - orgnazitionList
+		oTF = new sap.ui.commons.ListBox(_this.createId("orgnazitionList"),{
 			items: {
-		        path: "/scheduleTask/orgnazitionList", 
+		        path: "/", 
 		        template: new sap.ui.core.ListItem({key:"{id}",text:"{name}"})
 		    },
-			minWidth : "250px",
-			visibleItems : 15
+			minWidth : "280px",
+			visibleItems : 15 
 		});
-		var oLayout_Btn = new sap.ui.layout.VerticalLayout({
-			content:[
-				new sap.ui.commons.Button({text: ">>",
-					press: function() {
-					    
-					},
-					layoutData: new sap.ui.commons.form.GridElementData({hCells: "1"})}),
-				new sap.ui.commons.Button({text: "<<",
-					press: function() {
-						    
-					},
-					layoutData: new sap.ui.commons.form.GridElementData({hCells: "1"})})
-			]
-		});
-		oTF2 = new sap.ui.commons.ListBox({
-			items: {
-		        path: "/selectedOrgnazitions", 
-		        template: new sap.ui.core.ListItem({key:"{id}",text:"{name}"})
-		    },
-			minWidth : "250px",
-			visibleItems : 15
-		});
-		oCell = new sap.ui.commons.layout.MatrixLayoutCell({content: [oTF,oLayout_Btn,oTF2], rowSpan : 1, colSpan : 1});
-		var oLabel = new sap.ui.commons.Label({text: '', labelFor: oCell});
-		oLayout1.createRow(oLabel, oCell); 
-		
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({rowSpan: 12 });
+		oCell.addContent(oTF);
+		oLayout1_1.createRow(oCell);
+		oLayout1.createRow(oLabel, oLayout1_1); 
+		//1.6.2.Orgnazition Select
+		oTF = new sap.ui.commons.Button({text:"Select Orgnazition", press : function() {oController.openOrgnazitionSelect()}});
+		var oCell = new sap.ui.commons.layout.MatrixLayoutCell({ height: '25px' });
+		oCell.addContent(oTF);
+		oLayout1_1.createRow(oCell);
 		// 1.7 Buttons - Save & Cancel
 		var oBtn1 = new sap.ui.commons.Button({text: "Create",
 			press: function() {
